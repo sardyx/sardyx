@@ -35,10 +35,7 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-6 lg:px-16 flex justify-between items-center">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-primary to-secondary flex items-center justify-center">
-            <div className="w-4 h-4 bg-black rounded-full" />
-          </div>
-          <span className="text-2xl font-bold tracking-tighter text-white">
+          <span className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-primary via-white to-secondary bg-clip-text text-transparent">
             SARDYX
           </span>
         </Link>
