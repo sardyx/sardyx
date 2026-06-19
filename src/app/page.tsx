@@ -5,6 +5,7 @@ import Process from "@/components/sections/Process";
 import Showcase from "@/components/sections/Showcase";
 import Pricing from "@/components/sections/Pricing";
 import Testimonials from "@/components/sections/Testimonials";
+import Team from "@/components/sections/Team";
 import FAQ from "@/components/sections/FAQ";
 import Contact from "@/components/sections/Contact";
 
@@ -18,6 +19,7 @@ export default function Home() {
       <Showcase />
       <Pricing />
       <Testimonials />
+      <Team />
       <FAQ />
       <Contact />
     </main>
