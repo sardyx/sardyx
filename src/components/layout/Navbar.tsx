@@ -36,9 +36,7 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-6 lg:px-16 flex justify-between items-center">
         <Link href="/" className="flex items-center gap-2">
-          <span className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-primary via-white to-secondary bg-clip-text text-transparent">
-            SARDYX
-          </span>
+          <img src="/logo.png" alt="SARDYX" className="h-8 md:h-10 w-auto object-contain" />
         </Link>
 
         {/* Desktop Nav */}
