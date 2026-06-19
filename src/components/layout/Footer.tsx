@@ -15,7 +15,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-6">
-              <img src="/logo.png" alt="SARDYX" className="h-8 md:h-10 w-auto object-contain" />
+              <span className="text-2xl font-black tracking-[0.2em] bg-gradient-to-r from-white via-primary to-white bg-clip-text text-transparent metallic-shimmer drop-shadow-[0_0_10px_rgba(0,240,255,0.8)] hover:brightness-125 transition-all duration-300">
+                SARDYX
+              </span>
             </Link>
             <p className="text-gray-400 max-w-sm mb-6">
               Building the future with AI. We create intelligent digital systems, futuristic websites, and next-generation experiences for modern businesses.
