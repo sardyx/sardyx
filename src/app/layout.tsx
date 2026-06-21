@@ -8,8 +8,30 @@ import { Analytics } from "@vercel/analytics/next";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://sardyxai.vercel.app"),
   title: "SARDYX | Premium AI Agency",
   description: "Building The Future With AI. We create intelligent digital systems, futuristic websites, and AI automations.",
+  openGraph: {
+    title: "SARDYX | Premium AI Agency",
+    description: "Building The Future With AI. We create intelligent digital systems, futuristic websites, and AI automations.",
+    url: "https://sardyxai.vercel.app",
+    siteName: "SARDYX AI",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "SARDYX AI - Building The Future With AI",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SARDYX | Premium AI Agency",
+    description: "Building The Future With AI. We create intelligent digital systems, futuristic websites, and AI automations.",
+    images: ["/opengraph-image.png"],
+  },
 };
 
 export default function RootLayout({

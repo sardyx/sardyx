@@ -38,7 +38,7 @@ const teamCategories = [
         name: "Miss Bushra",
         role: "Operations & Project Manager",
         bio: "Coordinates cross-functional technical teams, optimizes delivery timelines, and ensures seamless execution of complex client systems.",
-        image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop",
+        image: "/team/bushra.png",
         icon: <Cpu className="w-5 h-5 text-secondary" />,
         socials: { twitter: "#", linkedin: "#", github: "#" },
       }
