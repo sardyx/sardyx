@@ -1,32 +1,66 @@
-import type { Metadata } from "next";
-import { Mail, MapPin, PhoneCall } from "lucide-react";
-
-export const metadata: Metadata = {
-  title: "Contact SARDYX AI | Schedule an Enterprise Systems Audit",
-  description: "Get in touch with our AI systems architects. Schedule a discovery call to map workflows, estimate automation savings, and discuss custom models.",
-  alternates: {
-    canonical: "https://sardyxai.com/contact",
-  },
-};
+"use client";
+import { useState } from "react";
+import { Mail, MapPin, PhoneCall, Send, Loader2, CheckCircle, AlertCircle } from "lucide-react";
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    service: "AI Consulting & Systems Audits",
+    budget: "$5,000 - $15,000 / month",
+    message: "",
+  });
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
   const contactDetails = [
     {
       title: "Global Inquiries",
-      desc: "hello@sardyxai.com",
+      desc: "contact@sardyxai.com",
       icon: <Mail className="text-primary" size={20} />,
     },
     {
       title: "Direct Access",
-      desc: "+1 (800) 555-0199",
+      desc: "+92 3499398141  |  +1 (516) 728-5387",
       icon: <PhoneCall className="text-primary" size={20} />,
     },
     {
       title: "HQ Operations",
-      desc: "Silicon Valley, San Francisco, CA",
+      desc: "NY, USA",
       icon: <MapPin className="text-primary" size={20} />,
     },
   ];
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.message) return;
+
+    setStatus("loading");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: `Service: ${formData.service} | Budget: ${formData.budget} | Message: ${formData.message}`,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed");
+
+      setStatus("success");
+      setFormData({ name: "", email: "", service: "AI Consulting & Systems Audits", budget: "$5,000 - $15,000 / month", message: "" });
+      setTimeout(() => setStatus("idle"), 6000);
+    } catch {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 5000);
+    }
+  };
 
   return (
     <main className="min-h-screen bg-black text-white pt-32 pb-20 relative overflow-hidden">
@@ -52,7 +86,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="font-mono text-xs uppercase tracking-wider text-gray-500 mb-1">{detail.title}</h3>
-                  <p className="text-white font-medium">{detail.desc}</p>
+                  <p className="text-white font-medium text-sm">{detail.desc}</p>
                 </div>
               </div>
             ))}
@@ -61,65 +95,111 @@ export default function ContactPage() {
           {/* Form Column */}
           <div className="glass-panel p-8 md:p-12 rounded-3xl border border-white/10 bg-white/[0.02] lg:col-span-2">
             <h2 className="text-2xl font-bold text-white mb-8">Initiate Project Inquiry</h2>
-            <form className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            {status === "success" ? (
+              <div className="py-16 flex flex-col items-center gap-4 text-center">
+                <div className="w-16 h-16 rounded-full bg-green-500/10 border border-green-500/30 flex items-center justify-center text-green-400 text-2xl shadow-[0_0_20px_rgba(74,222,128,0.2)]">
+                  <CheckCircle size={32} />
+                </div>
+                <h3 className="text-xl font-bold text-white">Transmission Received!</h3>
+                <p className="text-gray-400 text-sm max-w-sm">Your inquiry has been submitted successfully. Our team will reach out within 24 hours.</p>
+              </div>
+            ) : (
+              <form className="space-y-6" onSubmit={handleSubmit}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block font-mono text-xs uppercase tracking-wider text-gray-400 mb-2">Your Name</label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="e.g. John Doe"
+                      className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg focus:outline-none focus:border-primary text-sm transition-all text-white placeholder-gray-600"
+                      required
+                      disabled={status === "loading"}
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-mono text-xs uppercase tracking-wider text-gray-400 mb-2">Corporate Email</label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="e.g. john@company.com"
+                      className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg focus:outline-none focus:border-primary text-sm transition-all text-white placeholder-gray-600"
+                      required
+                      disabled={status === "loading"}
+                    />
+                  </div>
+                </div>
+
                 <div>
-                  <label className="block font-mono text-xs uppercase tracking-wider text-gray-400 mb-2">Your Name</label>
-                  <input 
-                    type="text" 
-                    placeholder="e.g. John Doe" 
-                    className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg focus:outline-none focus:border-primary text-sm transition-all"
-                    required 
+                  <label className="block font-mono text-xs uppercase tracking-wider text-gray-400 mb-2">Target Service Area</label>
+                  <select
+                    name="service"
+                    value={formData.service}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg focus:outline-none focus:border-primary text-sm text-gray-300 transition-all"
+                    disabled={status === "loading"}
+                  >
+                    <option>AI Consulting & Systems Audits</option>
+                    <option>Custom AI/ML Software Development</option>
+                    <option>Autonomous Workflow Automation</option>
+                    <option>AI Chatbots & Conversational Support</option>
+                    <option>AI Voice Agents & Call Centers</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block font-mono text-xs uppercase tracking-wider text-gray-400 mb-2">Estimated Monthly Operations Budget</label>
+                  <select
+                    name="budget"
+                    value={formData.budget}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg focus:outline-none focus:border-primary text-sm text-gray-300 transition-all"
+                    disabled={status === "loading"}
+                  >
+                    <option>$5,000 - $15,000 / month</option>
+                    <option>$15,000 - $50,000 / month</option>
+                    <option>$50,000+ / month</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block font-mono text-xs uppercase tracking-wider text-gray-400 mb-2">Project Brief & Automation Bottlenecks</label>
+                  <textarea
+                    rows={4}
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Tell us about the processes you're looking to automate or models you want to develop..."
+                    className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg focus:outline-none focus:border-primary text-sm transition-all resize-none text-white placeholder-gray-600"
+                    required
+                    disabled={status === "loading"}
                   />
                 </div>
-                <div>
-                  <label className="block font-mono text-xs uppercase tracking-wider text-gray-400 mb-2">Corporate Email</label>
-                  <input 
-                    type="email" 
-                    placeholder="e.g. john@company.com" 
-                    className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg focus:outline-none focus:border-primary text-sm transition-all"
-                    required 
-                  />
-                </div>
-              </div>
 
-              <div>
-                <label className="block font-mono text-xs uppercase tracking-wider text-gray-400 mb-2">Target Service Area</label>
-                <select className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg focus:outline-none focus:border-primary text-sm text-gray-300 transition-all">
-                  <option>AI Consulting & Systems Audits</option>
-                  <option>Custom AI/ML Software Development</option>
-                  <option>Autonomous Workflow Automation</option>
-                  <option>AI Chatbots & Conversational Support</option>
-                  <option>AI Voice Agents & Call Centers</option>
-                </select>
-              </div>
+                {status === "error" && (
+                  <p className="text-red-400 text-xs font-semibold bg-red-500/10 border border-red-500/20 px-4 py-2 rounded-lg flex items-center gap-2">
+                    <AlertCircle size={14} /> Submission failed. Please try again.
+                  </p>
+                )}
 
-              <div>
-                <label className="block font-mono text-xs uppercase tracking-wider text-gray-400 mb-2">Estimated Monthly Operations Budget</label>
-                <select className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg focus:outline-none focus:border-primary text-sm text-gray-300 transition-all">
-                  <option>$5,000 - $15,000 / month</option>
-                  <option>$15,000 - $50,000 / month</option>
-                  <option>$50,000+ / month</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block font-mono text-xs uppercase tracking-wider text-gray-400 mb-2">Project Brief & Automation Bottlenecks</label>
-                <textarea 
-                  rows={4} 
-                  placeholder="Tell us about the processes you're looking to automate or models you want to develop..." 
-                  className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg focus:outline-none focus:border-primary text-sm transition-all resize-none"
-                  required
-                />
-              </div>
-
-              <button 
-                type="submit" 
-                className="w-full py-4 bg-primary text-black font-semibold rounded-lg hover:bg-white hover:text-black transition-all font-mono text-sm uppercase tracking-wider drop-shadow-[0_0_12px_rgba(0,240,255,0.3)]"
-              >
-                Submit Consultation Request
-              </button>
-            </form>
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="w-full py-4 bg-primary text-black font-semibold rounded-lg hover:bg-white hover:text-black transition-all font-mono text-sm uppercase tracking-wider drop-shadow-[0_0_12px_rgba(0,240,255,0.3)] flex items-center justify-center gap-2 disabled:opacity-60"
+                >
+                  {status === "loading" ? (
+                    <><Loader2 size={18} className="animate-spin" /> ESTABLISHING CONNECTION...</>
+                  ) : (
+                    <><Send size={18} /> Submit Consultation Request</>
+                  )}
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </div>

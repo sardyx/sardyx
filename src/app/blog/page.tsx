@@ -1,56 +1,68 @@
+"use client";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import type { Metadata } from "next";
 import { ArrowRight, Calendar, User } from "lucide-react";
 
-interface BlogPost {
-  slug: string;
-  title: string;
-  excerpt: string;
-  date: string;
-  author: string;
-  category: string;
-  readTime: string;
-}
-
-const blogPosts: BlogPost[] = [
+// Static fallback posts
+const staticPosts = [
   {
+    id: "1",
     slug: "why-your-business-needs-ai-agents-in-2026",
     title: "Why Autonomous AI Agents are the Ultimate Leverage for Enterprise Growth in 2026",
     excerpt: "Discover how multi-agent networks are replacing static software platforms and helping businesses eliminate manual workflow bottlenecks.",
     date: "July 01, 2026",
     author: "SARDYX Technical Team",
     category: "AI Automation",
-    readTime: "7 min read",
+    read_time: "7 min read",
+    image_url: "",
+    published: true,
   },
   {
+    id: "2",
     slug: "guide-to-workflow-automation-and-roi",
     title: "The CFO Guide to AI Workflow Automation ROI: Calculations and Metrics",
     excerpt: "Learn how to quantify the financial returns of agentic automation pipelines before committing to custom development sprints.",
     date: "June 24, 2026",
     author: "Enterprise Strategy Group",
     category: "Strategy & ROI",
-    readTime: "10 min read",
+    read_time: "10 min read",
+    image_url: "",
+    published: true,
   },
   {
+    id: "3",
     slug: "enterprise-seo-maximizing-organic-traffic",
     title: "Maximizing LLM Visibility: Optimizing for ChatGPT, Gemini, and AI Overviews",
     excerpt: "The ultimate roadmap for semantic optimization. How to format structured data and content entities to guarantee citations in AI search engines.",
     date: "June 18, 2026",
     author: "Semantic SEO Specialists",
     category: "SEO & Search Engine Optimization",
-    readTime: "8 min read",
+    read_time: "8 min read",
+    image_url: "",
+    published: true,
   },
 ];
 
-export const metadata: Metadata = {
-  title: "SARDYX AI Blog | Enterprise Automation & Agentic Intelligence",
-  description: "Read the latest guides, technical breakdowns, and strategic insights on custom AI development, LLM search optimization, and autonomous workflows.",
-  alternates: {
-    canonical: "https://sardyxai.com/blog",
-  },
-};
-
 export default function BlogListingPage() {
+  const [posts, setPosts] = useState<any[]>(staticPosts);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const res = await fetch("/api/blog");
+        if (!res.ok) throw new Error("Failed");
+        const data = await res.json();
+        if (data && data.length > 0) setPosts(data);
+      } catch {
+        // keep static fallback
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPosts();
+  }, []);
+
   return (
     <main className="min-h-screen bg-black text-white pt-32 pb-20 relative overflow-hidden">
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-primary/10 blur-[150px] pointer-events-none" />
@@ -66,32 +78,43 @@ export default function BlogListingPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {blogPosts.map((post) => (
-            <article key={post.slug} className="glass-panel rounded-2xl border border-white/5 bg-white/[0.01] hover:border-primary/20 hover:bg-white/[0.02] transition-all flex flex-col group overflow-hidden">
-              <div className="p-8 flex flex-col flex-grow">
-                <div className="flex items-center gap-2 text-xs text-primary font-mono mb-4 uppercase tracking-wider">
-                  <span>{post.category}</span>
-                  <span>•</span>
-                  <span>{post.readTime}</span>
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="h-80 rounded-2xl glass-panel border border-white/5 animate-pulse" />
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {posts.map((post) => (
+              <article key={post.id || post.slug} className="glass-panel rounded-2xl border border-white/5 bg-white/[0.01] hover:border-primary/20 hover:bg-white/[0.02] transition-all flex flex-col group overflow-hidden">
+                {post.image_url && (
+                  <div className="w-full h-48 overflow-hidden">
+                    <img src={post.image_url} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  </div>
+                )}
+                <div className="p-8 flex flex-col flex-grow">
+                  <div className="flex items-center gap-2 text-xs text-primary font-mono mb-4 uppercase tracking-wider">
+                    <span>{post.category}</span>
+                    <span>•</span>
+                    <span>{post.read_time}</span>
+                  </div>
+                  <h2 className="text-xl font-bold mb-4 text-white group-hover:text-primary transition-colors">
+                    <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                  </h2>
+                  <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-grow">{post.excerpt}</p>
+                  <div className="flex items-center justify-between pt-6 border-t border-white/5 text-gray-500 text-xs">
+                    <span className="flex items-center gap-1"><Calendar size={14} /> {post.date}</span>
+                    <span className="flex items-center gap-1"><User size={14} /> {post.author}</span>
+                  </div>
                 </div>
-                <h2 className="text-xl font-bold mb-4 text-white group-hover:text-primary transition-colors">
-                  <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-                </h2>
-                <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-grow">
-                  {post.excerpt}
-                </p>
-                <div className="flex items-center justify-between pt-6 border-t border-white/5 text-gray-500 text-xs">
-                  <span className="flex items-center gap-1"><Calendar size={14} /> {post.date}</span>
-                  <span className="flex items-center gap-1"><User size={14} /> {post.author}</span>
-                </div>
-              </div>
-              <Link href={`/blog/${post.slug}`} className="py-4 px-8 bg-white/5 hover:bg-primary hover:text-black border-t border-white/5 transition-all text-sm font-semibold flex items-center justify-between text-gray-300 hover:text-black">
-                Read Article <ArrowRight size={16} />
-              </Link>
-            </article>
-          ))}
-        </div>
+                <Link href={`/blog/${post.slug}`} className="py-4 px-8 bg-white/5 hover:bg-primary hover:text-black border-t border-white/5 transition-all text-sm font-semibold flex items-center justify-between text-gray-300">
+                  Read Article <ArrowRight size={16} />
+                </Link>
+              </article>
+            ))}
+          </div>
+        )}
       </div>
     </main>
   );
