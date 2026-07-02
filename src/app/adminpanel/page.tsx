@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Lock, Save, Trash2, CheckCircle, RefreshCw, XCircle, Plus, Edit3, ShieldAlert } from "lucide-react";
-import { supabase, mockPackages, mockTestimonials, mockTeam } from "@/lib/supabase";
+import { mockPackages, mockTestimonials, mockTeam } from "@/lib/supabase";
 
 export default function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -52,16 +52,19 @@ export default function AdminDashboard() {
     setLoading(true);
     try {
       // 1. Fetch Packages
-      const { data: pkgData } = await supabase.from("packages").select("*").order("price_usd");
-      setPackages(pkgData || mockPackages);
+      const pkgRes = await fetch("/api/admin/packages");
+      const pkgData = pkgRes.ok ? await pkgRes.json() : null;
+      setPackages(pkgData && pkgData.length > 0 ? pkgData : mockPackages);
 
       // 2. Fetch Testimonials
-      const { data: testData } = await supabase.from("testimonials").select("*").order("created_at", { ascending: false });
-      setTestimonials(testData || mockTestimonials);
+      const testRes = await fetch("/api/admin/testimonials");
+      const testData = testRes.ok ? await testRes.json() : null;
+      setTestimonials(testData && testData.length > 0 ? testData : mockTestimonials);
 
       // 3. Fetch Team
-      const { data: teamData } = await supabase.from("team_members").select("*").order("created_at");
-      setTeam(teamData || mockTeam);
+      const teamRes = await fetch("/api/admin/team");
+      const teamData = teamRes.ok ? await teamRes.json() : null;
+      setTeam(teamData && teamData.length > 0 ? teamData : mockTeam);
     } catch (err) {
       console.error("Error loading administration stats:", err);
     } finally {
@@ -72,14 +75,14 @@ export default function AdminDashboard() {
   // Feedback actions
   const toggleFeedbackApproval = async (id: string, currentApproved: boolean) => {
     try {
-      const { error } = await supabase
-        .from("testimonials")
-        .update({ approved: !currentApproved })
-        .eq("id", id);
-      if (error) throw error;
+      const res = await fetch("/api/admin/testimonials", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, approved: !currentApproved }),
+      });
+      if (!res.ok) throw new Error("Failed to update status");
       fetchData();
     } catch (err) {
-      // Offline fallback state modify
       setTestimonials(prev =>
         prev.map(t => (t.id === id ? { ...t, approved: !currentApproved } : t))
       );
@@ -89,8 +92,8 @@ export default function AdminDashboard() {
   const deleteFeedback = async (id: string) => {
     if (!confirm("Are you sure you want to permanently delete this testimonial?")) return;
     try {
-      const { error } = await supabase.from("testimonials").delete().eq("id", id);
-      if (error) throw error;
+      const res = await fetch(`/api/admin/testimonials?id=${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Failed to delete");
       fetchData();
     } catch (err) {
       setTestimonials(prev => prev.filter(t => t.id !== id));
@@ -101,18 +104,19 @@ export default function AdminDashboard() {
   const handleUpdatePackage = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const { error } = await supabase
-        .from("packages")
-        .update({
+      const res = await fetch("/api/admin/packages", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: selectedPackage.id,
           name: selectedPackage.name,
           description: selectedPackage.description,
           price_usd: Number(selectedPackage.price_usd),
           features: selectedPackage.features,
           highlighted: selectedPackage.highlighted
-        })
-        .eq("id", selectedPackage.id);
-
-      if (error) throw error;
+        }),
+      });
+      if (!res.ok) throw new Error("Failed to update package");
       setSelectedPackage(null);
       fetchData();
     } catch (err) {
@@ -127,19 +131,22 @@ export default function AdminDashboard() {
   const handleSaveTeamMember = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      if (selectedTeamMember.id) {
-        // Edit
-        const { error } = await supabase
-          .from("team_members")
-          .update(selectedTeamMember)
-          .eq("id", selectedTeamMember.id);
-        if (error) throw error;
+      if (selectedTeamMember.id && !selectedTeamMember.id.startsWith("t")) {
+        // Edit existing db member
+        const res = await fetch("/api/admin/team", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(selectedTeamMember),
+        });
+        if (!res.ok) throw new Error("Failed to update");
       } else {
-        // Insert new
-        const { error } = await supabase
-          .from("team_members")
-          .insert([selectedTeamMember]);
-        if (error) throw error;
+        // Insert new member
+        const res = await fetch("/api/admin/team", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(selectedTeamMember),
+        });
+        if (!res.ok) throw new Error("Failed to insert");
       }
       setIsTeamModalOpen(false);
       setSelectedTeamMember(null);
@@ -158,8 +165,8 @@ export default function AdminDashboard() {
   const handleDeleteTeamMember = async (id: string) => {
     if (!confirm("Remove this expert from the SARDYX team list?")) return;
     try {
-      const { error } = await supabase.from("team_members").delete().eq("id", id);
-      if (error) throw error;
+      const res = await fetch(`/api/admin/team?id=${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Failed to delete member");
       fetchData();
     } catch (err) {
       setTeam(prev => prev.filter(t => t.id !== id));

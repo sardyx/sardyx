@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, Cpu, Sparkles, MessageSquareCode, ShieldCheck, HelpCircle } from "lucide-react";
-import { supabase, mockPackages } from "@/lib/supabase";
+import { mockPackages } from "@/lib/supabase";
 
 // Currency definitions with symbols and rates relative to USD (USD is default base)
 const currencies = [
@@ -17,21 +17,21 @@ export default function Pricing() {
   const [packages, setPackages] = useState<any[]>(mockPackages);
   const [activeCurrency, setActiveCurrency] = useState(currencies[0]); // USD default
   const [activeTab, setActiveTab] = useState("web-only"); // "web-only" or "hybrid"
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const { data, error } = await supabase
-          .from("packages")
-          .select("*")
-          .order("price_usd", { ascending: true });
-
-        if (error) throw error;
+        const res = await fetch("/api/packages");
+        if (!res.ok) throw new Error("Failed to fetch");
+        const data = await res.json();
         if (data && data.length > 0) {
           setPackages(data);
         }
       } catch (err) {
         console.warn("Using local packages data fallback", err);
+      } finally {
+        setLoading(false);
       }
     };
     fetchPackages();
@@ -180,79 +180,87 @@ export default function Pricing() {
         </div>
 
         {/* PRICING GRID */}
-        <div className={`grid grid-cols-1 ${
-          activePlans.length >= 4 ? "lg:grid-cols-2 max-w-5xl" : "md:grid-cols-3 max-w-6xl"
-        } gap-8 mx-auto items-stretch`}>
-          <AnimatePresence mode="wait">
-            {activePlans.map((plan, index) => (
-              <motion.div
-                key={plan.id || plan.name}
-                initial={{ opacity: 0, scale: 0.95, y: 15 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: -15 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                className={`glass-panel rounded-3xl p-8 relative flex flex-col justify-between group cursor-pointer transition-all ${
-                  plan.highlighted 
-                    ? "border-primary/50 shadow-[0_0_40px_rgba(0,240,255,0.12)] glow-border" 
-                    : "border-white/10 hover:border-white/20"
-                }`}
-              >
-                <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] z-0 pointer-events-none rounded-3xl"></div>
-
-                {plan.highlighted && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-black text-2xs md:text-xs font-black uppercase tracking-widest rounded-full z-20 shadow-[0_0_15px_#00f0ff]">
-                    Popular Selection
-                  </div>
-                )}
-
-                <div className="relative z-10">
-                  <div className="flex justify-between items-start mb-6">
-                    <div>
-                      <h3 className="text-xl font-bold text-white group-hover:text-primary transition-colors duration-300">
-                        {plan.name}
-                      </h3>
-                      <p className="text-xs text-gray-400 mt-2 min-h-8">
-                        {plan.description}
-                      </p>
-                    </div>
-                    <div className="p-3 bg-black/40 border border-white/10 rounded-xl group-hover:scale-110 transition-transform">
-                      {getIcon(plan.icon)}
-                    </div>
-                  </div>
-
-                  {/* Price display */}
-                  <div className="mb-8 bg-white/5 border border-white/5 py-4 px-6 rounded-2xl flex items-baseline gap-2">
-                    <span className="text-3xl font-extrabold text-white tracking-tight">
-                      {formatPrice(plan.price_usd)}
-                    </span>
-                    <span className="text-xs text-gray-400 font-mono">USD value</span>
-                  </div>
-
-                  {/* Features list */}
-                  <ul className="space-y-4 mb-8">
-                    {plan.features.map((feature: string, i: number) => (
-                      <li key={i} className="flex items-start text-xs md:text-sm text-gray-300 leading-tight">
-                        <Check size={16} className="text-primary mr-3 shrink-0 mt-0.5" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="relative z-10 mt-auto">
-                  <button className={`w-full py-3.5 rounded-xl font-bold transition-all duration-300 ${
-                    plan.highlighted 
-                      ? "bg-white text-black hover:bg-gray-200 hover:shadow-[0_0_15px_rgba(255,255,255,0.4)]" 
-                      : "bg-white/5 text-white border border-white/10 hover:bg-white/10"
-                  }`}>
-                    Acquire Package
-                  </button>
-                </div>
-
-              </motion.div>
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="h-96 rounded-3xl glass-panel border border-white/5 animate-pulse" />
             ))}
-          </AnimatePresence>
-        </div>
+          </div>
+        ) : (
+          <div className={`grid grid-cols-1 ${
+            activePlans.length >= 4 ? "lg:grid-cols-2 max-w-5xl" : "md:grid-cols-3 max-w-6xl"
+          } gap-8 mx-auto items-stretch`}>
+            <AnimatePresence mode="wait">
+              {activePlans.map((plan, index) => (
+                <motion.div
+                  key={plan.id || plan.name}
+                  initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: -15 }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                  className={`glass-panel rounded-3xl p-8 relative flex flex-col justify-between group cursor-pointer transition-all ${
+                    plan.highlighted 
+                      ? "border-primary/50 shadow-[0_0_40px_rgba(0,240,255,0.12)] glow-border" 
+                      : "border-white/10 hover:border-white/20"
+                  }`}
+                >
+                  <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] z-0 pointer-events-none rounded-3xl"></div>
+
+                  {plan.highlighted && (
+                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-black text-2xs md:text-xs font-black uppercase tracking-widest rounded-full z-20 shadow-[0_0_15px_#00f0ff]">
+                      Popular Selection
+                    </div>
+                  )}
+
+                  <div className="relative z-10">
+                    <div className="flex justify-between items-start mb-6">
+                      <div>
+                        <h3 className="text-xl font-bold text-white group-hover:text-primary transition-colors duration-300">
+                          {plan.name}
+                        </h3>
+                        <p className="text-xs text-gray-400 mt-2 min-h-8">
+                          {plan.description}
+                        </p>
+                      </div>
+                      <div className="p-3 bg-black/40 border border-white/10 rounded-xl group-hover:scale-110 transition-transform">
+                        {getIcon(plan.icon)}
+                      </div>
+                    </div>
+
+                    {/* Price display */}
+                    <div className="mb-8 bg-white/5 border border-white/5 py-4 px-6 rounded-2xl flex items-baseline gap-2">
+                      <span className="text-3xl font-extrabold text-white tracking-tight">
+                        {formatPrice(plan.price_usd)}
+                      </span>
+                      <span className="text-xs text-gray-400 font-mono">USD value</span>
+                    </div>
+
+                    {/* Features list */}
+                    <ul className="space-y-4 mb-8">
+                      {plan.features.map((feature: string, i: number) => (
+                        <li key={i} className="flex items-start text-xs md:text-sm text-gray-300 leading-tight">
+                          <Check size={16} className="text-primary mr-3 shrink-0 mt-0.5" />
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="relative z-10 mt-auto">
+                    <button className={`w-full py-3.5 rounded-xl font-bold transition-all duration-300 ${
+                      plan.highlighted 
+                        ? "bg-white text-black hover:bg-gray-200 hover:shadow-[0_0_15px_rgba(255,255,255,0.4)]" 
+                        : "bg-white/5 text-white border border-white/10 hover:bg-white/10"
+                    }`}>
+                      Acquire Package
+                    </button>
+                  </div>
+
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+        )}
 
         {/* Explanatory Maintenance note */}
         <motion.div

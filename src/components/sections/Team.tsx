@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Cpu, Code2, Globe, ShieldAlert, Award } from "lucide-react";
-import { supabase, mockTeam } from "@/lib/supabase";
+import { mockTeam } from "@/lib/supabase";
 
 const Github = (props: any) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -26,21 +26,21 @@ const Linkedin = (props: any) => (
 
 export default function Team() {
   const [teamMembers, setTeamMembers] = useState<any[]>(mockTeam);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchTeam = async () => {
       try {
-        const { data, error } = await supabase
-          .from("team_members")
-          .select("*")
-          .order("created_at", { ascending: true });
-
-        if (error) throw error;
+        const res = await fetch("/api/team");
+        if (!res.ok) throw new Error("Failed to fetch");
+        const data = await res.json();
         if (data && data.length > 0) {
           setTeamMembers(data);
         }
       } catch (err) {
         console.warn("Using local team members fallback data", err);
+      } finally {
+        setLoading(false);
       }
     };
     fetchTeam();
@@ -104,103 +104,111 @@ export default function Team() {
         </div>
 
         {/* Categories of team members */}
-        <div className="space-y-24">
-          {categories.map((catName) => {
-            const members = teamMembers.filter((m) => m.category === catName);
-            if (members.length === 0) return null;
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="h-96 rounded-3xl glass-panel border border-white/5 animate-pulse" />
+            ))}
+          </div>
+        ) : (
+          <div className="space-y-24">
+            {categories.map((catName) => {
+              const members = teamMembers.filter((m) => m.category === catName);
+              if (members.length === 0) return null;
 
-            return (
-              <div key={catName} className="space-y-10">
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="flex items-center gap-4"
-                >
-                  <h3 className="text-sm font-semibold tracking-widest uppercase text-gray-500 whitespace-nowrap">
-                    {catName}
-                  </h3>
-                  <div className="h-[1px] w-full bg-gradient-to-r from-white/10 to-transparent"></div>
-                </motion.div>
+              return (
+                <div key={catName} className="space-y-10">
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    className="flex items-center gap-4"
+                  >
+                    <h3 className="text-sm font-semibold tracking-widest uppercase text-gray-500 whitespace-nowrap">
+                      {catName}
+                    </h3>
+                    <div className="h-[1px] w-full bg-gradient-to-r from-white/10 to-transparent"></div>
+                  </motion.div>
 
-                <div className={`grid grid-cols-1 ${
-                  members.length === 2 ? "md:grid-cols-2 max-w-4xl mx-auto" : "md:grid-cols-3"
-                } gap-8`}>
-                  {members.map((member, index) => (
-                    <motion.div
-                      key={member.id || member.name}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-50px" }}
-                      transition={{ duration: 0.6, delay: index * 0.1 }}
-                      whileHover={{ y: -8 }}
-                      className="glass-panel rounded-3xl p-6 flex flex-col items-center text-center relative overflow-hidden group cursor-pointer"
-                    >
-                      <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] z-0 pointer-events-none"></div>
-                      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></div>
+                  <div className={`grid grid-cols-1 ${
+                    members.length === 2 ? "md:grid-cols-2 max-w-4xl mx-auto" : "md:grid-cols-3"
+                  } gap-8`}>
+                    {members.map((member, index) => (
+                      <motion.div
+                        key={member.id || member.name}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ duration: 0.6, delay: index * 0.1 }}
+                        whileHover={{ y: -8 }}
+                        className="glass-panel rounded-3xl p-6 flex flex-col items-center text-center relative overflow-hidden group cursor-pointer"
+                      >
+                        <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] z-0 pointer-events-none"></div>
+                        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></div>
 
-                      {/* Team Member Photo Frame */}
-                      <div className="relative w-32 h-32 mb-6 rounded-full p-1 z-10">
-                        <div className="absolute inset-0 rounded-full border border-dashed border-white/20 group-hover:border-primary/40 group-hover:rotate-45 transition-all duration-700"></div>
-                        <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-primary/30 to-secondary/30 opacity-0 group-hover:opacity-100 blur transition-opacity duration-500"></div>
-                        
-                        {/* Avatar Image container */}
-                        <div className="relative w-full h-full rounded-full overflow-hidden border border-white/10 bg-black/40">
-                          <img 
-                            src={member.image_url} 
-                            alt={member.name} 
-                            className="w-full h-full object-cover grayscale contrast-125 brightness-90 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 ease-out" 
-                          />
-                        </div>
-                        
-                        {/* Small Indicator Role Icon */}
-                        <div className="absolute bottom-0 right-0 w-8 h-8 rounded-full glass-panel border border-white/20 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                          {getRoleIcon(member.role)}
-                        </div>
-                      </div>
-
-                      <div className="relative z-10 w-full flex-grow flex flex-col justify-between">
-                        <div>
-                          <h4 className="text-xl font-bold text-white group-hover:text-primary transition-colors duration-300">
-                            {member.name}
-                          </h4>
-                          <p className="text-sm font-semibold tracking-wider uppercase text-secondary/90 mb-4 mt-1">
-                            {member.role}
-                          </p>
-                          <p className="text-sm text-gray-400 leading-relaxed mb-6 px-2">
-                            {member.bio}
-                          </p>
+                        {/* Team Member Photo Frame */}
+                        <div className="relative w-32 h-32 mb-6 rounded-full p-1 z-10">
+                          <div className="absolute inset-0 rounded-full border border-dashed border-white/20 group-hover:border-primary/40 group-hover:rotate-45 transition-all duration-700"></div>
+                          <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-primary/30 to-secondary/30 opacity-0 group-hover:opacity-100 blur transition-opacity duration-500"></div>
+                          
+                          {/* Avatar Image container */}
+                          <div className="relative w-full h-full rounded-full overflow-hidden border border-white/10 bg-black/40">
+                            <img 
+                              src={member.image_url} 
+                              alt={member.name} 
+                              className="w-full h-full object-cover grayscale contrast-125 brightness-90 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 ease-out" 
+                            />
+                          </div>
+                          
+                          {/* Small Indicator Role Icon */}
+                          <div className="absolute bottom-0 right-0 w-8 h-8 rounded-full glass-panel border border-white/20 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                            {getRoleIcon(member.role)}
+                          </div>
                         </div>
 
-                        {/* Social icons */}
-                        <div className="flex justify-center gap-4 pt-4 border-t border-white/5 mt-auto">
-                          <a 
-                            href={member.twitter} 
-                            className="w-8 h-8 rounded-full glass-panel flex items-center justify-center text-gray-400 hover:text-primary hover:scale-110 transition-all"
-                          >
-                            <Twitter size={14} />
-                          </a>
-                          <a 
-                            href={member.linkedin} 
-                            className="w-8 h-8 rounded-full glass-panel flex items-center justify-center text-gray-400 hover:text-primary hover:scale-110 transition-all"
-                          >
-                            <Linkedin size={14} />
-                          </a>
-                          <a 
-                            href={member.github} 
-                            className="w-8 h-8 rounded-full glass-panel flex items-center justify-center text-gray-400 hover:text-primary hover:scale-110 transition-all"
-                          >
-                            <Github size={14} />
-                          </a>
+                        <div className="relative z-10 w-full flex-grow flex flex-col justify-between">
+                          <div>
+                            <h4 className="text-xl font-bold text-white group-hover:text-primary transition-colors duration-300">
+                              {member.name}
+                            </h4>
+                            <p className="text-sm font-semibold tracking-wider uppercase text-secondary/90 mb-4 mt-1">
+                              {member.role}
+                            </p>
+                            <p className="text-sm text-gray-400 leading-relaxed mb-6 px-2">
+                              {member.bio}
+                            </p>
+                          </div>
+
+                          {/* Social icons */}
+                          <div className="flex justify-center gap-4 pt-4 border-t border-white/5 mt-auto">
+                            <a 
+                              href={member.twitter} 
+                              className="w-8 h-8 rounded-full glass-panel flex items-center justify-center text-gray-400 hover:text-primary hover:scale-110 transition-all"
+                            >
+                              <Twitter size={14} />
+                            </a>
+                            <a 
+                              href={member.linkedin} 
+                              className="w-8 h-8 rounded-full glass-panel flex items-center justify-center text-gray-400 hover:text-primary hover:scale-110 transition-all"
+                            >
+                              <Linkedin size={14} />
+                            </a>
+                            <a 
+                              href={member.github} 
+                              className="w-8 h-8 rounded-full glass-panel flex items-center justify-center text-gray-400 hover:text-primary hover:scale-110 transition-all"
+                            >
+                              <Github size={14} />
+                            </a>
+                          </div>
                         </div>
-                      </div>
-                    </motion.div>
-                  ))}
+                      </motion.div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   );
