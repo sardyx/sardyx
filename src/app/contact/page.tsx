@@ -1,19 +1,39 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Mail, MapPin, PhoneCall, Send, Loader2, CheckCircle, AlertCircle } from "lucide-react";
 
 export default function ContactPage() {
+  const [services, setServices] = useState<any[]>([]);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     service: "AI Consulting & Systems Audits",
-    budget: "$5,000 - $15,000 / month",
     message: "",
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
+  // Load services dynamically from database
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const res = await fetch("/api/services");
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.length > 0) {
+            setServices(data);
+            // Default to the first service title
+            setFormData(prev => ({ ...prev, service: data[0].title }));
+          }
+        }
+      } catch (err) {
+        console.warn("Could not load services dynamically", err);
+      }
+    };
+    fetchServices();
+  }, []);
+
   // Read URL search params to pre-populate package selections
-  useState(() => {
+  useEffect(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
       const pkg = params.get("package");
@@ -24,7 +44,7 @@ export default function ContactPage() {
         }));
       }
     }
-  });
+  }, []);
 
   const contactDetails = [
     {
@@ -61,14 +81,19 @@ export default function ContactPage() {
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
-          message: `Service: ${formData.service} | Budget: ${formData.budget} | Message: ${formData.message}`,
+          message: `Service: ${formData.service} | Message: ${formData.message}`,
         }),
       });
 
       if (!res.ok) throw new Error("Failed");
 
       setStatus("success");
-      setFormData({ name: "", email: "", service: "AI Consulting & Systems Audits", budget: "$5,000 - $15,000 / month", message: "" });
+      setFormData({
+        name: "",
+        email: "",
+        service: services.length > 0 ? services[0].title : "AI Consulting & Systems Audits",
+        message: ""
+      });
       setTimeout(() => setStatus("idle"), 6000);
     } catch {
       setStatus("error");
@@ -158,26 +183,19 @@ export default function ContactPage() {
                     className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg focus:outline-none focus:border-primary text-sm text-gray-300 transition-all"
                     disabled={status === "loading"}
                   >
-                    <option>AI Consulting & Systems Audits</option>
-                    <option>Custom AI/ML Software Development</option>
-                    <option>Autonomous Workflow Automation</option>
-                    <option>AI Chatbots & Conversational Support</option>
-                    <option>AI Voice Agents & Call Centers</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block font-mono text-xs uppercase tracking-wider text-gray-400 mb-2">Estimated Monthly Operations Budget</label>
-                  <select
-                    name="budget"
-                    value={formData.budget}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg focus:outline-none focus:border-primary text-sm text-gray-300 transition-all"
-                    disabled={status === "loading"}
-                  >
-                    <option>$5,000 - $15,000 / month</option>
-                    <option>$15,000 - $50,000 / month</option>
-                    <option>$50,000+ / month</option>
+                    {services.length > 0 ? (
+                      services.map((svc) => (
+                        <option key={svc.id}>{svc.title}</option>
+                      ))
+                    ) : (
+                      <>
+                        <option>AI Consulting & Systems Audits</option>
+                        <option>Custom AI/ML Software Development</option>
+                        <option>Autonomous Workflow Automation</option>
+                        <option>AI Chatbots & Conversational Support</option>
+                        <option>AI Voice Agents & Call Centers</option>
+                      </>
+                    )}
                   </select>
                 </div>
 
