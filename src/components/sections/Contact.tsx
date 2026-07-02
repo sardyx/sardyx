@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Send, Loader2, CheckCircle, AlertCircle } from "lucide-react";
-import { supabase } from "@/lib/supabase";
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -15,19 +14,13 @@ export default function Contact() {
     setStatus("loading");
 
     try {
-      // Assuming a table named 'leads' exists in your Supabase project
-      const { error } = await supabase
-        .from("leads")
-        .insert([
-          { 
-            name: formData.name, 
-            email: formData.email, 
-            message: formData.message,
-            created_at: new Date().toISOString()
-          }
-        ]);
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-      if (error) throw error;
+      if (!res.ok) throw new Error("Failed to submit transmission");
       
       setStatus("success");
       setFormData({ name: "", email: "", message: "" });

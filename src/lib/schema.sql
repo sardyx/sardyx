@@ -53,6 +53,35 @@ ALTER TABLE team_members ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow public read team_members" ON team_members FOR SELECT USING (true);
 CREATE POLICY "Allow authenticated manage team_members" ON team_members FOR ALL USING (true);
 
+-- 4. Create services Table
+CREATE TABLE IF NOT EXISTS services (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title TEXT NOT NULL,
+  description TEXT NOT NULL,
+  icon TEXT DEFAULT 'Cpu',
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Enable RLS for services
+ALTER TABLE services ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow public read services" ON services FOR SELECT USING (true);
+CREATE POLICY "Allow authenticated manage services" ON services FOR ALL USING (true);
+
+-- 5. Create leads (Inbox Messages) Table
+CREATE TABLE IF NOT EXISTS leads (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  message TEXT NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Enable RLS for leads
+ALTER TABLE leads ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow public insert leads" ON leads FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow authenticated manage leads" ON leads FOR ALL USING (true);
+
+
 -- Populate initial packages data (updated default prices with +$10k increases)
 INSERT INTO packages (name, description, price_usd, features, highlighted, category, icon) VALUES
 ('Basic Web System', 'Perfect for local startups and small businesses needing a premium digital portal.', 12500, ARRAY['1 Year Premium Hosting Included', 'Free Custom Domain Name', 'Perfect SEO Optimization for Google Ranking', 'High-Performance Frontend & Layout', '3 Months of Free Maintenance'], false, 'web-only', 'Cpu'),
@@ -72,3 +101,10 @@ INSERT INTO team_members (name, role, bio, image_url, category, twitter, linkedi
 ('Mr. Khubaib', 'Back End Developer', 'Deploys ultra-secure, scalable cloud infrastructures, microservices, and databases with near-zero operational latency.', '/team/khubaib.png', 'AI & Engineering', '#', '#', '#'),
 ('Mr. Hussain', 'Growth & Strategy Lead', 'Drives strategic global market acquisition, product positioning, and scaling systems for modern enterprise brands.', '/team/hussain.jpeg', 'Growth & Strategy', '#', '#', '#'),
 ('Mr. Ahmed', 'Brand & Sales Consultant', 'Forges valuable corporate alliances, manages client pipelines, and positions SARDYX AI at the forefront of digital growth.', '/team/ahmed.jpeg', 'Growth & Strategy', '#', '#', '#');
+
+-- Populate initial services data
+INSERT INTO services (title, description, icon) VALUES
+('AI Automation', 'Streamline complex workflows with advanced autonomous agents operating at superhuman speed.', 'Cpu'),
+('AI Chatbots', 'Intelligent conversational interfaces that understand context and resolve issues seamlessly.', 'MessageSquareText'),
+('Web Design', 'Ultra-premium, high-performance UI tailored for futuristic brands with cinematic interactions.', 'LayoutTemplate'),
+('Digital Growth', 'Data-driven SEO strategies, advanced funnels, and analytics mapping to scale your operations.', 'Globe');

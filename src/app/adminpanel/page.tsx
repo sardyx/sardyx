@@ -1,8 +1,35 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Lock, Save, Trash2, CheckCircle, RefreshCw, XCircle, Plus, Edit3, ShieldAlert } from "lucide-react";
+import { Lock, Save, Trash2, CheckCircle, RefreshCw, XCircle, Plus, Edit3, ShieldAlert, Mail, Briefcase, Inbox } from "lucide-react";
 import { mockPackages, mockTestimonials, mockTeam } from "@/lib/supabase";
+
+const staticServicesFallback = [
+  {
+    id: "s1",
+    title: "AI Automation",
+    description: "Streamline complex workflows with advanced autonomous agents operating at superhuman speed.",
+    icon: "Cpu"
+  },
+  {
+    id: "s2",
+    title: "AI Chatbots",
+    description: "Intelligent conversational interfaces that understand context and resolve issues seamlessly.",
+    icon: "MessageSquareText"
+  },
+  {
+    id: "s3",
+    title: "Web Design",
+    description: "Ultra-premium, high-performance UI tailored for futuristic brands with cinematic interactions.",
+    icon: "LayoutTemplate"
+  },
+  {
+    id: "s4",
+    title: "Digital Growth",
+    description: "Data-driven SEO strategies, advanced funnels, and analytics mapping to scale your operations.",
+    icon: "Globe"
+  }
+];
 
 export default function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -14,13 +41,17 @@ export default function AdminDashboard() {
   const [packages, setPackages] = useState<any[]>([]);
   const [testimonials, setTestimonials] = useState<any[]>([]);
   const [team, setTeam] = useState<any[]>([]);
-  const [activeTab, setActiveTab] = useState("pricing"); // "pricing", "feedback", "team"
+  const [services, setServices] = useState<any[]>([]);
+  const [leads, setLeads] = useState<any[]>([]);
+  const [activeTab, setActiveTab] = useState("pricing"); // "pricing", "feedback", "team", "services", "inbox"
   const [loading, setLoading] = useState(false);
 
   // Edit Modes & Modal states
   const [selectedPackage, setSelectedPackage] = useState<any>(null);
   const [selectedTeamMember, setSelectedTeamMember] = useState<any>(null);
+  const [selectedService, setSelectedService] = useState<any>(null);
   const [isTeamModalOpen, setIsTeamModalOpen] = useState(false);
+  const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
 
   useEffect(() => {
     // Check if session has authorized status
@@ -65,6 +96,17 @@ export default function AdminDashboard() {
       const teamRes = await fetch("/api/admin/team");
       const teamData = teamRes.ok ? await teamRes.json() : null;
       setTeam(teamData && teamData.length > 0 ? teamData : mockTeam);
+
+      // 4. Fetch Services
+      const servRes = await fetch("/api/admin/services");
+      const servData = servRes.ok ? await servRes.json() : null;
+      setServices(servData && servData.length > 0 ? servData : staticServicesFallback);
+
+      // 5. Fetch Leads (Inbox Messages)
+      const leadRes = await fetch("/api/admin/leads");
+      const leadData = leadRes.ok ? await leadRes.json() : null;
+      setLeads(leadData || []);
+
     } catch (err) {
       console.error("Error loading administration stats:", err);
     } finally {
@@ -173,6 +215,64 @@ export default function AdminDashboard() {
     }
   };
 
+  // Services Actions
+  const handleSaveService = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      if (selectedService.id && !selectedService.id.startsWith("s")) {
+        // Edit existing service
+        const res = await fetch("/api/admin/services", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(selectedService),
+        });
+        if (!res.ok) throw new Error("Failed to update service");
+      } else {
+        // Insert new service
+        const res = await fetch("/api/admin/services", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(selectedService),
+        });
+        if (!res.ok) throw new Error("Failed to insert service");
+      }
+      setIsServiceModalOpen(false);
+      setSelectedService(null);
+      fetchData();
+    } catch (err) {
+      if (selectedService.id) {
+        setServices(prev => prev.map(s => (s.id === selectedService.id ? selectedService : s)));
+      } else {
+        setServices(prev => [...prev, { ...selectedService, id: Math.random().toString() }]);
+      }
+      setIsServiceModalOpen(false);
+      setSelectedService(null);
+    }
+  };
+
+  const handleDeleteService = async (id: string) => {
+    if (!confirm("Remove this core capability from the SARDYX services list?")) return;
+    try {
+      const res = await fetch(`/api/admin/services?id=${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Failed to delete service");
+      fetchData();
+    } catch (err) {
+      setServices(prev => prev.filter(s => s.id !== id));
+    }
+  };
+
+  // Leads Actions
+  const handleDeleteLead = async (id: string) => {
+    if (!confirm("Remove this contact submission from the inbox?")) return;
+    try {
+      const res = await fetch(`/api/admin/leads?id=${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Failed to delete lead");
+      fetchData();
+    } catch (err) {
+      setLeads(prev => prev.filter(l => l.id !== id));
+    }
+  };
+
   if (!isAuthenticated) {
     return (
       <main className="min-h-screen bg-black text-white flex items-center justify-center pt-24 px-6 relative overflow-hidden">
@@ -262,17 +362,23 @@ export default function AdminDashboard() {
 
         {/* Tab switcher */}
         <div className="flex gap-4 mb-10 overflow-x-auto pb-2">
-          {["pricing", "feedback", "team"].map((tab) => (
+          {[
+            { id: "pricing", label: "Manage Pricing" },
+            { id: "feedback", label: "Manage Feedback" },
+            { id: "team", label: "Manage Team" },
+            { id: "services", label: "Manage Services" },
+            { id: "inbox", label: "Inbox Messages" }
+          ].map((tab) => (
             <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-6 py-3 rounded-xl font-mono text-xs uppercase font-bold border transition-all ${
-                activeTab === tab 
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-6 py-3 rounded-xl font-mono text-xs uppercase font-bold border transition-all whitespace-nowrap ${
+                activeTab === tab.id 
                   ? "bg-primary text-black border-primary" 
                   : "bg-white/5 text-gray-400 border-white/10 hover:text-white"
               }`}
             >
-              Manage {tab}
+              {tab.label}
             </button>
           ))}
         </div>
@@ -567,6 +673,153 @@ export default function AdminDashboard() {
                         </div>
                       </form>
                     </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* SERVICES TAB */}
+            {activeTab === "services" && (
+              <div className="space-y-6">
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-xl font-bold text-white font-mono">Core Capabilities</h2>
+                  <button
+                    onClick={() => {
+                      setSelectedService({
+                        title: "",
+                        description: "",
+                        icon: "Cpu"
+                      });
+                      setIsServiceModalOpen(true);
+                    }}
+                    className="px-4 py-2.5 bg-primary text-black font-semibold rounded-xl hover:bg-white hover:text-black transition-all text-xs font-mono uppercase flex items-center gap-2 shadow-[0_0_12px_rgba(0,240,255,0.2)]"
+                  >
+                    <Plus size={14} /> Add Service
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {services.map((service) => (
+                    <div key={service.id} className="p-6 rounded-2xl glass-panel border border-white/5 bg-white/[0.01] flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-4">
+                          <h4 className="font-bold text-white text-lg flex items-center gap-2">
+                            <span className="px-2.5 py-1.5 rounded-lg bg-white/5 text-primary text-xs font-mono">{service.icon}</span>
+                            {service.title}
+                          </h4>
+                        </div>
+                        <p className="text-sm text-gray-400 mb-6 leading-relaxed">{service.description}</p>
+                      </div>
+                      
+                      <div className="flex gap-4 pt-4 border-t border-white/5">
+                        <button
+                          onClick={() => {
+                            setSelectedService(service);
+                            setIsServiceModalOpen(true);
+                          }}
+                          className="px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-colors text-2xs font-mono uppercase font-bold"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDeleteService(service.id)}
+                          className="px-3 py-1.5 rounded-lg border border-red-500/20 bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-colors text-2xs font-mono uppercase font-bold"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Service Modal */}
+                {isServiceModalOpen && selectedService && (
+                  <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setIsServiceModalOpen(false)} />
+                    <div className="relative w-full max-w-lg glass-panel p-8 rounded-3xl border border-white/10 bg-black/90 z-10">
+                      <h3 className="text-xl font-bold text-white mb-6 font-mono">
+                        {selectedService.id ? "Edit Capability" : "Add Capability"}
+                      </h3>
+                      <form onSubmit={handleSaveService} className="space-y-4">
+                        <div>
+                          <label className="block text-xs font-mono text-gray-400 mb-2">Service Title</label>
+                          <input 
+                            type="text" 
+                            value={selectedService.title}
+                            onChange={(e) => setSelectedService({ ...selectedService, title: e.target.value })}
+                            className="w-full px-4 py-3 bg-black border border-white/10 rounded-xl focus:outline-none"
+                            required 
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-mono text-gray-400 mb-2">Icon Type</label>
+                          <select 
+                            value={selectedService.icon}
+                            onChange={(e) => setSelectedService({ ...selectedService, icon: e.target.value })}
+                            className="w-full px-4 py-3 bg-black border border-white/10 rounded-xl focus:outline-none text-gray-300"
+                          >
+                            <option>Cpu</option>
+                            <option>MessageSquareText</option>
+                            <option>LayoutTemplate</option>
+                            <option>Globe</option>
+                            <option>Sparkles</option>
+                            <option>Code2</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="block text-xs font-mono text-gray-400 mb-2">Description</label>
+                          <textarea 
+                            rows={3}
+                            value={selectedService.description}
+                            onChange={(e) => setSelectedService({ ...selectedService, description: e.target.value })}
+                            className="w-full px-4 py-3 bg-black border border-white/10 rounded-xl focus:outline-none resize-none"
+                            required 
+                          />
+                        </div>
+
+                        <div className="pt-4 flex gap-4">
+                          <button type="submit" className="px-6 py-3 bg-primary text-black font-semibold rounded-xl text-xs font-mono uppercase">
+                            Save Capability
+                          </button>
+                          <button type="button" onClick={() => setIsServiceModalOpen(false)} className="px-6 py-3 bg-white/5 border border-white/10 text-gray-400 rounded-xl text-xs font-mono uppercase">
+                            Cancel
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* INBOX TAB */}
+            {activeTab === "inbox" && (
+              <div className="space-y-4">
+                <h2 className="text-xl font-bold text-white mb-6 font-mono flex items-center gap-2">
+                  <Inbox className="text-primary animate-pulse" size={20} /> Client Transmission Feed
+                </h2>
+                {leads.length === 0 ? (
+                  <p className="text-gray-500 font-mono text-sm">No transmissions in the inbox yet.</p>
+                ) : (
+                  <div className="space-y-4">
+                    {leads.map((lead) => (
+                      <div key={lead.id} className="p-6 rounded-2xl glass-panel border border-white/5 bg-white/[0.01] flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:border-primary/20 transition-all duration-300">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-3">
+                            <h4 className="font-bold text-white">{lead.name}</h4>
+                            <span className="text-3xs font-mono text-gray-500">{new Date(lead.created_at).toLocaleString()}</span>
+                          </div>
+                          <p className="text-xs font-mono text-primary">{lead.email}</p>
+                          <p className="text-gray-300 text-sm mt-2 leading-relaxed font-sans">"{lead.message}"</p>
+                        </div>
+                        <button
+                          onClick={() => handleDeleteLead(lead.id)}
+                          className="px-4 py-2 rounded-lg bg-red-500/10 text-red-500 hover:bg-red-500/20 border border-red-500/25 text-2xs font-mono uppercase font-bold flex items-center gap-1.5 transition-colors self-end md:self-center"
+                        >
+                          <Trash2 size={12} /> Clear Message
+                        </button>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
