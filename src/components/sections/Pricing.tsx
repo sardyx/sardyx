@@ -247,11 +247,16 @@ export default function Pricing() {
                   </div>
 
                   <div className="relative z-10 mt-auto">
-                    <button className={`w-full py-3.5 rounded-xl font-bold transition-all duration-300 ${
-                      plan.highlighted 
-                        ? "bg-white text-black hover:bg-gray-200 hover:shadow-[0_0_15px_rgba(255,255,255,0.4)]" 
-                        : "bg-white/5 text-white border border-white/10 hover:bg-white/10"
-                    }`}>
+                    <button 
+                      onClick={() => {
+                        window.location.href = `/contact?package=${encodeURIComponent(plan.name)}`;
+                      }}
+                      className={`w-full py-3.5 rounded-xl font-bold transition-all duration-300 ${
+                        plan.highlighted 
+                          ? "bg-white text-black hover:bg-gray-200 hover:shadow-[0_0_15px_rgba(255,255,255,0.4)]" 
+                          : "bg-white/5 text-white border border-white/10 hover:bg-white/10"
+                      }`}
+                    >
                       Acquire Package
                     </button>
                   </div>

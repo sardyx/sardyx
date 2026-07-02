@@ -12,6 +12,20 @@ export default function ContactPage() {
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
+  // Read URL search params to pre-populate package selections
+  useState(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const pkg = params.get("package");
+      if (pkg) {
+        setFormData(prev => ({
+          ...prev,
+          message: `I am interested in acquiring the "${pkg}" package. Let's discuss onboarding.`
+        }));
+      }
+    }
+  });
+
   const contactDetails = [
     {
       title: "Global Inquiries",
