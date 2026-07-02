@@ -39,34 +39,36 @@ export default function Footer() {
           </div>
           
           <div>
-            <h3 className="font-semibold text-white mb-6">Services</h3>
+            <h3 className="font-semibold text-white mb-6 font-mono text-sm uppercase tracking-wider">Services</h3>
             <ul className="space-y-4">
-              <li><Link href="#" className="text-gray-400 hover:text-primary transition-colors">AI Automation</Link></li>
-              <li><Link href="#" className="text-gray-400 hover:text-primary transition-colors">Chatbot Development</Link></li>
-              <li><Link href="#" className="text-gray-400 hover:text-primary transition-colors">Web Development</Link></li>
-              <li><Link href="#" className="text-gray-400 hover:text-primary transition-colors">Brand Identity</Link></li>
+              <li><Link href="/services/ai-consulting" className="text-gray-400 hover:text-primary transition-colors text-sm">AI Consulting</Link></li>
+              <li><Link href="/services/ai-development" className="text-gray-400 hover:text-primary transition-colors text-sm">Custom AI Development</Link></li>
+              <li><Link href="/services/ai-workflow-automation" className="text-gray-400 hover:text-primary transition-colors text-sm">Workflow Automation</Link></li>
+              <li><Link href="/services/ai-chatbot-development" className="text-gray-400 hover:text-primary transition-colors text-sm">AI Chatbot Systems</Link></li>
+              <li><Link href="/services/ai-voice-agent-development" className="text-gray-400 hover:text-primary transition-colors text-sm">AI Voice Agents</Link></li>
             </ul>
           </div>
           
           <div>
-            <h3 className="font-semibold text-white mb-6">Company</h3>
+            <h3 className="font-semibold text-white mb-6 font-mono text-sm uppercase tracking-wider">Company</h3>
             <ul className="space-y-4">
-              <li><Link href="#" className="text-gray-400 hover:text-primary transition-colors">About Us</Link></li>
-              <li><Link href="#team" className="text-gray-400 hover:text-primary transition-colors">Our Team</Link></li>
-              <li><Link href="#portfolio" className="text-gray-400 hover:text-primary transition-colors">Portfolio</Link></li>
-              <li><Link href="#pricing" className="text-gray-400 hover:text-primary transition-colors">Pricing</Link></li>
-              <li><Link href="#contact" className="text-gray-400 hover:text-primary transition-colors">Contact</Link></li>
+              <li><Link href="/about" className="text-gray-400 hover:text-primary transition-colors text-sm">About Us</Link></li>
+              <li><Link href="/#team" className="text-gray-400 hover:text-primary transition-colors text-sm">Our Team</Link></li>
+              <li><Link href="/#portfolio" className="text-gray-400 hover:text-primary transition-colors text-sm">Portfolio</Link></li>
+              <li><Link href="/#pricing" className="text-gray-400 hover:text-primary transition-colors text-sm">Pricing</Link></li>
+              <li><Link href="/contact" className="text-gray-400 hover:text-primary transition-colors text-sm">Contact Us</Link></li>
             </ul>
           </div>
         </div>
         
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-500 text-sm">
-            &copy; {new Date().getFullYear()} SARDYX INTELLIGENCE. All rights reserved.
+            &copy; {new Date().getFullYear()} SARDYX AI. All rights reserved.
           </p>
           <div className="flex space-x-6 text-sm">
-            <Link href="#" className="text-gray-500 hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="#" className="text-gray-500 hover:text-white transition-colors">Terms of Service</Link>
+            <Link href="/privacy" className="text-gray-500 hover:text-white transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="text-gray-500 hover:text-white transition-colors">Terms & Conditions</Link>
+            <Link href="/cookies" className="text-gray-500 hover:text-white transition-colors">Cookie Policy</Link>
           </div>
         </div>
       </div>

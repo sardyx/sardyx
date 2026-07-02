@@ -1,151 +1,76 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, Cpu, Sparkles, MessageSquareCode, ShieldCheck, HelpCircle } from "lucide-react";
+import { supabase, mockPackages } from "@/lib/supabase";
 
-// Currencies definition with symbols and rates relative to PKR
+// Currency definitions with symbols and rates relative to USD (USD is default base)
 const currencies = [
-  { code: "PKR", symbol: "₨", name: "PKR", rate: 1 },
-  { code: "USD", symbol: "$", name: "USD", rate: 1 / 278 },
-  { code: "GBP", symbol: "£", name: "GBP", rate: 1 / 353 },
-  { code: "EUR", symbol: "€", name: "EUR", rate: 1 / 297 },
-  { code: "AED", symbol: "AED ", name: "AED", rate: 1 / 75.7 }
-];
-
-const webPlans = [
-  {
-    name: "Basic Web System",
-    description: "Perfect for local startups and small businesses needing a premium digital portal.",
-    basePricePKR: 50000,
-    features: [
-      "1 Year Premium Hosting Included",
-      "Free Custom Domain Name (.com / .pk)",
-      "Perfect SEO Optimization for Google Ranking",
-      "High-Performance Frontend & Layout",
-      "3 Months of Free Maintenance",
-      "25k PKR/month maintenance after trial"
-    ],
-    highlighted: false,
-    icon: <Cpu size={24} className="text-gray-400 group-hover:text-primary transition-colors" />
-  },
-  {
-    name: "Professional Web System",
-    description: "Tailored for growing enterprises aiming for solid industry authority.",
-    basePricePKR: 80000,
-    features: [
-      "2 Years Premium Hosting Included",
-      "Free Custom Domain Name",
-      "Perfect SEO Optimization & Ranking Integration",
-      "Immersive Futuristic UI/UX & Custom Animations",
-      "3 Months of Free Maintenance",
-      "25k PKR/month maintenance after trial"
-    ],
-    highlighted: true,
-    icon: <Sparkles size={24} className="text-primary drop-shadow-[0_0_8px_rgba(0,240,255,0.6)]" />
-  },
-  {
-    name: "Enterprise Web System",
-    description: "High-performance digital ecosystem engineered for maximum scale.",
-    basePricePKR: 120000,
-    features: [
-      "4 Years Premium Hosting Included",
-      "Free Custom Domain Name",
-      "Aggressive SEO Google Ranking Audit",
-      "Full Custom Framer-Motion Interactions & Panel Animations",
-      "3 Months of Free Maintenance",
-      "25k PKR/month maintenance after trial"
-    ],
-    highlighted: false,
-    icon: <MessageSquareCode size={24} className="text-gray-400 group-hover:text-secondary transition-colors" />
-  },
-  {
-    name: "Unified Corporate System",
-    description: "Unified multi-branch network solution engineered for massive commercial operations.",
-    basePricePKR: 500000,
-    features: [
-      "4 Years Enterprise Hosting Included",
-      "Free Custom Domains for 10+ branches",
-      "Unified Administration Network Panel",
-      "Enterprise Grade Database Clustering",
-      "5 Months of Free Maintenance",
-      "25k PKR/month maintenance after trial"
-    ],
-    highlighted: false,
-    icon: <ShieldCheck size={24} className="text-secondary drop-shadow-[0_0_8px_rgba(138,43,226,0.6)]" />
-  }
-];
-
-const hybridPlans = [
-  {
-    name: "Growth Starter Bundle",
-    description: "Kickstart your traffic with high-intent social ads coupled with a premium SEO website.",
-    basePricePKR: 100000,
-    features: [
-      "Professional Web System Included",
-      "1 Year Hosting & Custom Domain Included",
-      "1 Month Meta Ads Campaign Management (FB/IG)",
-      "High-Converting Ad Copy & Creative Design",
-      "3 Months Free Web Maintenance",
-      "25k PKR/month maintenance after trial"
-    ],
-    highlighted: false,
-    icon: <Cpu size={24} className="text-gray-400 group-hover:text-primary transition-colors" />
-  },
-  {
-    name: "Cinematic Scale Bundle",
-    description: "Establish elite brand authority with a custom animated 2D marketing video.",
-    basePricePKR: 150000,
-    features: [
-      "Professional Web System Included",
-      "2 Years Hosting & Custom Domain Included",
-      "Premium 2D Explainer Video (Voiceover, Animation, Script)",
-      "Storyboard & Custom Graphics Suite",
-      "3 Months Free Web Maintenance",
-      "25k PKR/month maintenance after trial"
-    ],
-    highlighted: true,
-    icon: <Sparkles size={24} className="text-primary drop-shadow-[0_0_8px_rgba(0,240,255,0.6)]" />
-  },
-  {
-    name: "Ultimate Engine Bundle",
-    description: "The complete digital scale arsenal combining advanced engineering, video, and ads.",
-    basePricePKR: 220000,
-    features: [
-      "Enterprise Web System Included",
-      "4 Years Hosting & Custom Domain Included",
-      "Premium 2D Explainer Video (Storyboard/Script/Voiceover)",
-      "1 Month Meta Ads Management & Funnel Strategy",
-      "3 Months Free Web Maintenance",
-      "25k PKR/month maintenance after trial"
-    ],
-    highlighted: false,
-    icon: <MessageSquareCode size={24} className="text-secondary drop-shadow-[0_0_8px_rgba(138,43,226,0.6)]" />
-  }
+  { code: "USD", symbol: "$", name: "USD", rate: 1 },
+  { code: "PKR", symbol: "₨", name: "PKR", rate: 278 },
+  { code: "GBP", symbol: "£", name: "GBP", rate: 0.79 },
+  { code: "EUR", symbol: "€", name: "EUR", rate: 0.92 },
+  { code: "AED", symbol: "AED ", name: "AED", rate: 3.67 }
 ];
 
 export default function Pricing() {
-  const [activeCurrency, setActiveCurrency] = useState(currencies[0]);
+  const [packages, setPackages] = useState<any[]>(mockPackages);
+  const [activeCurrency, setActiveCurrency] = useState(currencies[0]); // USD default
   const [activeTab, setActiveTab] = useState("web-only"); // "web-only" or "hybrid"
 
-  const formatPrice = (pkrAmount: number) => {
-    const converted = pkrAmount * activeCurrency.rate;
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("packages")
+          .select("*")
+          .order("price_usd", { ascending: true });
+
+        if (error) throw error;
+        if (data && data.length > 0) {
+          setPackages(data);
+        }
+      } catch (err) {
+        console.warn("Using local packages data fallback", err);
+      }
+    };
+    fetchPackages();
+  }, []);
+
+  const formatPrice = (usdAmount: number) => {
+    const converted = usdAmount * activeCurrency.rate;
     
     // Formatting for PKR specifically
     if (activeCurrency.code === "PKR") {
-      if (pkrAmount >= 100000) {
-        return `₨ ${pkrAmount / 100000} Lakh`;
+      if (converted >= 100000) {
+        return `₨ ${(converted / 100000).toFixed(1)} Lakh`;
       }
-      return `₨ ${pkrAmount / 1000}k`;
+      return `₨ ${(converted / 1000).toFixed(0)}k`;
     }
     
-    // Formatting for foreign currencies
+    // Formatting for other currencies
     if (converted >= 1000) {
       return `${activeCurrency.symbol}${Math.round(converted).toLocaleString()}`;
     }
     return `${activeCurrency.symbol}${Math.round(converted)}`;
   };
 
-  const activePlans = activeTab === "web-only" ? webPlans : hybridPlans;
+  const getIcon = (iconName: string) => {
+    switch (iconName) {
+      case "Cpu":
+        return <Cpu size={24} className="text-gray-400 group-hover:text-primary transition-colors" />;
+      case "Sparkles":
+        return <Sparkles size={24} className="text-primary drop-shadow-[0_0_8px_rgba(0,240,255,0.6)]" />;
+      case "MessageSquareCode":
+        return <MessageSquareCode size={24} className="text-gray-400 group-hover:text-secondary transition-colors" />;
+      case "ShieldCheck":
+        return <ShieldCheck size={24} className="text-secondary drop-shadow-[0_0_8px_rgba(138,43,226,0.6)]" />;
+      default:
+        return <Cpu size={24} />;
+    }
+  };
+
+  const activePlans = packages.filter(p => p.category === activeTab);
 
   return (
     <section id="pricing" className="py-32 relative overflow-hidden bg-black/40">
@@ -171,7 +96,7 @@ export default function Pricing() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold mb-6 tracking-tight"
+            className="text-4xl md:text-5xl font-black mb-6 tracking-tight"
           >
             Futuristic Pricing <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary glow-text">Matrix</span>
           </motion.h2>
@@ -181,9 +106,9 @@ export default function Pricing() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-gray-400 max-w-2xl mx-auto text-lg"
+            className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed"
           >
-            Select your preferred currency and choose between standalone web setups or hybrid scaling models.
+            Select your preferred currency. All packages feature automated agent scaling and premium security compliance structures.
           </motion.p>
         </div>
 
@@ -192,7 +117,7 @@ export default function Pricing() {
           
           {/* Currency Pill Selector */}
           <div className="flex flex-col items-center gap-3">
-            <span className="text-xs uppercase tracking-widest text-gray-500 font-semibold">Select Currency</span>
+            <span className="text-xs uppercase tracking-widest text-gray-500 font-semibold font-mono">Select Currency</span>
             <div className="inline-flex p-1.5 rounded-full glass-panel border border-white/5 relative">
               {currencies.map((curr) => {
                 const isActive = activeCurrency.code === curr.code;
@@ -256,12 +181,12 @@ export default function Pricing() {
 
         {/* PRICING GRID */}
         <div className={`grid grid-cols-1 ${
-          activePlans.length === 4 ? "lg:grid-cols-2 max-w-5xl" : "md:grid-cols-3 max-w-6xl"
+          activePlans.length >= 4 ? "lg:grid-cols-2 max-w-5xl" : "md:grid-cols-3 max-w-6xl"
         } gap-8 mx-auto items-stretch`}>
           <AnimatePresence mode="wait">
             {activePlans.map((plan, index) => (
               <motion.div
-                key={plan.name}
+                key={plan.id || plan.name}
                 initial={{ opacity: 0, scale: 0.95, y: 15 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: -15 }}
@@ -272,7 +197,6 @@ export default function Pricing() {
                     : "border-white/10 hover:border-white/20"
                 }`}
               >
-                {/* Scanline background for futuristic texture */}
                 <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] z-0 pointer-events-none rounded-3xl"></div>
 
                 {plan.highlighted && (
@@ -292,21 +216,21 @@ export default function Pricing() {
                       </p>
                     </div>
                     <div className="p-3 bg-black/40 border border-white/10 rounded-xl group-hover:scale-110 transition-transform">
-                      {plan.icon}
+                      {getIcon(plan.icon)}
                     </div>
                   </div>
 
                   {/* Price display */}
                   <div className="mb-8 bg-white/5 border border-white/5 py-4 px-6 rounded-2xl flex items-baseline gap-2">
                     <span className="text-3xl font-extrabold text-white tracking-tight">
-                      {formatPrice(plan.basePricePKR)}
+                      {formatPrice(plan.price_usd)}
                     </span>
-                    <span className="text-xs text-gray-400">base value</span>
+                    <span className="text-xs text-gray-400 font-mono">USD value</span>
                   </div>
 
                   {/* Features list */}
                   <ul className="space-y-4 mb-8">
-                    {plan.features.map((feature, i) => (
+                    {plan.features.map((feature: string, i: number) => (
                       <li key={i} className="flex items-start text-xs md:text-sm text-gray-300 leading-tight">
                         <Check size={16} className="text-primary mr-3 shrink-0 mt-0.5" />
                         <span>{feature}</span>
@@ -339,7 +263,7 @@ export default function Pricing() {
           className="max-w-xl mx-auto mt-16 text-center text-xs text-gray-500 border-t border-white/5 pt-6 flex items-center justify-center gap-2"
         >
           <HelpCircle size={14} className="text-primary shrink-0" />
-          <span>After the free trial support period, maintenance costs default to ₨ 25,000 / month (converted value applies).</span>
+          <span>After the free trial support period, maintenance costs default to $100 / month (converted value applies).</span>
         </motion.div>
 
       </div>
