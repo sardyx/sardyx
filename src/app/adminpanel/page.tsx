@@ -67,11 +67,15 @@ export default function AdminDashboard() {
   const [isTeamModalOpen, setIsTeamModalOpen] = useState(false);
 
   useEffect(() => {
-    const authStatus = localStorage.getItem("sardyx_auth");
+    // v2 = password updated to smafSARDYXAI3072009@ — busts old sessions
+    const authStatus = localStorage.getItem("sardyx_auth_v2");
     if (authStatus === "authorized") {
       setIsAuthenticated(true);
       loadSavedData();
       fetchData();
+    } else {
+      // Clear any stale v1 session
+      localStorage.removeItem("sardyx_auth");
     }
   }, []);
 
@@ -85,7 +89,7 @@ export default function AdminDashboard() {
     const cleanUser = username.trim().toLowerCase();
     if ((cleanUser === "admin" || cleanUser === "sardyxadmin") && password === "smafSARDYXAI3072009@") {
       setIsAuthenticated(true);
-      localStorage.setItem("sardyx_auth", "authorized");
+      localStorage.setItem("sardyx_auth_v2", "authorized");
       setLoginError("");
       loadSavedData();
       fetchData();
@@ -97,6 +101,7 @@ export default function AdminDashboard() {
 
   const handleLogout = () => {
     setIsAuthenticated(false);
+    localStorage.removeItem("sardyx_auth_v2");
     localStorage.removeItem("sardyx_auth");
   };
 
