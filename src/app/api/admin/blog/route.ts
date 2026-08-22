@@ -9,13 +9,19 @@ export async function GET() {
     .order("created_at", { ascending: false });
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json(data);
+  return NextResponse.json(data ?? []);
 }
 
 // POST create a new blog post
 export async function POST(req: Request) {
   const body = await req.json();
   const { id, ...insertData } = body;
+
+  // Ensure slug exists
+  if (!insertData.slug && insertData.title) {
+    insertData.slug = insertData.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+  }
+
   const { error } = await supabaseAdmin.from("blog_posts").insert([insertData]);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ success: true });
@@ -26,6 +32,8 @@ export async function PATCH(req: Request) {
   const body = await req.json();
   const { id, ...updates } = body;
   if (!id) return NextResponse.json({ error: "Missing id" }, { status: 400 });
+
+  updates.updated_at = new Date().toISOString();
   const { error } = await supabaseAdmin.from("blog_posts").update(updates).eq("id", id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ success: true });
@@ -36,6 +44,7 @@ export async function DELETE(req: Request) {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
   if (!id) return NextResponse.json({ error: "Missing id" }, { status: 400 });
+
   const { error } = await supabaseAdmin.from("blog_posts").delete().eq("id", id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ success: true });

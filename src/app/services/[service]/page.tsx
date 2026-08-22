@@ -1,12 +1,15 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight, Bot, Cpu, LineChart, MessageSquare, PhoneCall } from "lucide-react";
+import { ArrowRight, Bot, Cpu, LineChart, MessageSquare, PhoneCall, ShieldCheck, Zap, Layers, Sparkles, CheckCircle2, MessageCircle } from "lucide-react";
 
 interface ServiceDetail {
   title: string;
   subtitle: string;
+  category: string;
   description: string;
+  priceStartingUsd: number;
+  priceStartingPkr: number;
   benefits: string[];
   features: string[];
   process: string[];
@@ -16,177 +19,453 @@ interface ServiceDetail {
 }
 
 const servicesData: Record<string, ServiceDetail> = {
-  "ai-consulting": {
-    title: "AI Strategy & Enterprise Readiness Consulting",
-    subtitle: "Navigate the complexity of enterprise intelligence, identify high-ROI automation vectors, and build custom AI roadmaps.",
-    description: "SARDYX AI acts as your dedicated architectural partner. We run comprehensive systems audits, estimate ROI models for custom integrations, and architect secure, compliant private AI infrastructures.",
+  "professional-websites": {
+    title: "Professional Website Development & Engineering",
+    subtitle: "Ultra-premium, futuristic Next.js web applications engineered for 100/100 Google Core Web Vitals, sub-second latency, and #1 search ranking.",
+    category: "Web & Enterprise Software",
+    priceStartingUsd: 399,
+    priceStartingPkr: 110000,
+    description: "We design and build bespoke web portals that position your brand as a market leader. From glassmorphic luxury aesthetics to robust backend architecture, our web systems convert cold traffic into high-value clients effortlessly.",
     benefits: [
-      "Mitigate security and data compliance risks before deployment",
-      "Identify automation bottlenecks saving over 10,000+ developer/agent hours",
-      "Ensure strategic alignment between proprietary corporate data and modern LLMs",
+      "Sub-second global load times with Next.js 16 Server-Side Rendering",
+      "Dominant organic Google search ranking with strict JSON-LD schema",
+      "Fluid 60FPS Framer Motion animations & responsive glassmorphism",
+      "Direct integration with WhatsApp, CRM pipelines, and payment processors"
     ],
     features: [
-      "Systems Audit & AI Feasibility Assessment",
-      "Enterprise LLM Selection & Fine-Tuning Strategy",
-      "AI Governance, Data Sovereignty & Security Consulting",
-      "ROI Modeling and ROI Estimation Reports",
+      "Custom Next.js & TypeScript Architecture",
+      "Mobile-First Responsive Layout & High-Conversion Copy",
+      "Full On-Page Technical SEO & XML Sitemaps",
+      "Integrated Contact Portals & Lead Capture Funnels",
+      "Free 1 Year High-Speed Cloud Hosting & SSL Certificate"
     ],
     process: [
-      "1. Discovery & Data Auditing: Analyzing existing workflows, security layers, and data silos.",
-      "2. Feasibility Mapping: Determining what can be automated with off-the-shelf LLMs vs. custom training.",
-      "3. Strategic Blueprint: Designing the architecture, timeline, resource allocation, and privacy controls.",
-      "4. Final Handover & Audit Report: A comprehensive action plan ready for integration.",
+      "1. Architectural Blueprint: Analyzing your vertical, target personas, and conversion hierarchy.",
+      "2. Visual & UI Design: Crafting immersive dark/glassmorphic interface prototypes.",
+      "3. Full-Stack Engineering: Developing with Next.js 16, TailwindCSS, and Framer Motion.",
+      "4. SEO & Deployment: Audit for 100/100 Web Vitals, schema injection, and DNS launch."
     ],
-    techStack: ["OpenAI Enterprise", "Anthropic Claude 3.5 Sonnet", "Google Gemini Pro", "Llama 3 (Meta)", "Pinecone", "LangChain"],
-    industries: ["Finance & FinTech", "Healthcare & Life Sciences", "B2B SaaS & Tech", "Logistics & Supply Chain"],
+    techStack: ["Next.js 16", "React 19", "TypeScript", "TailwindCSS", "Framer Motion", "Vercel", "Supabase"],
+    industries: ["Corporate & Enterprise", "Law & Financial Firms", "E-Commerce & Retail", "Healthcare & Clinics", "Automotive & Manufacturing"],
     faqs: [
       {
-        q: "What is an AI Feasibility Assessment?",
-        a: "It's an in-depth audit of your company's processes and data models to identify where artificial intelligence can deliver direct, measurable efficiency gains.",
+        q: "Why choose Next.js over standard WordPress?",
+        a: "Next.js delivers sub-second page loads, impenetrable security without plugin vulnerabilities, custom animations, and superior SEO rankings that Google rewards heavily."
       },
       {
-        q: "How do you ensure enterprise data privacy?",
-        a: "We architect air-gapped VPCs (Virtual Private Clouds) and deploy private models that never train on or leak proprietary corporate data.",
-      },
-    ],
+        q: "Will my website rank #1 on Google for my local area?",
+        a: "Yes. We inject hyper-targeted structured schema, local business metadata, semantic headings, and blazing-fast performance required to outrank competitors."
+      }
+    ]
   },
-  "ai-development": {
-    title: "Custom AI & Machine Learning Software Development",
-    subtitle: "Engineered-to-order machine learning models, custom neural networks, and agentic reasoning pipelines.",
-    description: "We design, build, and deploy production-grade software powered by custom-trained models, Retrieval-Augmented Generation (RAG), and proprietary agent loops that fit seamlessly into your core operations.",
+
+  "pos-softwares": {
+    title: "Custom POS Software Development",
+    subtitle: "Cloud-connected, high-speed Point of Sale systems with barcode scanning, automated billing, inventory control, and multi-branch sync.",
+    category: "Retail & Enterprise Systems",
+    priceStartingUsd: 599,
+    priceStartingPkr: 165000,
+    description: "Streamline your retail, salon, restaurant, or wholesale operations with lightning-fast POS software. Features instantaneous thermal invoice printing, offline resilience, and centralized cloud dashboard management.",
     benefits: [
-      "Build proprietary IP that increases enterprise valuation",
-      "Unlock sub-second response times and reduced API inference costs",
-      "Achieve near-perfect accuracy with custom vector embedding models",
+      "Process customer checkouts in under 3 seconds with barcode integration",
+      "Track live stock levels and receive automatic low-inventory alerts",
+      "Operate seamlessly even during internet outages with offline data caching",
+      "Manage multiple branches from a single unified mobile or desktop dashboard"
     ],
     features: [
-      "Retrieval-Augmented Generation (RAG) Architecture",
-      "Custom Fine-Tuning of Open-Source Models (Llama, Mistral)",
-      "Neural Network Design & Fine-Tuning",
-      "API Orchestration and Edge AI Deployment",
+      "Barcode Scanner & Thermal Receipt Printer Integration",
+      "Multi-Register & Multi-Branch Real-Time Cloud Sync",
+      "Daily Sales, Expenses, and Profit/Loss Analytics",
+      "Customer Loyalty, Discount Codes, and Credit Ledgers",
+      "Staff Role Permissions & Cash Drawer Audit Logs"
     ],
     process: [
-      "1. Architecture Design: Prototyping data ingestion, vector indexing, and fallback layers.",
-      "2. Model Selection & Fine-Tuning: Training models on proprietary datasets to match domain jargon.",
-      "3. System Integration: Embedding the ML pipelines into existing web/cloud applications.",
-      "4. Testing & Guardrails: Validating model outputs, prompt injection defenses, and compliance.",
+      "1. Workflow Assessment: Mapping your counter checkout flow, hardware, and inventory logic.",
+      "2. Database & POS Architecture: Building fast local storage with cloud synchronization.",
+      "3. Hardware Testing: Validating thermal printers, barcode scanners, and touchscreens.",
+      "4. Staff Onboarding & Launch: Hands-on training and zero-downtime deployment."
     ],
-    techStack: ["Python", "PyTorch", "Hugging Face", "Vercel AI SDK", "Qdrant", "PostgreSQL PGVector", "AWS / GCP"],
-    industries: ["Enterprise Software", "E-commerce & Retail", "Cybersecurity", "Legal Tech"],
+    techStack: ["React", "Electron", "Node.js", "PostgreSQL", "SQLite Offline", "TailwindCSS", "Cloudflare"],
+    industries: ["Salons & Spas (e.g. NSK Enterprise)", "Retail & Supermarkets", "Restaurants & Cafes", "Pharmacies & Medical Stores", "Automotive Spare Parts"],
     faqs: [
       {
-        q: "How long does a custom AI software project take?",
-        a: "Typically, a functional MVP is ready in 4 to 6 weeks, with full production scaling taking 8 to 12 weeks.",
+        q: "Does the POS work without an active internet connection?",
+        a: "Yes. Our POS architecture stores transactions locally in offline mode and automatically synchronizes to the cloud database the moment connection is restored."
       },
       {
-        q: "What is RAG and why does my business need it?",
-        a: "RAG stands for Retrieval-Augmented Generation. It allows AI models to search and query your company's live documents, database entries, and policies in real-time, eliminating hallucinations.",
-      },
-    ],
+        q: "Can I connect my existing thermal printer and barcode scanner?",
+        a: "Absolutely. We support all standard USB, Bluetooth, and LAN thermal receipt printers and barcode hardware."
+      }
+    ]
   },
-  "ai-workflow-automation": {
-    title: "Autonomous AI Workflow & Operations Automation",
-    subtitle: "Eliminate manual data entry, optimize complex API middleware pipelines, and run autonomous business operations.",
-    description: "Transform your back-office into a self-operating engine. We build autonomous agent workflows that connect CRMs, ERPs, emails, and internal communication nodes to automate end-to-end operational systems.",
+
+  "sales-management-systems": {
+    title: "Enterprise Sales Management & CRM Systems",
+    subtitle: "End-to-end sales pipelines, real-time revenue analytics, staff commission ledgers, and automated customer retention engines.",
+    category: "Enterprise Software",
+    priceStartingUsd: 799,
+    priceStartingPkr: 220000,
+    description: "Empower your executive team with deep operational visibility. Our custom sales management platforms track deal stages, calculate automated commissions, audit operational expenses, and forecast revenue trajectories.",
     benefits: [
-      "Reduce process cycle times by 80% to 90%",
-      "Eliminate human error in high-volume bookkeeping, reporting, and data entry",
-      "Scale operations infinitely without proportional head-count increases",
+      "Gain 100% transparency into daily, monthly, and annual sales revenue",
+      "Automate sales team commission tracking and performance leaderboards",
+      "Retain high-value customers through automated follow-up triggers",
+      "Eliminate spreadsheet errors with centralized database records"
     ],
     features: [
-      "CRM & ERP Data Ingestion Pipelines",
-      "Auto-Responding Email & Ticket Triaging Systems",
-      "Multi-Agent Workflow Orchestration",
-      "Legacy Software API Wrapping and Custom RPA Hooks",
+      "Real-Time Sales Pipeline & Lead Kanban Boards",
+      "Automated Revenue, Expense & Net Profit Ledger",
+      "Staff Commission Engine & Attendance Synchronization",
+      "Customer Lifetime Value (LTV) & Churn Forecasting",
+      "One-Click PDF Invoice Generation & Export to Excel"
     ],
     process: [
-      "1. Operational Audit: Documenting step-by-step logic for your manual processes.",
-      "2. Workflow Mapping: Building workflow graphs with deterministic logic and AI judgment branches.",
-      "3. Connector Engineering: Writing custom middleware connectors between platforms (Salesforce, HubSpot, SAP).",
-      "4. Performance Monitoring: Launching live dry-runs with human-in-the-loop oversight.",
+      "1. Business Audit: Analyzing your existing sales cycle, tiers, and compensation models.",
+      "2. Platform Engineering: Building custom dashboards with interactive charts and role access.",
+      "3. Integration: Connecting POS data, lead forms, and bank statement reconciliations.",
+      "4. Launch & Staff Training: Delivering complete video walkthroughs and live support."
     ],
-    techStack: ["n8n", "Make.com", "Zapier Enterprise", "Python", "Node.js", "GraphQL", "Supabase"],
-    industries: ["Supply Chain", "Real Estate", "Professional Services", "Human Resources"],
+    techStack: ["Next.js", "TypeScript", "Prisma ORM", "Supabase", "Chart.js / Tremor", "TailwindCSS"],
+    industries: ["Enterprises & B2B Wholesalers", "Real Estate Agencies", "Automotive Dealerships", "Service & Consulting Agencies"],
     faqs: [
       {
-        q: "Can you automate legacy software without API endpoints?",
-        a: "Yes. We design customized Robotic Process Automation (RPA) scripts and browser automation nodes to handle legacy UI interaction.",
+        q: "Can this system integrate with our existing POS or website?",
+        a: "Yes. We build custom API bridges to ingest data seamlessly from your websites, POS software, and third-party tools."
       },
       {
-        q: "Do you support human-in-the-loop validation?",
-        a: "Absolutely. We build review interfaces where critical actions (like wire transfers or contract generation) await human confirmation.",
-      },
-    ],
+        q: "Can access be restricted for different staff members?",
+        a: "Yes. The platform includes granular role-based permissions so sales reps only see their assigned deals while executives view total financial summaries."
+      }
+    ]
   },
-  "ai-chatbot-development": {
-    title: "Conversational AI Systems & Intelligent Chatbots",
-    subtitle: "Delight customers with ultra-responsive, multilingual AI support systems that actually resolve issues.",
-    description: "Go beyond rigid, rule-based trees. Our conversational AI systems understand complex context, read live customer databases, issue refunds, schedule calls, and escalate to human agents with perfect summaries.",
+
+  "mobile-apps": {
+    title: "Android & iOS Mobile App Development",
+    subtitle: "High-performance native and cross-platform Flutter mobile applications published directly to Apple App Store and Google Play Store.",
+    category: "Mobile Engineering",
+    priceStartingUsd: 1299,
+    priceStartingPkr: 360000,
+    description: "Launch sleek, responsive mobile experiences for your customers. We engineer native iOS and Android apps with 60fps micro-animations, biometric authentication, offline synchronization, and seamless in-app payment gateways.",
     benefits: [
-      "Maintain 24/7/365 customer support availability",
-      "Deflect up to 70% of inbound support tickets instantly",
-      "Maintain a consistent, polite, and expert brand voice globally",
+      "Reach billions of mobile users on Apple App Store & Google Play",
+      "Re-engage customers instantly with personalized push notifications",
+      "Deliver fluid 60FPS user experiences with Flutter and native engines",
+      "Monetize with in-app purchases, subscriptions, and secure checkout"
     ],
     features: [
-      "Intent Recognition & Context Tracking",
-      "Omnichannel Deployment (Web, WhatsApp, Slack, Messenger)",
-      "CRM/Database Syncing for Account-Level Personalization",
-      "Automatic Ticket Tagging and Sentiment Analysis",
+      "Cross-Platform Flutter & React Native Engineering",
+      "Apple App Store & Google Play Submission & Compliance",
+      "Firebase Cloud Messaging (FCM) Push Notifications",
+      "Biometric FaceID / Fingerprint Authentication",
+      "Offline Caching & High-Performance REST/GraphQL APIs"
     ],
     process: [
-      "1. Scripting & Brand Definition: Outlining tone of voice, boundaries, and fallback scripts.",
-      "2. Knowledge Base Ingestion: Formatting articles, FAQs, and documents for vector retrieval.",
-      "3. API Integration: Connecting the agent to live customer database states.",
-      "4. Red Teaming: Testing the bot under extreme prompts to prevent jailbreaks.",
+      "1. UX Wireframing: Designing high-fidelity interactive Figma mobile prototypes.",
+      "2. Flutter / Native Coding: Building state-managed frontend with secure API endpoints.",
+      "3. QA & Device Testing: Testing across various Android and iOS screen sizes and OS versions.",
+      "4. Store Publishing: Managing app review guidelines, screenshots, and store approval."
     ],
-    techStack: ["Vercel AI", "LangGraph", "OpenAI Assistants API", "Voiceflow", "React", "Next.js"],
-    industries: ["E-commerce", "SaaS & Tech Support", "Travel & Hospitality", "Education"],
+    techStack: ["Flutter", "Dart", "React Native", "Firebase", "Node.js", "PostgreSQL", "Stripe / Local Gateways"],
+    industries: ["E-Commerce & Delivery", "On-Demand Services", "Health & Fitness", "Fintech & Wallets", "Social & Community"],
     faqs: [
       {
-        q: "Can your chatbots translate in real-time?",
-        a: "Yes. Our systems natively support and automatically detect over 80 languages, offering fluent translation.",
+        q: "Will one codebase run on both Android and iPhone?",
+        a: "Yes. Using Flutter, we build a single, ultra-optimized codebase that delivers native performance on both iOS and Android, cutting development cost and time in half."
       },
       {
-        q: "What happens if a bot cannot answer a question?",
-        a: "It generates a concise summary of the conversation and seamlessly hands off to your support agents via Zendesk, HubSpot, or Intercom.",
-      },
-    ],
+        q: "Do you handle the App Store and Google Play submission process?",
+        a: "Yes. We manage the entire store setup, compliance checks, app signing, and approval process from start to finish."
+      }
+    ]
   },
-  "ai-voice-agent-development": {
-    title: "Autonomous AI Voice Agents & Call Center Automation",
-    subtitle: "Sub-second latency voice systems that handle inbound booking, outbound qualification, and lead triage.",
-    description: "Transform your call centers with hyper-realistic voice synthesizers. Our voice agents listen, speak, and act in real-time, executing actions directly in your CRM during the call.",
+
+  "game-development": {
+    title: "Custom 2D & 3D Game Development",
+    subtitle: "Immersive games engineered with Unity and Unreal Engine for Web, Mobile, and Desktop platforms.",
+    category: "Gaming & Interactive",
+    priceStartingUsd: 1499,
+    priceStartingPkr: 415000,
+    description: "Turn your creative game concept into an addictive reality. We develop polished 2D and 3D games featuring custom physics, responsive touch/controller mechanics, captivating soundtracks, and high-ROI monetization models.",
     benefits: [
-      "Cut phone agent operating costs by up to 75%",
-      "Eliminate hold times completely for thousands of simultaneous calls",
-      "Qualify, schedule, and close inbound leads in seconds",
+      "Captivate global players with immersive storylines and fluid gameplay",
+      "Monetize through rewarded video ads, in-app purchases, and cosmetic passes",
+      "Deploy across WebGL, Android, iOS, Steam, and Windows platforms",
+      "Custom gamification systems for brands looking to boost customer engagement"
     ],
     features: [
-      "Ultra-Low Latency Conversational Streaming",
-      "Voice Cloning & Custom Emotional Modulation",
-      "Outbound Cold Lead Triage & Qualification Campaigns",
-      "Inbound Customer Authentication & Self-Service Support",
+      "Unity 3D / 2D & Unreal Engine Development",
+      "Custom Physics, AI Enemy Behaviors & Level Design",
+      "AdMob / Unity Ads & In-App Purchase Integration",
+      "Cross-Platform Optimization & High Framerate Rendering",
+      "Cinematic SFX, Particle Effects & Dynamic Audio"
     ],
     process: [
-      "1. Dialog Graphing: Structuring conversation states, voice pitches, and interruption limits.",
-      "2. Telephony Hooking: Assigning and routing numbers (Twilio, Retell, Vapi).",
-      "3. Backend Callbacks: Engineering the system to update databases as the user speaks.",
-      "4. Load Testing: Simulating thousands of concurrent calls to guarantee uptime.",
+      "1. Game Design Document (GDD): Establishing core loop, mechanics, and art direction.",
+      "2. Rapid Prototyping: Building playable physics and controller mechanics.",
+      "3. Asset Integration & Level Building: Crafting environments, shaders, and sound effects.",
+      "4. Optimization & Release: Polishing performance and publishing to target platforms."
     ],
-    techStack: ["Retell AI", "Vapi", "LiveKit", "ElevenLabs", "Twilio", "FastAPI"],
-    industries: ["Real Estate & Local Business", "Medical Clinics", "Financial Services", "Automotive"],
+    techStack: ["Unity Engine", "C#", "Unreal Engine", "Blender 3D", "WebGL", "AdMob"],
+    industries: ["Mobile Gaming", "Gamified Brand Marketing", "Educational Simulation", "Hyper-Casual & Indie Studios"],
     faqs: [
       {
-        q: "Is there any lag in the call?",
-        a: "No. We optimize streaming infrastructure to achieve response times of under 800ms, making conversations feel completely natural.",
+        q: "Can you develop 3D games with multiplayer support?",
+        a: "Yes. We build both single-player and multiplayer online games with matchmaking, leaderboards, and live server sync."
       },
       {
-        q: "Is calling regulatory-compliant?",
-        a: "Yes. We build in explicit opt-in verifications, caller ID configurations, and abide by TCPA rules.",
-      },
-    ],
+        q: "How do we earn revenue from the game?",
+        a: "We integrate interstitial & rewarded video ads, in-game coin/gem purchases, and subscription passes to maximize player lifetime value."
+      }
+    ]
   },
+
+  "social-media-marketing": {
+    title: "High-ROI Social Media Marketing & Meta Ads",
+    subtitle: "Dominate Facebook, Instagram, TikTok, and LinkedIn with algorithmic organic growth and high-converting paid ad funnels.",
+    category: "Growth & Marketing",
+    priceStartingUsd: 349,
+    priceStartingPkr: 95000,
+    description: "Scale your revenue predictably. We combine high-retention content creation with laser-targeted Meta (Facebook & Instagram) and TikTok advertising campaigns to drive consistent inbound leads and sales.",
+    benefits: [
+      "Generate continuous high-intent leads directly into your WhatsApp & CRM",
+      "Achieve viral reach with high-retention short-form video strategies",
+      "Maximize Return on Ad Spend (ROAS) through precision audience targeting",
+      "Build a prestigious brand presence that commands premium pricing"
+    ],
+    features: [
+      "Complete Meta Ads (Facebook & Instagram) Campaign Management",
+      "Custom Audience Segmentation & Retargeting Funnels",
+      "Monthly Content Strategy & Professional Post Scheduling",
+      "TikTok & Reels Viral Video Scripting & Execution",
+      "Weekly ROI, CPC, and Lead Acquisition Transparency Reports"
+    ],
+    process: [
+      "1. Audience Profiling: Pinpointing your highest-converting demographic segments.",
+      "2. Campaign Architecture: Setting up pixel tracking, custom audiences, and ad funnels.",
+      "3. Creative Testing: A/B testing multiple hooks, angles, and call-to-actions.",
+      "4. Scaling & Optimization: Doubling down on winning ad sets to reduce acquisition cost."
+    ],
+    techStack: ["Meta Ads Manager", "TikTok Ads", "Google Analytics 4", "Canva Pro", "CapCut", "ManyChat"],
+    industries: ["Local Service Businesses", "E-Commerce Brands", "Real Estate Agencies", "Salons & Healthcare", "Tech Startups"],
+    faqs: [
+      {
+        q: "How fast can we see leads coming in?",
+        a: "Paid Meta campaigns typically start generating qualified leads within the first 24 to 48 hours of campaign launch."
+      },
+      {
+        q: "Do you provide the ad creative videos and graphics?",
+        a: "Yes! Our package includes full video editing, copy writing, and static graphic design tailored for your target audience."
+      }
+    ]
+  },
+
+  "ads-creatives": {
+    title: "High-Converting Ads Creatives & Motion Visuals",
+    subtitle: "Scroll-stopping video and static ad creatives engineered with direct-response psychological triggers to maximize CTR and ROAS.",
+    category: "Creative & Ads",
+    priceStartingUsd: 199,
+    priceStartingPkr: 55000,
+    description: "Stop wasting money on boring ads that users scroll past. We craft high-retention motion graphics, UGC-style video creatives, and high-CTR static carousels designed to convert viewers into paying customers.",
+    benefits: [
+      "Boost Click-Through Rates (CTR) by up to 300%",
+      "Drastically lower Cost Per Acquisition (CPA) on Meta & TikTok",
+      "Stand out from competitors with sleek, high-definition motion visuals",
+      "Tested direct-response hooks and persuasive copywriting"
+    ],
+    features: [
+      "Animated High-Retention 9:16 Video Creatives (Reels/TikToks/Stories)",
+      "1:1 & 4:5 Feed Static & Carousel Ad Variations",
+      "Direct-Response Scriptwriting & Psychological Hook Structuring",
+      "Dynamic Captions, Sound Effects & Professional Color Grading",
+      "Multi-Variant A/B Testing Packages Ready for Ad Managers"
+    ],
+    process: [
+      "1. Competitor & Hook Research: Identifying top-performing visual formats in your niche.",
+      "2. Scripting & Storyboarding: Writing scroll-stopping opening 3 seconds and strong CTAs.",
+      "3. Production & Motion Design: Animating typography, visual assets, and high-energy pacing.",
+      "4. Final Delivery: High-bitrate 4K exports in all necessary aspect ratios."
+    ],
+    techStack: ["Adobe After Effects", "Premiere Pro", "Photoshop", "Illustrator", "Midjourney"],
+    industries: ["E-Commerce & Dropshipping", "SaaS & Mobile Apps", "Real Estate & Architecture", "Course Creators & Coaching"],
+    faqs: [
+      {
+        q: "In what formats do you deliver the creatives?",
+        a: "We deliver in 9:16 (Stories/Reels/TikTok), 1:1 (Square Feed), and 4:5 (Portrait Feed) in crisp 1080p and 4K MP4/PNG formats."
+      },
+      {
+        q: "Can you deliver scripts for UGC creators?",
+        a: "Yes, we provide full voiceover scripts and direct-response talking points tailored for video spokespersons."
+      }
+    ]
+  },
+
+  "windows-apps": {
+    title: "Windows Desktop Application Development",
+    subtitle: "Robust, high-performance offline desktop software built with C#, .NET, and Electron for high-throughput enterprise workflows.",
+    category: "Desktop Software",
+    priceStartingUsd: 699,
+    priceStartingPkr: 190000,
+    description: "When web browsers aren't fast enough or you require direct hardware integration, our native Windows desktop applications provide zero-latency database computation, local peripheral communication, and impenetrable security.",
+    benefits: [
+      "Zero-latency performance for massive local database transactions",
+      "Direct communication with thermal printers, serial ports, RFID, and scanners",
+      "100% functional offline without relying on external cloud servers",
+      "Custom Windows installer packages with silent automatic background updates"
+    ],
+    features: [
+      "C# / .NET / Electron Native Windows Architecture",
+      "Direct Hardware Port & Peripheral Interfacing (USB/LAN/COM)",
+      "Local Encrypted SQLite / SQL Server Database Engine",
+      "Automated Daily Cloud Backup Synchronization",
+      "Role-Based Local User Management & Audit Logs"
+    ],
+    process: [
+      "1. Technical Specification: Identifying hardware interfaces, OS targets, and processing throughput.",
+      "2. Native UI & Logic Development: Building responsive desktop interfaces with fast C#/.NET pipelines.",
+      "3. Hardware Testing & Stress Testing: Running 10,000+ continuous record writes and print cycles.",
+      "4. Installer Packaging & Delivery: Creating self-contained .msi / .exe installers."
+    ],
+    techStack: ["C#", ".NET 8", "WPF / WinUI", "Electron", "SQLite", "SQL Server"],
+    industries: ["Manufacturing & Factories", "Warehousing & Logistics", "Retail Superstores", "Medical Diagnostics Laboratories"],
+    faqs: [
+      {
+        q: "Will the app run on older Windows versions like Windows 10 and 11?",
+        a: "Yes, our desktop applications are optimized to run seamlessly across Windows 10, Windows 11, and Windows Server environments."
+      },
+      {
+        q: "Can the desktop app sync data with our central web database?",
+        a: "Yes. The app can maintain full offline functionality and automatically synchronize with your remote cloud server whenever connected."
+      }
+    ]
+  },
+
+  "graphic-design-video-editing": {
+    title: "Graphic Design & Cinematic 4K Video Editing",
+    subtitle: "Elite brand identities, 2D/3D motion graphics, commercial 4K video editing, and high-retention social content.",
+    category: "Creative Media",
+    priceStartingUsd: 299,
+    priceStartingPkr: 80000,
+    description: "Establish undeniable brand authority. We create unforgettable visual identities, luxury logo systems, corporate pitch decks, and cinematic 4K video edits with custom sound design that demand attention.",
+    benefits: [
+      "Elevate perceived brand value to command premium market pricing",
+      "Engage audiences on YouTube, Instagram, and LinkedIn with cinematic edits",
+      "Consistent, cohesive brand identity across all digital & physical touchpoints",
+      "Full commercial rights and editable vector source files included"
+    ],
+    features: [
+      "Complete Brand Identity (Logo, Color Palette, Typography, Guidelines)",
+      "Cinematic 4K Video Editing with Pacing, Color Grading & SFX",
+      "Dynamic 2D Explainer & Typography Motion Graphics",
+      "Social Media Post Kits, YouTube Thumbnails & Banners",
+      "Vector Source Files (AI, PSD, Premiere Project Files)"
+    ],
+    process: [
+      "1. Brand Discovery: Understanding your brand tone, target aesthetic, and story.",
+      "2. Concept Generation: Presenting unique moodboards, logo vectors, and video rough-cuts.",
+      "3. Polish & Sound Design: Adding color grading, sound effects, transitions, and typography.",
+      "4. Final Handover: Packaging all web, print, and video master files."
+    ],
+    techStack: ["Adobe Premiere Pro", "After Effects", "Illustrator", "Photoshop", "DaVinci Resolve", "Figma"],
+    industries: ["Corporate Brands", "Content Creators & Influencers", "Fashion & Lifestyle", "Real Estate & Hospitality"],
+    faqs: [
+      {
+        q: "Do I get full ownership and source files?",
+        a: "Yes. You receive 100% commercial ownership along with all vector source files (AI, PSD) and high-res master exports."
+      },
+      {
+        q: "Can you handle ongoing monthly video editing for our brand?",
+        a: "Yes. We offer dedicated monthly retainers covering weekly YouTube videos, daily Reels/TikToks, and promotional assets."
+      }
+    ]
+  },
+
+  "ai-automations": {
+    title: "Autonomous AI Workflow Automations",
+    subtitle: "Eliminate 90% of manual repetitive tasks with autonomous multi-agent pipelines connecting CRMs, ERPs, emails, and internal databases.",
+    category: "AI & Automations",
+    priceStartingUsd: 499,
+    priceStartingPkr: 135000,
+    description: "Transform your company into a self-operating engine. We build autonomous agent workflows with n8n, Make, and Python that automatically triage inbound leads, generate invoices, update databases, and run business operations 24/7.",
+    benefits: [
+      "Reduce operational processing times by up to 85%",
+      "Eliminate human data entry errors in bookkeeping and CRM updates",
+      "Scale business volume 10x without hiring proportional back-office staff",
+      "Automate end-to-end customer onboarding and email follow-ups"
+    ],
+    features: [
+      "n8n & Make Enterprise Multi-Agent Workflow Pipelines",
+      "Automated Lead Ingestion, Enrichment & WhatsApp/Email Notification",
+      "Invoice Generation & Automatic Accounting Reconciliation",
+      "Custom API Middleware & Webhook Connectors",
+      "Autonomous 24/7 Cloud Background Execution"
+    ],
+    process: [
+      "1. Operational Audit: Documenting repetitive bottlenecks in your daily workflows.",
+      "2. Workflow Mapping: Designing automated node logic with deterministic fail-safes.",
+      "3. Connector Engineering: Integrating your CRM, database, WhatsApp, and email tools.",
+      "4. Live Testing & Handover: Running simulated test runs and deploying continuous monitoring."
+    ],
+    techStack: ["n8n", "Make.com", "Python", "OpenAI API", "Supabase", "Zapier Enterprise", "Webhooks"],
+    industries: ["E-Commerce & Supply Chain", "Real Estate & Property", "Professional Service Firms", "Agencies & Consultants"],
+    faqs: [
+      {
+        q: "Can you automate tools that don't have official APIs?",
+        a: "Yes. We use headless browser automation and robotic process automation (RPA) to handle legacy systems seamlessly."
+      },
+      {
+        q: "What happens if a third-party API goes down?",
+        a: "Our workflows feature automatic retry logic, error logging, and instant notification alerts to your team so no data is ever lost."
+      }
+    ]
+  },
+
+  "ai-chatbot-callbot": {
+    title: "AI Chatbots & Autonomous Voice Callbots",
+    subtitle: "Omnichannel 24/7 intelligent GPT-4o chatbots and sub-800ms conversational voice callbots that qualify leads and close appointments.",
+    category: "AI & Voice Systems",
+    priceStartingUsd: 699,
+    priceStartingPkr: 190000,
+    description: "Never miss another client lead. Our conversational AI systems understand complex natural language, answer questions from your company knowledge base, qualify callers, and book appointments directly on your calendar in real-time.",
+    benefits: [
+      "Maintain 24/7/365 instant customer response availability across Web & Phone",
+      "Sub-second voice latency (<800ms) that feels completely human and natural",
+      "Deflect up to 75% of routine support queries and qualify inbound sales leads",
+      "Omnichannel integration across WhatsApp, Website, Messenger, and Telephony"
+    ],
+    features: [
+      "Sub-Second Latency Real-Time Voice Callbot (Inbound & Outbound)",
+      "Omnichannel Web & WhatsApp GPT-4o Chatbot Deployment",
+      "Retrieval-Augmented Generation (RAG) on Your Business Documents",
+      "Direct Google Calendar / Cal.com Appointment Booking",
+      "Live Human Agent Handover & Full Conversation Transcripts"
+    ],
+    process: [
+      "1. Knowledge Ingestion: Ingesting your business FAQs, service catalog, and guidelines.",
+      "2. Voice & Tone Tuning: Selecting realistic voice models and conversational guardrails.",
+      "3. Telephony & Web Integration: Connecting phone numbers (Twilio/Vapi) and web chat widgets.",
+      "4. Load Testing & Launch: Simulating concurrent calls and deploying live."
+    ],
+    techStack: ["Retell AI", "Vapi", "ElevenLabs", "Twilio", "OpenAI GPT-4o", "Pinecone", "Next.js"],
+    industries: ["Salons & Clinics", "Automotive Workshops & Dealerships", "Real Estate & Booking", "E-Commerce & SaaS Support"],
+    faqs: [
+      {
+        q: "Does the voice callbot sound robotic or lag?",
+        a: "No! We utilize ultra-low latency streaming (<800ms) with emotional voice modulation, making conversations feel fluid, fast, and lifelike."
+      },
+      {
+        q: "Can the bot book appointments directly into my calendar?",
+        a: "Yes. During the call or chat, the AI checks live slot availability, books the time, and sends instant confirmation SMS and emails to both you and the client."
+      }
+    ]
+  }
 };
+
+// Aliases for backward compatibility
+servicesData["ai-consulting"] = servicesData["ai-automations"];
+servicesData["ai-development"] = servicesData["professional-websites"];
+servicesData["ai-workflow-automation"] = servicesData["ai-automations"];
+servicesData["ai-chatbot-development"] = servicesData["ai-chatbot-callbot"];
+servicesData["ai-voice-agent-development"] = servicesData["ai-chatbot-callbot"];
 
 export async function generateStaticParams() {
   return Object.keys(servicesData).map((slug) => ({
@@ -203,8 +482,13 @@ export async function generateMetadata({ params }: { params: Promise<{ service: 
     title: `${service.title} | SARDYX AI`,
     description: service.subtitle,
     alternates: {
-      canonical: `https://sardyxai.com/services/${resolvedParams.service}`,
+      canonical: `https://www.sardyxai.com/services/${resolvedParams.service}`,
     },
+    openGraph: {
+      title: `${service.title} | SARDYX AI`,
+      description: service.subtitle,
+      url: `https://www.sardyxai.com/services/${resolvedParams.service}`,
+    }
   };
 }
 
@@ -217,7 +501,7 @@ export default async function ServicePage({ params }: { params: Promise<{ servic
     notFound();
   }
 
-  // Create JSON-LD schema for this page
+  // Schema markup
   const serviceSchema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -228,19 +512,16 @@ export default async function ServicePage({ params }: { params: Promise<{ servic
         "provider": {
           "@type": "Organization",
           "name": "SARDYX AI",
-          "url": "https://sardyxai.com"
+          "url": "https://www.sardyxai.com",
+          "sameAs": [
+            "https://www.instagram.com/sardyxai.pk/",
+            "https://www.facebook.com/profile.php?id=61593771264721"
+          ]
         },
-        "areaServed": ["US", "CA", "GB", "AU", "EU"],
-        "hasOfferCatalog": {
-          "@type": "OfferCatalog",
-          "name": "AI Development & Automation Services",
-          "itemListElement": service.features.map((f, i) => ({
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": f
-            }
-          }))
+        "offers": {
+          "@type": "Offer",
+          "price": service.priceStartingUsd,
+          "priceCurrency": "USD"
         }
       },
       {
@@ -258,48 +539,83 @@ export default async function ServicePage({ params }: { params: Promise<{ servic
   };
 
   return (
-    <main className="min-h-screen bg-black text-white pt-32 pb-20 relative overflow-hidden">
+    <main className="min-h-screen bg-black text-white pt-32 pb-24 relative overflow-hidden">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-primary/20 blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-10 left-1/4 w-96 h-96 bg-secondary/10 blur-[150px] pointer-events-none" />
+      <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-primary/15 blur-[150px] pointer-events-none" />
+      <div className="absolute bottom-10 left-1/4 w-[600px] h-[600px] bg-secondary/15 blur-[150px] pointer-events-none" />
 
       <div className="container mx-auto px-6 lg:px-16 relative z-10">
+        
         {/* Breadcrumb */}
-        <nav className="text-gray-500 text-sm mb-8 flex items-center gap-2">
-          <Link href="/" className="hover:text-white transition-colors">Home</Link>
+        <nav className="text-gray-400 text-xs mb-8 flex items-center gap-2 font-mono">
+          <Link href="/" className="hover:text-primary transition-colors">Home</Link>
           <span>/</span>
-          <span className="text-gray-300">Services</span>
+          <Link href="/#services" className="hover:text-primary transition-colors">Services</Link>
           <span>/</span>
-          <span className="text-primary font-medium">{service.title}</span>
+          <span className="text-primary font-bold">{service.category}</span>
         </nav>
 
         {/* Hero Info */}
-        <div className="max-w-4xl mb-20">
-          <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-6 bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
+        <div className="max-w-4xl mb-16">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-panel mb-6 border-primary/30 text-primary text-xs font-mono font-bold uppercase tracking-wider">
+            <Sparkles size={13} className="text-primary animate-pulse" />
+            <span>{service.category}</span>
+          </div>
+
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight mb-6 bg-gradient-to-r from-white via-gray-100 to-gray-400 bg-clip-text text-transparent leading-tight">
             {service.title}
           </h1>
-          <p className="text-xl text-primary font-medium mb-6 font-mono">
+
+          <p className="text-lg md:text-xl text-cyan-400 font-medium mb-6 font-mono leading-relaxed">
             {service.subtitle}
           </p>
-          <p className="text-lg text-gray-400 leading-relaxed">
+
+          <p className="text-base md:text-lg text-gray-300 leading-relaxed mb-8">
             {service.description}
           </p>
+
+          {/* Quick Pricing & Instant WhatsApp Trigger */}
+          <div className="flex flex-wrap items-center gap-4 p-4 rounded-2xl glass-panel border border-primary/30 max-w-xl bg-black/60">
+            <div>
+              <span className="text-2xs uppercase font-mono text-gray-400 block">Starting Investment</span>
+              <span className="text-2xl font-black text-white">
+                ${service.priceStartingUsd} <span className="text-xs text-gray-400 font-normal">/ ₨ {(service.priceStartingPkr / 1000).toFixed(0)}k</span>
+              </span>
+            </div>
+            <div className="ml-auto flex items-center gap-2">
+              <a
+                href={`https://wa.me/923499398141?text=${encodeURIComponent(`Hello SARDYX AI, I would like to get a quote for "${service.title}".`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-2.5 rounded-xl bg-emerald-500 text-black font-bold text-xs uppercase tracking-wider hover:bg-white transition-all flex items-center gap-1.5 shadow-[0_0_15px_rgba(16,185,129,0.4)]"
+              >
+                <MessageCircle size={15} />
+                WhatsApp Quote
+              </a>
+              <Link
+                href={`/contact?package=${encodeURIComponent(service.title)}`}
+                className="px-5 py-2.5 rounded-xl bg-primary text-black font-bold text-xs uppercase tracking-wider hover:bg-white transition-all"
+              >
+                Book Audit
+              </Link>
+            </div>
+          </div>
         </div>
 
-        {/* Features / Benefits Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+        {/* Benefits & Core Capabilities Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
           {/* Benefits */}
-          <div className="glass-panel p-8 rounded-2xl border border-white/5 bg-white/[0.02]">
-            <h2 className="text-2xl font-bold mb-6 text-white flex items-center gap-2">
-              <LineChart className="text-primary" /> Key Business Benefits
+          <div className="glass-panel p-8 rounded-3xl border border-white/10 bg-black/40">
+            <h2 className="text-2xl font-bold mb-6 text-white flex items-center gap-2.5">
+              <LineChart className="text-primary" /> Measurable Business Benefits
             </h2>
             <ul className="space-y-4">
               {service.benefits.map((benefit, idx) => (
-                <li key={idx} className="flex gap-3 text-gray-300">
-                  <span className="text-primary font-bold">✓</span>
+                <li key={idx} className="flex items-start gap-3 text-gray-300 text-sm md:text-base leading-relaxed">
+                  <CheckCircle2 size={18} className="text-primary shrink-0 mt-1" />
                   <span>{benefit}</span>
                 </li>
               ))}
@@ -307,14 +623,14 @@ export default async function ServicePage({ params }: { params: Promise<{ servic
           </div>
 
           {/* Features */}
-          <div className="glass-panel p-8 rounded-2xl border border-white/5 bg-white/[0.02]">
-            <h2 className="text-2xl font-bold mb-6 text-white flex items-center gap-2">
-              <Cpu className="text-primary" /> Core Capabilities
+          <div className="glass-panel p-8 rounded-3xl border border-white/10 bg-black/40">
+            <h2 className="text-2xl font-bold mb-6 text-white flex items-center gap-2.5">
+              <Cpu className="text-secondary" /> Core Technical Deliverables
             </h2>
             <ul className="space-y-4">
               {service.features.map((feature, idx) => (
-                <li key={idx} className="flex gap-3 text-gray-300 items-start">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <li key={idx} className="flex items-start gap-3 text-gray-300 text-sm md:text-base leading-relaxed">
+                  <Zap size={18} className="text-secondary shrink-0 mt-1" />
                   <span>{feature}</span>
                 </li>
               ))}
@@ -322,37 +638,46 @@ export default async function ServicePage({ params }: { params: Promise<{ servic
           </div>
         </div>
 
-        {/* Process Roadmap */}
+        {/* Implementation Process Roadmap */}
         <div className="mb-20">
-          <h2 className="text-3xl font-black text-white mb-12 text-center">Our Proven Implementation Process</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="text-center mb-12">
+            <span className="text-2xs font-mono text-primary uppercase tracking-widest block mb-2 font-bold">Standard Operating Procedure</span>
+            <h2 className="text-3xl md:text-4xl font-black text-white">How We Execute & Deliver</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {service.process.map((step, idx) => (
-              <div key={idx} className="glass-panel p-6 rounded-2xl border border-white/5 bg-white/[0.01] relative">
-                <div className="text-xs font-mono text-primary mb-4 uppercase tracking-widest">Phase 0{idx + 1}</div>
-                <h3 className="text-lg font-bold text-white mb-2">{step.split(":")[0]}</h3>
-                <p className="text-gray-400 text-sm">{step.split(":")[1]}</p>
+              <div key={idx} className="glass-panel p-6 rounded-3xl border border-white/10 bg-black/40 relative flex flex-col justify-between">
+                <div>
+                  <div className="text-xs font-mono text-primary mb-3 uppercase tracking-widest font-bold">Step 0{idx + 1}</div>
+                  <h3 className="text-lg font-bold text-white mb-2">{step.split(":")[0]}</h3>
+                  <p className="text-gray-400 text-xs md:text-sm leading-relaxed">{step.split(":")[1]}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Tech Stack & Industries */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
-          <div>
-            <h2 className="text-2xl font-bold mb-6 text-white">Technological Arsenal</h2>
-            <div className="flex flex-wrap gap-3">
+        {/* Tech Stack & Target Verticals */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
+          <div className="glass-panel p-8 rounded-3xl border border-white/10 bg-black/40">
+            <h3 className="text-xl font-bold mb-5 text-white flex items-center gap-2">
+              <Layers className="text-primary" size={20} /> Technology Stack
+            </h3>
+            <div className="flex flex-wrap gap-2.5">
               {service.techStack.map((tech) => (
-                <span key={tech} className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-gray-300 text-sm font-mono">
+                <span key={tech} className="px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/10 text-gray-200 text-xs font-mono">
                   {tech}
                 </span>
               ))}
             </div>
           </div>
-          <div>
-            <h2 className="text-2xl font-bold mb-6 text-white">Target Verticals & Sectors</h2>
-            <div className="flex flex-wrap gap-3">
+          <div className="glass-panel p-8 rounded-3xl border border-white/10 bg-black/40">
+            <h3 className="text-xl font-bold mb-5 text-white flex items-center gap-2">
+              <ShieldCheck className="text-secondary" size={20} /> Optimized Verticals
+            </h3>
+            <div className="flex flex-wrap gap-2.5">
               {service.industries.map((ind) => (
-                <span key={ind} className="px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-mono">
+                <span key={ind} className="px-3.5 py-1.5 rounded-xl bg-primary/10 border border-primary/25 text-primary text-xs font-mono">
                   {ind}
                 </span>
               ))}
@@ -362,35 +687,48 @@ export default async function ServicePage({ params }: { params: Promise<{ servic
 
         {/* FAQ Section */}
         <div className="mb-20 max-w-4xl mx-auto">
-          <h2 className="text-3xl font-black text-center mb-12 text-white flex items-center justify-center gap-2">
+          <h2 className="text-3xl font-black text-center mb-10 text-white flex items-center justify-center gap-2.5">
             <Bot className="text-primary" /> Frequently Asked Questions
           </h2>
-          <div className="space-y-6">
+          <div className="space-y-4">
             {service.faqs.map((faq, idx) => (
-              <div key={idx} className="glass-panel p-6 rounded-xl border border-white/5 bg-white/[0.01]">
-                <h3 className="text-lg font-bold text-white mb-2">{faq.q}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{faq.a}</p>
+              <div key={idx} className="glass-panel p-6 rounded-2xl border border-white/10 bg-black/40">
+                <h3 className="text-base md:text-lg font-bold text-white mb-2">{faq.q}</h3>
+                <p className="text-gray-400 text-xs md:text-sm leading-relaxed">{faq.a}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Final CTA Card */}
-        <div className="glass-panel p-12 rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 text-center relative overflow-hidden">
-          <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none" />
-          <h2 className="text-3xl md:text-4xl font-black mb-4">Ready to automate your operations with AI?</h2>
-          <p className="text-gray-400 max-w-2xl mx-auto mb-8">
-            Consult with our engineering team to design custom, compliant workflow systems that save you thousands of hours.
+        {/* Bottom CTA Box */}
+        <div className="glass-panel p-10 md:p-14 rounded-3xl border border-primary/40 bg-gradient-to-r from-primary/15 via-black to-secondary/15 text-center relative overflow-hidden">
+          <div className="absolute inset-0 bg-grid-pattern opacity-15 pointer-events-none" />
+          <h2 className="text-3xl md:text-4xl font-black mb-4 text-white">
+            Ready to deploy {service.title}?
+          </h2>
+          <p className="text-gray-300 max-w-2xl mx-auto mb-8 text-sm md:text-base">
+            Consult with our engineering team today to receive a comprehensive roadmap, transparent quote, and timeline.
           </p>
-          <div className="flex justify-center">
+          <div className="flex flex-wrap justify-center gap-4">
             <Link
-              href="/contact"
-              className="px-8 py-4 rounded-full bg-primary text-black font-semibold hover:bg-white hover:text-black transition-all flex items-center gap-2 group drop-shadow-[0_0_15px_rgba(0,240,255,0.4)]"
+              href={`/contact?package=${encodeURIComponent(service.title)}`}
+              className="px-8 py-4 rounded-full bg-primary text-black font-extrabold hover:bg-white transition-all text-xs uppercase tracking-wider drop-shadow-[0_0_20px_rgba(0,240,255,0.4)] flex items-center gap-2"
             >
-              Book a Strategy Audit <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              <span>Request Project Proposal</span>
+              <ArrowRight size={16} />
             </Link>
+            <a
+              href={`https://wa.me/923499398141?text=${encodeURIComponent(`Hello SARDYX AI, I'm ready to begin with "${service.title}".`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-8 py-4 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 font-bold text-xs uppercase tracking-wider hover:bg-emerald-500/30 transition-all flex items-center gap-2"
+            >
+              <MessageCircle size={16} />
+              <span>Direct WhatsApp Discussion</span>
+            </a>
           </div>
         </div>
+
       </div>
     </main>
   );

@@ -40,7 +40,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-xl font-bold text-white mb-4">4. Compliance Contact</h2>
             <p>
-              For security reports, audit queries, or privacy questions, reach our governance officers directly at <strong>security@sardyxai.com</strong>.
+              For security reports, audit queries, or privacy questions, reach our governance officers directly at <strong>sardyxai@gmail.com</strong>.
             </p>
           </section>
         </div>
