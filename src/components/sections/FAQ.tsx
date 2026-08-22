@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, HelpCircle, Sparkles } from "lucide-react";
+import { ChevronDown, HelpCircle } from "lucide-react";
 
 const faqs = [
   {
@@ -14,15 +14,15 @@ const faqs = [
   },
   {
     q: "Can I customize a package with only the services my business needs?",
-    a: "Yes! Use our interactive Custom Package Builder in the Pricing section to pick any combination of services (e.g. Next.js Website + Cloud POS + AI Callbot) and automatically unlock up to 20% bundling discounts."
+    a: "Yes! Use our interactive Custom Package Builder in the Pricing section to pick any combination of services (e.g. Next.js Website + Cloud POS + AI Callbot) and automatically unlock up to 25% bundling discounts."
   },
   {
     q: "Do you offer post-launch technical support and maintenance?",
-    a: "Yes. All packages include free initial deployment maintenance (3 to 6 months depending on tier). Ongoing 24/7 server monitoring, security patches, and cloud database updates are available starting at $50 - $100 / month."
+    a: "Yes. All packages include initial deployment maintenance. Ongoing 24/7 server monitoring, security patches, and cloud database updates are available starting at $99/month."
   },
   {
     q: "How do your AI Voice Callbots work for customer booking?",
-    a: "Our AI Voice Callbots operate with sub-second latency (<800ms) with realistic human-sounding emotional inflection. They answer incoming phone calls 24/7, qualify leads, answer company FAQs, and book appointments directly on your live calendar."
+    a: "Our AI Voice Callbots operate with sub-second latency (<800ms) with realistic human-sounding emotional inflection. They answer incoming phone calls 24/7, qualify leads, answer FAQs, and book appointments directly on your live calendar."
   },
   {
     q: "How do we get started on a project?",
@@ -34,77 +34,75 @@ export default function FAQ() {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-32 relative bg-black/40 overflow-hidden">
-      <div className="container mx-auto px-6 lg:px-16 max-w-4xl relative z-10">
+    <section className="py-14 sm:py-24 relative bg-black/40 overflow-hidden">
+      <div className="container mx-auto px-3 sm:px-6 lg:px-12 max-w-3xl relative z-10">
         
-        <div className="text-center mb-16">
+        <div className="text-center mb-8 sm:mb-12">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-panel mb-6 border-primary/20 text-primary text-xs font-mono font-bold uppercase tracking-wider"
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full glass-panel mb-3 border-primary/20 text-primary text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider"
           >
-            <HelpCircle size={13} className="text-primary animate-pulse" />
+            <HelpCircle size={12} className="text-primary animate-pulse" />
             <span>Got Questions?</span>
           </motion.div>
 
           <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-black mb-4 tracking-tight text-white"
+            className="text-2xl sm:text-4xl md:text-5xl font-black mb-3 tracking-tight text-white"
           >
             Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary glow-text">Questions</span>
           </motion.h2>
 
           <motion.p 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-gray-300 text-base max-w-xl mx-auto"
+            className="text-gray-400 max-w-xl mx-auto text-xs sm:text-sm leading-relaxed"
           >
-            Everything you need to know about our development lifecycle, pricing, and system scalability.
+            Everything you need to know about our engineering process, pricing, and project turnaround.
           </motion.p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-2.5 sm:space-y-3">
           {faqs.map((faq, index) => {
             const isOpen = activeIndex === index;
             return (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                className={`glass-panel border rounded-2xl overflow-hidden transition-all duration-300 ${
-                  isOpen ? "border-primary/50 shadow-[0_0_20px_rgba(0,240,255,0.1)] bg-black/60" : "border-white/10 bg-black/40 hover:border-white/20"
-                }`}
+                transition={{ duration: 0.35, delay: index * 0.04 }}
+                className="glass-panel rounded-xl sm:rounded-2xl border border-white/10 overflow-hidden bg-black/40"
               >
                 <button
                   onClick={() => setActiveIndex(isOpen ? null : index)}
-                  className="w-full flex items-center justify-between p-6 text-left cursor-pointer"
+                  className="w-full p-3.5 sm:p-5 text-left flex items-center justify-between gap-3 hover:bg-white/5 transition-colors cursor-pointer"
                 >
-                  <span className={`text-base md:text-lg font-bold transition-colors ${isOpen ? "text-primary" : "text-white"}`}>
+                  <span className="text-xs sm:text-base font-bold text-white leading-snug">
                     {faq.q}
                   </span>
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ml-4 transition-transform duration-300 ${
-                    isOpen ? "rotate-180 bg-primary text-black" : "bg-white/5 text-gray-400"
+                  <div className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 transition-transform duration-300 ${
+                    isOpen ? "rotate-180 bg-primary/20 border-primary/40 text-primary" : "text-gray-400"
                   }`}>
-                    <ChevronDown size={18} />
+                    <ChevronDown size={14} />
                   </div>
                 </button>
+
                 <AnimatePresence>
                   {isOpen && (
                     <motion.div
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
+                      transition={{ duration: 0.25 }}
                     >
-                      <div className="p-6 pt-0 text-gray-300 text-sm md:text-base leading-relaxed border-t border-white/5 mt-2">
+                      <div className="px-3.5 pb-3.5 sm:px-5 sm:pb-5 pt-0 text-[11px] sm:text-sm text-gray-300 leading-relaxed border-t border-white/5">
                         {faq.a}
                       </div>
                     </motion.div>
