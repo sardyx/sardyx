@@ -42,6 +42,16 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.sardyxai.com",
   },
+  icons: {
+    icon: [
+      { url: "/favicon.png", type: "image/png" },
+      { url: "/icon.png", type: "image/png" }
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png" }
+    ],
+    shortcut: ["/favicon.png"]
+  },
   openGraph: {
     title: "SARDYX AI | Software Development, POS Systems, Websites & AI Agency",
     description: "Premier full-stack software & AI agency. Professional websites, POS softwares, sales management systems, mobile apps, and autonomous AI chatbots & voice callbots.",

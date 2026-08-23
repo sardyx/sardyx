@@ -1,20 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Cpu, Code2, Globe, ShieldAlert, Award } from "lucide-react";
 import { mockTeam } from "@/lib/supabase";
-
-const Github = (props: any) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.24c3-.34 6-1.53 6-6.76a5.5 5.5 0 0 0-1.5-3.89 5 5 0 0 0-.15-3.83s-1.13-.36-3.7 1.38a12.8 12.8 0 0 0-7 0C4.9 1.5 3.75 1.86 3.75 1.86a5 5 0 0 0-.15 3.83 5.5 5.5 0 0 0-1.5 3.89c0 5.23 3 6.42 6 6.76a4.8 4.8 0 0 0-1 3.24v4" />
-  </svg>
-);
-
-const Twitter = (props: any) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
-  </svg>
-);
 
 const Linkedin = (props: any) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -23,6 +10,15 @@ const Linkedin = (props: any) => (
     <circle cx="4" cy="4" r="2" />
   </svg>
 );
+
+const roleColors: Record<string, string> = {
+  "CEO & Founder": "text-primary",
+  "Operations & Project Manager": "text-violet-400",
+  "Senior AI Developer": "text-cyan-400",
+  "Back End Developer": "text-emerald-400",
+  "Growth & Strategy Lead": "text-amber-400",
+  "Brand & Sales Consultant": "text-pink-400",
+};
 
 export default function Team() {
   const [teamMembers, setTeamMembers] = useState<any[]>(mockTeam);
@@ -34,11 +30,9 @@ export default function Team() {
         const res = await fetch("/api/team");
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
-        if (data && data.length > 0) {
-          setTeamMembers(data);
-        }
-      } catch (err) {
-        console.warn("Using local team members fallback data", err);
+        if (data && data.length > 0) setTeamMembers(data);
+      } catch {
+        // fallback to mock
       } finally {
         setLoading(false);
       }
@@ -46,150 +40,124 @@ export default function Team() {
     fetchTeam();
   }, []);
 
-  const categories = ["Leadership", "AI & Engineering", "Growth & Strategy", "Creative Design"];
-
   return (
-    <section id="team" className="py-20 sm:py-28 relative overflow-hidden bg-[#080814]">
-      {/* Background glow blurs */}
-      <div className="absolute top-1/3 left-0 w-[450px] h-[450px] bg-primary/5 rounded-full blur-[140px] pointer-events-none -translate-x-1/2"></div>
-      <div className="absolute bottom-1/3 right-0 w-[450px] h-[450px] bg-violet-600/5 rounded-full blur-[140px] pointer-events-none translate-x-1/2"></div>
+    <section id="team" className="py-20 sm:py-28 relative overflow-hidden bg-[#06060E]">
+      {/* Ambient lighting */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/5 blur-[120px] pointer-events-none" />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
-        <div className="text-center max-w-2xl mx-auto mb-16">
+      <div className="container mx-auto px-5 sm:px-8 lg:px-14 relative z-10">
+
+        {/* Header */}
+        <div className="text-center max-w-2xl mx-auto mb-14">
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 mb-4"
           >
-            <span className="w-2 h-2 rounded-full bg-primary"></span>
-            <span className="text-xs font-semibold tracking-wider uppercase text-gray-300">Engineering & Growth Specialists</span>
+            <span className="w-2 h-2 rounded-full bg-primary" />
+            <span className="text-xs font-semibold tracking-wider uppercase text-gray-300">The People Behind It</span>
           </motion.div>
-          
-          <motion.h2 
-            initial={{ opacity: 0, y: 15 }}
+
+          <motion.h2
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-3xl sm:text-5xl font-black mb-3 tracking-tight text-white"
           >
-            Meet the <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-200 to-violet-400">Syndicate</span>
+            Meet the <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-200 to-violet-400">Team</span>
           </motion.h2>
-          
-          <motion.p 
-            initial={{ opacity: 0, y: 15 }}
+
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-gray-400 text-sm sm:text-base leading-relaxed"
           >
-            Specialized engineering and growth teams dedicated to scaling client digital systems.
+            A specialized team of engineers, strategists, and designers building the future of digital systems.
           </motion.p>
         </div>
 
-        {/* Categories of team members */}
+        {/* Single unified grid */}
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-64 rounded-2xl bg-white/[0.02] border border-white/5 animate-pulse" />
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div key={i} className="h-52 rounded-2xl bg-white/[0.02] border border-white/5 animate-pulse" />
             ))}
           </div>
         ) : (
-          <div className="space-y-12">
-            {categories.map((catName) => {
-              const members = teamMembers.filter((m) => m.category === catName);
-              if (members.length === 0) return null;
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
+            {teamMembers.map((member, index) => {
+              const roleColor = roleColors[member.role] || "text-gray-400";
+              const isFirst = index === 0;
 
               return (
-                <div key={catName} className="space-y-6">
-                  <div className="flex items-center gap-3">
-                    <h3 className="text-xs sm:text-sm font-bold tracking-wider uppercase text-primary whitespace-nowrap">
-                      {catName}
-                    </h3>
-                    <div className="h-[1px] w-full bg-white/10"></div>
+                <motion.div
+                  key={member.id || member.name}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.35, delay: index * 0.05 }}
+                  className={`relative flex flex-col items-center text-center p-5 rounded-2xl border transition-all group
+                    ${isFirst
+                      ? "border-primary/30 bg-[#0E0E1C] ring-1 ring-primary/20"
+                      : "border-white/[0.08] bg-[#0E0E1C] hover:border-white/20"
+                    }`}
+                >
+                  {/* CEO badge */}
+                  {isFirst && (
+                    <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-primary text-black text-[10px] font-black uppercase tracking-wider whitespace-nowrap">
+                      Founder
+                    </span>
+                  )}
+
+                  {/* Avatar */}
+                  <div className={`w-16 h-16 mb-3 rounded-full overflow-hidden border shrink-0 ${isFirst ? "border-primary/50 w-20 h-20" : "border-white/10"}`}>
+                    {member.image_url ? (
+                      <img
+                        src={member.image_url}
+                        alt={member.name}
+                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-lg font-bold text-primary bg-primary/10">
+                        {member.name?.charAt(0)}
+                      </div>
+                    )}
                   </div>
 
-                  {/* Clean Team Members Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                    {members.map((member, index) => (
-                      <motion.div
-                        key={member.id || member.name}
-                        initial={{ opacity: 0, y: 15 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.3, delay: index * 0.03 }}
-                        className="p-5 rounded-2xl border border-white/10 bg-[#0E0E1C]/80 hover:bg-[#121224] hover:border-primary/40 transition-all flex flex-col items-center text-center group shadow-sm"
-                      >
-                        {/* Avatar Image Frame */}
-                        <div className="w-20 h-20 mb-4 rounded-full overflow-hidden border border-white/15 bg-black/60 shrink-0">
-                          {member.image_url ? (
-                            <img 
-                              src={member.image_url} 
-                              alt={member.name} 
-                              className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-300" 
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center font-bold text-xl font-mono text-primary bg-primary/10">
-                              {member.name?.charAt(0) || "T"}
-                            </div>
-                          )}
-                        </div>
+                  {/* Info */}
+                  <h4 className={`font-bold text-white leading-tight mb-0.5 ${isFirst ? "text-base" : "text-sm"}`}>
+                    {member.name}
+                  </h4>
+                  <p className={`text-[11px] font-semibold uppercase tracking-wide mb-3 ${roleColor}`}>
+                    {member.role}
+                  </p>
 
-                        <div className="w-full flex flex-col justify-between flex-1">
-                          <div>
-                            <h4 className="text-base font-bold text-white group-hover:text-primary transition-colors truncate">
-                              {member.name}
-                            </h4>
-                            <p className="text-xs font-semibold uppercase text-violet-400 mb-2 mt-0.5 tracking-wider truncate">
-                              {member.role}
-                            </p>
-                            {member.bio && (
-                              <p className="text-xs text-gray-400 leading-relaxed mb-4 line-clamp-2 px-1">
-                                {member.bio}
-                              </p>
-                            )}
-                          </div>
+                  {/* Bio — show on hover for non-CEO, always for CEO */}
+                  <p className="text-[11px] text-gray-500 leading-relaxed line-clamp-3 mb-3">
+                    {member.bio}
+                  </p>
 
-                          {/* Social links */}
-                          <div className="flex justify-center gap-2.5 pt-3 border-t border-white/5 mt-auto">
-                            {member.twitter && (
-                              <a 
-                                href={member.twitter} 
-                                target="_blank"
-                                rel="noreferrer"
-                                className="w-7 h-7 rounded-lg bg-white/[0.04] hover:bg-primary/20 flex items-center justify-center text-gray-400 hover:text-primary transition-all"
-                              >
-                                <Twitter className="w-3.5 h-3.5" />
-                              </a>
-                            )}
-                            {member.linkedin && (
-                              <a 
-                                href={member.linkedin} 
-                                target="_blank"
-                                rel="noreferrer"
-                                className="w-7 h-7 rounded-lg bg-white/[0.04] hover:bg-primary/20 flex items-center justify-center text-gray-400 hover:text-primary transition-all"
-                              >
-                                <Linkedin className="w-3.5 h-3.5" />
-                              </a>
-                            )}
-                            {member.github && (
-                              <a 
-                                href={member.github} 
-                                target="_blank"
-                                rel="noreferrer"
-                                className="w-7 h-7 rounded-lg bg-white/[0.04] hover:bg-primary/20 flex items-center justify-center text-gray-400 hover:text-primary transition-all"
-                              >
-                                <Github className="w-3.5 h-3.5" />
-                              </a>
-                            )}
-                          </div>
-                        </div>
-                      </motion.div>
-                    ))}
+                  {/* LinkedIn only */}
+                  <div className="mt-auto pt-2 border-t border-white/[0.06] w-full flex justify-center">
+                    <a
+                      href={member.linkedin && member.linkedin !== "#" ? member.linkedin : "https://www.linkedin.com/"}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="w-6 h-6 rounded-md bg-white/[0.04] flex items-center justify-center text-gray-500 hover:text-primary transition-colors"
+                    >
+                      <Linkedin className="w-3 h-3" />
+                    </a>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </div>
         )}
+
+
+
       </div>
     </section>
   );

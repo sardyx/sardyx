@@ -53,11 +53,13 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="col-span-2 lg:col-span-2">
-            <Link href="/" className="inline-flex items-center gap-2 mb-5 group">
-              <span className="w-7 h-7 rounded-lg bg-primary/20 border border-primary/40 flex items-center justify-center">
-                <span className="w-2.5 h-2.5 rounded-sm bg-primary block"></span>
-              </span>
-              <span className="text-base font-black tracking-[0.12em] text-white">
+            <Link href="/" className="inline-flex items-center gap-2.5 mb-5 group">
+              <img 
+                src="/favicon.png" 
+                alt="SARDYX AI Logo" 
+                className="w-8 h-8 rounded-lg object-cover border border-primary/30 shadow-[0_0_12px_rgba(0,240,255,0.25)] group-hover:scale-105 transition-transform" 
+              />
+              <span className="text-base font-black tracking-[0.12em] text-white group-hover:text-primary transition-colors">
                 SARDYX<span className="text-primary"> AI</span>
               </span>
             </Link>

@@ -63,6 +63,21 @@ export const mockProjects = [
       "Local Google Search #1 ranking optimization",
       "Mobile-first fast booking UI"
     ]
+  },
+  {
+    id: "proj-4",
+    title: "Jamia Siddiqiyyah — Islamic University Portal",
+    client: "Jamia Siddiqiyyah",
+    category: "Professional Websites",
+    tag: "Islamic Education & Endowment",
+    image: "/projects/jamia-siddiqiyyah.png",
+    desc: "World-class Islamic university and global endowment portal combining the rigorous transmission of classical sciences with contemporary research and charity integration. Features a full donor platform, scholar profiles, academic program listings, and a Sponsor a Seeker fundraising pipeline.",
+    tags: ["Education Portal", "Donation System", "Next.js", "SEO Optimized"],
+    highlights: [
+      "Full endowment & donor management with Sponsor a Seeker pipeline",
+      "Scholar profiles, academic programs & classical sciences curriculum",
+      "Integrated charity portal with mobile-first responsive design"
+    ]
   }
 ];
 
@@ -402,12 +417,12 @@ export const mockTestimonials = [
 export const mockTeam = [
   {
     id: "t1",
-    name: "Mr. Fazal ur Rehman",
+    name: "Mr. Abdullah",
     role: "CEO & Founder",
-    bio: "Architects the long-term vision of SARDYX AI, merging cutting-edge AI breakthroughs with disruptive commercial strategies.",
-    image_url: "/team/fazal.jpeg",
+    bio: "Architects the long-term vision of SARDYX AI, merging cutting-edge AI breakthroughs with disruptive commercial strategies and world-class engineering delivery.",
+    image_url: "/team/abdullah.jpeg",
     category: "Leadership",
-    twitter: "https://twitter.com/sardyxai",
+    twitter: "#",
     linkedin: "https://www.instagram.com/sardyxai.pk/",
     github: "https://github.com/sardyxai"
   },
@@ -435,17 +450,6 @@ export const mockTeam = [
   },
   {
     id: "t4",
-    name: "Mr. Abdullah",
-    role: "Front End Developer",
-    bio: "Crafts immersive, premium, and highly responsive user interfaces utilizing bleeding-edge web technologies and micro-interactions.",
-    image_url: "/team/abdullah.jpeg",
-    category: "AI & Engineering",
-    twitter: "#",
-    linkedin: "#",
-    github: "#"
-  },
-  {
-    id: "t5",
     name: "Mr. Khubaib",
     role: "Back End Developer",
     bio: "Deploys ultra-secure, scalable cloud infrastructures, microservices, and databases with near-zero operational latency.",
@@ -456,7 +460,7 @@ export const mockTeam = [
     github: "#"
   },
   {
-    id: "t6",
+    id: "t5",
     name: "Mr. Hussain",
     role: "Growth & Strategy Lead",
     bio: "Drives strategic global market acquisition, product positioning, and scaling systems for modern enterprise brands.",
@@ -467,7 +471,7 @@ export const mockTeam = [
     github: "#"
   },
   {
-    id: "t7",
+    id: "t6",
     name: "Mr. Ahmed",
     role: "Brand & Sales Consultant",
     bio: "Forges valuable corporate alliances, manages client pipelines, and positions SARDYX AI at the forefront of digital growth.",

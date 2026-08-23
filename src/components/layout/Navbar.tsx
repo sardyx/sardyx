@@ -37,10 +37,12 @@ export default function Navbar() {
       <div className="container mx-auto px-5 sm:px-8 lg:px-14 flex items-center justify-between">
 
         {/* Brand */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <span className="w-7 h-7 rounded-lg bg-primary/20 border border-primary/40 flex items-center justify-center">
-            <span className="w-2.5 h-2.5 rounded-sm bg-primary block"></span>
-          </span>
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <img 
+            src="/favicon.png" 
+            alt="SARDYX AI Logo" 
+            className="w-8 h-8 rounded-lg object-cover border border-primary/30 shadow-[0_0_12px_rgba(0,240,255,0.25)] group-hover:scale-105 transition-transform" 
+          />
           <span className="text-lg font-black tracking-[0.12em] text-white group-hover:text-primary transition-colors duration-200">
             SARDYX<span className="text-primary"> AI</span>
           </span>
