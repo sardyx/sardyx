@@ -90,28 +90,6 @@ export default function Hero() {
 
         </div>
 
-        {/* Trust Metrics moved up */}
-
-        {/* Bottom Trust Metrics Strip */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto mt-10 pt-8 border-t border-white/10 text-center">
-          <div>
-            <div className="text-2xl sm:text-3xl font-black text-white font-mono">100+</div>
-            <div className="text-xs text-gray-400 font-medium">Digital Systems Deployed</div>
-          </div>
-          <div>
-            <div className="text-2xl sm:text-3xl font-black text-emerald-400 font-mono">99.99%</div>
-            <div className="text-xs text-gray-400 font-medium">Cloud Infrastructure Uptime</div>
-          </div>
-          <div>
-            <div className="text-2xl sm:text-3xl font-black text-primary font-mono">&lt; 800ms</div>
-            <div className="text-xs text-gray-400 font-medium">AI Voice Callbot Latency</div>
-          </div>
-          <div>
-            <div className="text-2xl sm:text-3xl font-black text-violet-400 font-mono">#1 Rank</div>
-            <div className="text-xs text-gray-400 font-medium">Organic SEO Performance</div>
-          </div>
-        </div>
-
       </div>
     </section>
   );
