@@ -63,28 +63,28 @@ export default function Hero() {
           >
             <a
               href="#services"
-              className="px-7 py-3.5 rounded-xl bg-primary text-black font-extrabold text-xs sm:text-sm uppercase tracking-wider hover:bg-white hover:scale-105 transition-all duration-300 flex items-center gap-2 shadow-[0_0_25px_rgba(0,240,255,0.4)]"
+              className="px-5 py-2.5 rounded-xl bg-primary text-black font-bold text-xs sm:text-sm uppercase tracking-wider hover:bg-cyan-300 transition-all flex items-center gap-1.5"
             >
-              <span>Explore 12 Services</span>
-              <ArrowRight size={16} />
+              <span>Explore Services</span>
+              <ArrowRight size={14} />
             </a>
 
             <button
               onClick={() => {
-                const msg = encodeURIComponent("Hello SARDYX AI! I would like to consult on a POS / Website / AI project.");
+                const msg = encodeURIComponent("Hello SARDYX AI! I would like to consult on a project.");
                 window.open(`https://wa.me/923499398141?text=${msg}`, "_blank");
               }}
-              className="px-6 py-3.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 font-bold text-xs sm:text-sm uppercase tracking-wider hover:scale-105 transition-all flex items-center gap-2"
+              className="px-4 py-2.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 font-semibold text-xs sm:text-sm transition-all flex items-center gap-1.5 cursor-pointer"
             >
-              <MessageCircle size={16} />
-              <span>WhatsApp Live Desk</span>
+              <MessageCircle size={14} />
+              <span>WhatsApp Desk</span>
             </button>
 
             <a
               href="/contact"
-              className="px-6 py-3.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-white font-semibold text-xs sm:text-sm uppercase tracking-wider transition-all"
+              className="px-4 py-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-gray-300 hover:text-white font-medium text-xs sm:text-sm transition-all"
             >
-              Book Strategy Call
+              Get a Quote
             </a>
           </motion.div>
 
