@@ -253,6 +253,23 @@ export const mockAllServices = [
       "Direct Calendar Appointment Booking",
       "Seamless Live Agent Fallback & Transcripts"
     ]
+  },
+  {
+    id: "s12",
+    slug: "enterprise-seo",
+    title: "Enterprise SEO & Ranking",
+    icon: "TrendingUp",
+    category: "Marketing",
+    shortDesc: "Dominate Google search results and generate high-intent organic leads 24/7 with zero ad spend.",
+    priceUsd: 449,
+    pricePkr: 125000,
+    features: [
+      "#1 Google Ranking Target for High-Intent Keywords",
+      "Comprehensive Technical SEO & Crawl Optimization",
+      "Structured JSON-LD Schema & Rich Snippets",
+      "Local SEO & Google Business Profile Domination",
+      "Monthly Traffic, Keyword Rank & ROI Reporting"
+    ]
   }
 ];
 

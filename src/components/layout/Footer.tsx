@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MessageCircle, Mail, PhoneCall, MapPin, Globe } from "lucide-react";
+import { MessageCircle, Mail, Phone, MapPin, Globe } from "lucide-react";
 
 const Instagram = (props: any) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -15,205 +15,145 @@ const Facebook = (props: any) => (
   </svg>
 );
 
+const softwareLinks = [
+  { label: "Professional Websites", href: "/services/professional-websites" },
+  { label: "POS Softwares", href: "/services/pos-softwares" },
+  { label: "Sales Management Systems", href: "/services/sales-management-systems" },
+  { label: "Android & iOS Apps", href: "/services/mobile-apps" },
+  { label: "Windows Desktop Apps", href: "/services/windows-apps" },
+  { label: "Game Development", href: "/services/game-development" },
+];
+
+const aiLinks = [
+  { label: "AI Workflow Automations", href: "/services/ai-automations" },
+  { label: "AI Chatbot & Callbot", href: "/services/ai-chatbot-callbot" },
+  { label: "Enterprise SEO", href: "/services/enterprise-seo" },
+  { label: "Social Media Marketing", href: "/services/social-media-marketing" },
+  { label: "Ads Creatives & Motion", href: "/services/ads-creatives" },
+  { label: "Graphic Design & 4K Video", href: "/services/graphic-design-video-editing" },
+];
+
+const agencyLinks = [
+  { label: "About SARDYX AI", href: "/about" },
+  { label: "Client Case Studies", href: "/#portfolio" },
+  { label: "Pricing Matrix", href: "/#pricing" },
+  { label: "Tech Insights & Blog", href: "/blog" },
+  { label: "Schedule Consultation", href: "/contact" },
+];
+
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-black pt-20 pb-10 relative overflow-hidden text-white">
-      {/* Background Ambience */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-32 bg-primary/15 blur-[120px] pointer-events-none"></div>
-      
-      <div className="container mx-auto px-6 lg:px-16 relative z-10">
-        
+    <footer className="border-t border-white/[0.07] bg-[#06060E] pt-16 pb-8 relative overflow-hidden">
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[200px] bg-primary/5 blur-[100px] pointer-events-none"></div>
+
+      <div className="container mx-auto px-5 sm:px-8 lg:px-14 relative z-10">
+
         {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-16">
-          
-          {/* Brand Col without logo box */}
-          <div className="lg:col-span-2">
-            <Link href="/" className="inline-block mb-6 group">
-              <span className="text-2xl font-black tracking-[0.18em] bg-gradient-to-r from-white via-primary to-white bg-clip-text text-transparent metallic-shimmer drop-shadow-[0_0_10px_rgba(0,240,255,0.8)]">
-                SARDYX AI
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 lg:gap-10 mb-12">
+
+          {/* Brand */}
+          <div className="col-span-2 lg:col-span-2">
+            <Link href="/" className="inline-flex items-center gap-2 mb-5 group">
+              <span className="w-7 h-7 rounded-lg bg-primary/20 border border-primary/40 flex items-center justify-center">
+                <span className="w-2.5 h-2.5 rounded-sm bg-primary block"></span>
+              </span>
+              <span className="text-base font-black tracking-[0.12em] text-white">
+                SARDYX<span className="text-primary"> AI</span>
               </span>
             </Link>
 
-            <p className="text-gray-400 max-w-sm mb-6 text-sm leading-relaxed">
-              Leading full-stack software & AI agency. We design and deploy high-performance websites, POS systems, sales management platforms, mobile apps, and autonomous voice agents for worldwide enterprise growth.
+            <p className="text-gray-500 text-sm leading-relaxed mb-6 max-w-xs">
+              Full-stack software & AI agency delivering high-performance websites, POS systems, mobile apps, and autonomous voice agents for global growth.
             </p>
 
-            {/* Social Links */}
-            <div className="flex space-x-3 mb-6">
-              <a
-                href="https://www.instagram.com/sardyxai.pk/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full glass-panel flex items-center justify-center text-gray-400 hover:text-pink-400 hover:border-pink-500/40 transition-colors"
-                aria-label="Instagram"
-              >
-                <Instagram size={18} />
-              </a>
-              <a
-                href="https://www.facebook.com/profile.php?id=61593771264721"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full glass-panel flex items-center justify-center text-gray-400 hover:text-blue-400 hover:border-blue-500/40 transition-colors"
-                aria-label="Facebook"
-              >
-                <Facebook size={18} />
-              </a>
-              <a
-                href="https://wa.me/923499398141"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full glass-panel flex items-center justify-center text-gray-400 hover:text-emerald-400 hover:border-emerald-500/40 transition-colors"
-                aria-label="WhatsApp"
-              >
-                <MessageCircle size={18} />
-              </a>
-              <a
-                href="https://www.sardyxai.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full glass-panel flex items-center justify-center text-gray-400 hover:text-primary hover:border-primary/40 transition-colors"
-                aria-label="Website"
-              >
-                <Globe size={18} />
-              </a>
+            {/* Social Icons */}
+            <div className="flex gap-2.5 mb-6">
+              {[
+                { href: "https://www.instagram.com/sardyxai.pk/", icon: Instagram, label: "Instagram" },
+                { href: "https://www.facebook.com/profile.php?id=61593771264721", icon: Facebook, label: "Facebook" },
+                { href: "https://wa.me/923499398141", icon: MessageCircle, label: "WhatsApp" },
+                { href: "https://www.sardyxai.com/", icon: Globe, label: "Website" },
+              ].map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className="w-9 h-9 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-gray-500 hover:text-primary hover:border-primary/30 hover:bg-primary/10 transition-all"
+                >
+                  <s.icon className="w-4 h-4" />
+                </a>
+              ))}
             </div>
 
-            {/* Direct Contact info */}
-            <div className="space-y-2 text-xs text-gray-400 font-mono">
-              <p className="flex items-center gap-2">
-                <Mail size={14} className="text-primary" /> sardyxai@gmail.com
-              </p>
-              <p className="flex items-center gap-2">
-                <PhoneCall size={14} className="text-emerald-400" /> +92 3499398141
-              </p>
-              <p className="flex items-center gap-2">
-                <MapPin size={14} className="text-secondary" /> Global Operations (USA, UK, PK)
-              </p>
+            {/* Contact Details */}
+            <div className="space-y-2">
+              {[
+                { icon: Mail, text: "sardyxai@gmail.com", color: "text-primary" },
+                { icon: Phone, text: "+92 3499398141", color: "text-emerald-400" },
+                { icon: MapPin, text: "USA · UK · Pakistan", color: "text-violet-400" },
+              ].map((c) => (
+                <div key={c.text} className="flex items-center gap-2">
+                  <c.icon size={13} className={c.color} />
+                  <span className="text-xs text-gray-500">{c.text}</span>
+                </div>
+              ))}
             </div>
           </div>
-          
-          {/* Services Col 1 */}
+
+          {/* Software & Systems */}
           <div>
-            <h3 className="font-bold text-white mb-5 font-mono text-xs uppercase tracking-wider text-primary">
-              Software & Systems
-            </h3>
-            <ul className="space-y-3 text-xs">
-              <li>
-                <Link href="/services/professional-websites" className="text-gray-400 hover:text-white transition-colors">
-                  Professional Websites
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/pos-softwares" className="text-gray-400 hover:text-white transition-colors">
-                  POS Softwares
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/sales-management-systems" className="text-gray-400 hover:text-white transition-colors">
-                  Sales Management Systems
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/mobile-apps" className="text-gray-400 hover:text-white transition-colors">
-                  Android & iOS Apps
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/windows-apps" className="text-gray-400 hover:text-white transition-colors">
-                  Windows Desktop Apps
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/game-development" className="text-gray-400 hover:text-white transition-colors">
-                  Games Development
-                </Link>
-              </li>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-primary mb-4">Software</h3>
+            <ul className="space-y-2.5">
+              {softwareLinks.map((l) => (
+                <li key={l.label}>
+                  <Link href={l.href} className="text-xs text-gray-500 hover:text-gray-200 transition-colors">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Services Col 2 */}
+          {/* AI & Growth */}
           <div>
-            <h3 className="font-bold text-white mb-5 font-mono text-xs uppercase tracking-wider text-secondary">
-              AI & Digital Growth
-            </h3>
-            <ul className="space-y-3 text-xs">
-              <li>
-                <Link href="/services/ai-automations" className="text-gray-400 hover:text-white transition-colors">
-                  AI Workflow Automations
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/ai-chatbot-callbot" className="text-gray-400 hover:text-white transition-colors">
-                  AI Chatbot & Callbot
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/social-media-marketing" className="text-gray-400 hover:text-white transition-colors">
-                  Social Media Marketing
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/ads-creatives" className="text-gray-400 hover:text-white transition-colors">
-                  Ads Creatives & Motion
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/graphic-design-video-editing" className="text-gray-400 hover:text-white transition-colors">
-                  Graphic Design & 4K Video
-                </Link>
-              </li>
-            </ul>
-          </div>
-          
-          {/* Quick Links */}
-          <div>
-            <h3 className="font-bold text-white mb-5 font-mono text-xs uppercase tracking-wider text-gray-300">
-              Agency
-            </h3>
-            <ul className="space-y-3 text-xs">
-              <li>
-                <Link href="/about" className="text-gray-400 hover:text-white transition-colors">
-                  About SARDYX AI
-                </Link>
-              </li>
-              <li>
-                <Link href="/#portfolio" className="text-gray-400 hover:text-white transition-colors">
-                  Client Case Studies
-                </Link>
-              </li>
-              <li>
-                <Link href="/#pricing" className="text-gray-400 hover:text-white transition-colors">
-                  Pricing Matrix
-                </Link>
-              </li>
-              <li>
-                <Link href="/blog" className="text-gray-400 hover:text-white transition-colors">
-                  Tech Insights & Blog
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">
-                  Schedule Consultation
-                </Link>
-              </li>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-violet-400 mb-4">AI & Growth</h3>
+            <ul className="space-y-2.5">
+              {aiLinks.map((l) => (
+                <li key={l.label}>
+                  <Link href={l.href} className="text-xs text-gray-500 hover:text-gray-200 transition-colors">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
+          {/* Agency */}
+          <div>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-4">Agency</h3>
+            <ul className="space-y-2.5">
+              {agencyLinks.map((l) => (
+                <li key={l.label}>
+                  <Link href={l.href} className="text-xs text-gray-500 hover:text-gray-200 transition-colors">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-        
+
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
-          <p className="text-gray-500">
-            &copy; {new Date().getFullYear()} SARDYX AI. All Rights Reserved. Engineered for Global High-Performance.
-          </p>
-          <div className="flex space-x-6 text-gray-500">
-            <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
-            <Link href="/cookies" className="hover:text-white transition-colors">Cookie Policy</Link>
+        <div className="pt-6 border-t border-white/[0.07] flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-600">
+          <p>&copy; {new Date().getFullYear()} SARDYX AI. All Rights Reserved.</p>
+          <div className="flex gap-5">
+            <Link href="/privacy" className="hover:text-gray-300 transition-colors">Privacy</Link>
+            <Link href="/terms" className="hover:text-gray-300 transition-colors">Terms</Link>
+            <Link href="/cookies" className="hover:text-gray-300 transition-colors">Cookies</Link>
           </div>
         </div>
-
       </div>
     </footer>
   );

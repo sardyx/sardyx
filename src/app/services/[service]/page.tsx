@@ -457,6 +457,46 @@ const servicesData: Record<string, ServiceDetail> = {
         a: "Yes. During the call or chat, the AI checks live slot availability, books the time, and sends instant confirmation SMS and emails to both you and the client."
       }
     ]
+  },
+
+  "enterprise-seo": {
+    title: "Enterprise SEO & Local Search Domination",
+    subtitle: "Dominate Google search results, rank #1 for high-intent commercial keywords, and generate a predictable stream of organic inbound leads 24/7.",
+    category: "Organic Growth & SEO",
+    priceStartingUsd: 449,
+    priceStartingPkr: 125000,
+    description: "Search Engine Optimization engineered for real revenue. We audit, restructure, and optimize your digital presence with deep technical SEO, structured JSON-LD schema, topic authority clustering, and high-authority link building to outrank established competitors.",
+    benefits: [
+      "Target #1 Google organic rankings for high-intent commercial search terms",
+      "Drive consistent, recurring inbound leads with zero monthly ad spend",
+      "100/100 Core Web Vitals optimization (LCP < 1.2s, INP < 50ms, CLS 0)",
+      "Strict Local SEO & Google Business Profile dominance in your region"
+    ],
+    features: [
+      "Complete Technical SEO & Crawl Budget Audit",
+      "Semantic JSON-LD Structured Schema Injection",
+      "Topic Cluster & High-Intent Keyword Architecture",
+      "Local Map Pack & Multi-Location Citation Engine",
+      "Monthly Organic Traffic, Keyword Position & ROI Reports"
+    ],
+    process: [
+      "1. Technical & Competitor Audit: Identifying keyword gaps and technical indexing issues.",
+      "2. On-Page & Schema Overhaul: Restructuring headings, meta signals, and JSON-LD schema.",
+      "3. Content & Authority Strategy: Crafting pillar content and high-retention semantic clusters.",
+      "4. Local & Off-Page Optimization: Building high-domain authority citations and tracking rankings."
+    ],
+    techStack: ["Google Search Console", "Ahrefs", "Semrush", "Next.js 16 SSR", "Schema.org", "Lighthouse"],
+    industries: ["Local Service Businesses", "Automotive & Repair Shops", "Law & Dental Clinics", "E-Commerce Stores", "Enterprise SaaS"],
+    faqs: [
+      {
+        q: "How long does it take to see #1 rankings on Google?",
+        a: "Technical fixes and local search gains typically show noticeable ranking improvements in 30 to 60 days, with full competitive keyword dominance within 90 days."
+      },
+      {
+        q: "Do you guarantee first-page Google rankings?",
+        a: "We follow strict Google E-E-A-T guidelines, Core Web Vitals benchmarks, and comprehensive schema architecture to systematically outrank competitors in your vertical."
+      }
+    ]
   }
 };
 

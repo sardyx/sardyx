@@ -46,153 +46,118 @@ export default function Team() {
     fetchTeam();
   }, []);
 
-  const getRoleIcon = (role: string) => {
-    const lowerRole = (role || "").toLowerCase();
-    if (lowerRole.includes("ceo") || lowerRole.includes("founder")) {
-      return <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" />;
-    }
-    if (lowerRole.includes("operations") || lowerRole.includes("manager")) {
-      return <Cpu className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-secondary" />;
-    }
-    if (lowerRole.includes("senior") || lowerRole.includes("lead")) {
-      return <ShieldAlert className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" />;
-    }
-    if (lowerRole.includes("developer") || lowerRole.includes("engineer")) {
-      return <Code2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-secondary" />;
-    }
-    return <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" />;
-  };
-
   const categories = ["Leadership", "AI & Engineering", "Growth & Strategy", "Creative Design"];
 
   return (
-    <section id="team" className="py-14 sm:py-24 relative overflow-hidden bg-black/30">
-      {/* Dynamic background blur elements */}
-      <div className="absolute top-1/3 left-0 w-[350px] h-[350px] bg-primary/10 rounded-full blur-[100px] pointer-events-none -translate-x-1/2"></div>
-      <div className="absolute bottom-1/3 right-0 w-[350px] h-[350px] bg-secondary/10 rounded-full blur-[100px] pointer-events-none translate-x-1/2"></div>
+    <section id="team" className="py-20 sm:py-28 relative overflow-hidden bg-[#080814]">
+      {/* Background glow blurs */}
+      <div className="absolute top-1/3 left-0 w-[450px] h-[450px] bg-primary/5 rounded-full blur-[140px] pointer-events-none -translate-x-1/2"></div>
+      <div className="absolute bottom-1/3 right-0 w-[450px] h-[450px] bg-violet-600/5 rounded-full blur-[140px] pointer-events-none translate-x-1/2"></div>
 
-      <div className="container mx-auto px-3 sm:px-6 lg:px-12 relative z-10">
-        <div className="text-center mb-10 sm:mb-14">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+        <div className="text-center max-w-2xl mx-auto mb-16">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full glass-panel mb-3 border-primary/20"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 mb-4"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
-            <span className="text-[10px] sm:text-xs font-semibold tracking-widest uppercase text-primary">Engineering Syndicate</span>
+            <span className="w-2 h-2 rounded-full bg-primary"></span>
+            <span className="text-xs font-semibold tracking-wider uppercase text-gray-300">Engineering & Growth Specialists</span>
           </motion.div>
           
           <motion.h2 
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-2xl sm:text-4xl md:text-5xl font-black mb-3 tracking-tight text-white"
+            className="text-3xl sm:text-5xl font-black mb-3 tracking-tight text-white"
           >
-            Meet Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary glow-text">Experts</span>
+            Meet the <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-200 to-violet-400">Syndicate</span>
           </motion.h2>
           
           <motion.p 
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-gray-400 max-w-xl mx-auto text-xs sm:text-sm md:text-base leading-relaxed"
+            className="text-gray-400 text-sm sm:text-base leading-relaxed"
           >
-            Specialized engineering and design teams architecting mission-critical digital systems.
+            Specialized engineering and growth teams dedicated to scaling client digital systems.
           </motion.p>
         </div>
 
         {/* Categories of team members */}
         {loading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-6 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-48 sm:h-72 rounded-2xl glass-panel border border-white/5 animate-pulse" />
+              <div key={i} className="h-64 rounded-2xl bg-white/[0.02] border border-white/5 animate-pulse" />
             ))}
           </div>
         ) : (
-          <div className="space-y-10 sm:space-y-14">
+          <div className="space-y-12">
             {categories.map((catName) => {
               const members = teamMembers.filter((m) => m.category === catName);
               if (members.length === 0) return null;
 
               return (
-                <div key={catName} className="space-y-4 sm:space-y-6">
-                  <motion.div
-                    initial={{ opacity: 0, x: -15 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    className="flex items-center gap-3"
-                  >
-                    <h3 className="text-xs sm:text-sm font-bold tracking-widest uppercase text-primary whitespace-nowrap">
+                <div key={catName} className="space-y-6">
+                  <div className="flex items-center gap-3">
+                    <h3 className="text-xs sm:text-sm font-bold tracking-wider uppercase text-primary whitespace-nowrap">
                       {catName}
                     </h3>
-                    <div className="h-[1px] w-full bg-gradient-to-r from-primary/30 to-transparent"></div>
-                  </motion.div>
+                    <div className="h-[1px] w-full bg-white/10"></div>
+                  </div>
 
-                  {/* Team Members Grid: 2 COLUMNS ON MOBILE (grid-cols-2) and 3/4 on desktop */}
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-5">
+                  {/* Clean Team Members Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                     {members.map((member, index) => (
                       <motion.div
                         key={member.id || member.name}
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 15 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-30px" }}
-                        transition={{ duration: 0.4, delay: index * 0.05 }}
-                        className="glass-panel rounded-2xl sm:rounded-3xl p-3 sm:p-5 flex flex-col items-center text-center relative overflow-hidden group hover:border-primary/40 transition-all border border-white/10 bg-black/40 hover:bg-black/60"
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.3, delay: index * 0.03 }}
+                        className="p-5 rounded-2xl border border-white/10 bg-[#0E0E1C]/80 hover:bg-[#121224] hover:border-primary/40 transition-all flex flex-col items-center text-center group shadow-sm"
                       >
-                        <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] z-0 pointer-events-none"></div>
-
-                        {/* Team Member Photo Frame */}
-                        <div className="relative w-18 h-18 sm:w-24 sm:h-24 mb-3 sm:mb-4 rounded-full p-1 z-10">
-                          <div className="absolute inset-0 rounded-full border border-dashed border-white/20 group-hover:border-primary/40 group-hover:rotate-45 transition-all duration-700"></div>
-                          <div className="absolute -inset-0.5 rounded-full bg-gradient-to-tr from-primary/30 to-secondary/30 opacity-0 group-hover:opacity-100 blur transition-opacity duration-500"></div>
-                          
-                          {/* Avatar Image */}
-                          <div className="relative w-full h-full rounded-full overflow-hidden border border-white/10 bg-black/50">
-                            {member.image_url ? (
-                              <img 
-                                src={member.image_url} 
-                                alt={member.name} 
-                                className="w-full h-full object-cover grayscale contrast-125 brightness-90 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-500" 
-                              />
-                            ) : (
-                              <div className="w-full h-full flex items-center justify-center font-bold text-lg font-mono text-primary bg-primary/10">
-                                {member.name?.charAt(0) || "T"}
-                              </div>
-                            )}
-                          </div>
-                          
-                          {/* Small Role Icon Indicator */}
-                          <div className="absolute bottom-0 right-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full glass-panel border border-white/20 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
-                            {getRoleIcon(member.role)}
-                          </div>
+                        {/* Avatar Image Frame */}
+                        <div className="w-20 h-20 mb-4 rounded-full overflow-hidden border border-white/15 bg-black/60 shrink-0">
+                          {member.image_url ? (
+                            <img 
+                              src={member.image_url} 
+                              alt={member.name} 
+                              className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-300" 
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center font-bold text-xl font-mono text-primary bg-primary/10">
+                              {member.name?.charAt(0) || "T"}
+                            </div>
+                          )}
                         </div>
 
-                        <div className="relative z-10 w-full flex-grow flex flex-col justify-between">
+                        <div className="w-full flex flex-col justify-between flex-1">
                           <div>
-                            <h4 className="text-xs sm:text-base font-bold text-white group-hover:text-primary transition-colors truncate">
+                            <h4 className="text-base font-bold text-white group-hover:text-primary transition-colors truncate">
                               {member.name}
                             </h4>
-                            <p className="text-[9px] sm:text-xs font-semibold tracking-wider uppercase text-secondary/90 mb-2 mt-0.5 truncate">
+                            <p className="text-xs font-semibold uppercase text-violet-400 mb-2 mt-0.5 tracking-wider truncate">
                               {member.role}
                             </p>
                             {member.bio && (
-                              <p className="text-[9px] sm:text-xs text-gray-400 leading-relaxed mb-3 line-clamp-2 px-1">
+                              <p className="text-xs text-gray-400 leading-relaxed mb-4 line-clamp-2 px-1">
                                 {member.bio}
                               </p>
                             )}
                           </div>
 
                           {/* Social links */}
-                          <div className="flex justify-center gap-2 pt-2 sm:pt-3 border-t border-white/5 mt-auto">
+                          <div className="flex justify-center gap-2.5 pt-3 border-t border-white/5 mt-auto">
                             {member.twitter && (
                               <a 
                                 href={member.twitter} 
                                 target="_blank"
                                 rel="noreferrer"
-                                className="w-6 h-6 sm:w-7 sm:h-7 rounded-full glass-panel flex items-center justify-center text-gray-400 hover:text-primary transition-all"
+                                className="w-7 h-7 rounded-lg bg-white/[0.04] hover:bg-primary/20 flex items-center justify-center text-gray-400 hover:text-primary transition-all"
                               >
-                                <Twitter className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                                <Twitter className="w-3.5 h-3.5" />
                               </a>
                             )}
                             {member.linkedin && (
@@ -200,9 +165,9 @@ export default function Team() {
                                 href={member.linkedin} 
                                 target="_blank"
                                 rel="noreferrer"
-                                className="w-6 h-6 sm:w-7 sm:h-7 rounded-full glass-panel flex items-center justify-center text-gray-400 hover:text-primary transition-all"
+                                className="w-7 h-7 rounded-lg bg-white/[0.04] hover:bg-primary/20 flex items-center justify-center text-gray-400 hover:text-primary transition-all"
                               >
-                                <Linkedin className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                                <Linkedin className="w-3.5 h-3.5" />
                               </a>
                             )}
                             {member.github && (
@@ -210,9 +175,9 @@ export default function Team() {
                                 href={member.github} 
                                 target="_blank"
                                 rel="noreferrer"
-                                className="w-6 h-6 sm:w-7 sm:h-7 rounded-full glass-panel flex items-center justify-center text-gray-400 hover:text-primary transition-all"
+                                className="w-7 h-7 rounded-lg bg-white/[0.04] hover:bg-primary/20 flex items-center justify-center text-gray-400 hover:text-primary transition-all"
                               >
-                                <Github className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                                <Github className="w-3.5 h-3.5" />
                               </a>
                             )}
                           </div>

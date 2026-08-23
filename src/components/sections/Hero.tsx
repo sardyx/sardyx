@@ -1,203 +1,293 @@
 "use client";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { 
   ArrowRight, 
   Sparkles, 
+  ShieldCheck, 
+  Zap, 
   Bot, 
   Code2, 
   MessageCircle, 
   TrendingUp,
-  Store,
-  Zap,
   Activity,
-  Cpu
+  Layers,
+  Store,
+  CheckCircle2
 } from "lucide-react";
 
 export default function Hero() {
+  const [activeTab, setActiveTab] = useState<"pos" | "web" | "ai">("pos");
+
   return (
-    <section className="relative min-h-[85vh] flex items-center justify-center pt-24 pb-12 sm:pt-32 sm:pb-20 overflow-hidden bg-black">
-      {/* Dynamic Ambient Glow Behind Columns */}
-      <div className="absolute top-1/4 left-10 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-primary/15 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute top-1/3 right-10 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-cyan-500/15 rounded-full blur-[130px] pointer-events-none"></div>
-      <div className="absolute bottom-10 left-1/3 w-[300px] sm:w-[450px] h-[300px] sm:h-[450px] bg-secondary/15 rounded-full blur-[110px] pointer-events-none"></div>
-      
-      {/* Cyber Grid Pattern */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none"></div>
+    <section className="relative min-h-screen flex items-center justify-center pt-28 pb-20 overflow-hidden bg-[#06060E]">
+      {/* Subtle Ambient Radial Lighting */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-gradient-to-b from-primary/10 via-violet-600/5 to-transparent blur-[140px] pointer-events-none"></div>
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-emerald-500/5 blur-[120px] pointer-events-none"></div>
+
+      {/* Cyber Grid Lines */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-15 pointer-events-none"></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
+        
+        {/* Top Header Content */}
+        <div className="text-center max-w-4xl mx-auto mb-14">
           
-          {/* ================= LEFT COLUMN: High-Impact Typography & CTAs ================= */}
-          <motion.div 
-            initial={{ opacity: 0, x: -25 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="lg:col-span-7 flex flex-col items-start text-left"
+          {/* Status Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/10 backdrop-blur-md mb-6 shadow-[0_0_20px_rgba(0,0,0,0.5)]"
           >
-            {/* Agency Status Pill */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-panel mb-4 sm:mb-6 border border-primary/30 shadow-[0_0_20px_rgba(0,240,255,0.25)]">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span className="text-[11px] sm:text-xs md:text-sm font-bold tracking-wider uppercase bg-gradient-to-r from-primary via-cyan-200 to-white bg-clip-text text-transparent">
-                Top-Tier Software, POS & AI Agency
-              </span>
-              <Sparkles size={12} className="text-primary animate-spin" style={{ animationDuration: "8s" }} />
-            </div>
-
-            {/* Main Title */}
-            <h1 className="text-3xl sm:text-5xl md:text-6xl xl:text-7xl font-black tracking-tight leading-[1.08] mb-4 sm:mb-6 text-white">
-              Architecting Futuristic <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-300 to-secondary glow-text">
-                Websites, POS & AI Systems
-              </span>
-            </h1>
-
-            {/* Subtitle */}
-            <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-2xl mb-6 sm:mb-8 leading-relaxed font-normal">
-              We engineer high-performance web systems, cloud POS & sales management software, native mobile apps, sub-second AI voice callbots, and high-ROI conversion funnels.
-            </p>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto mb-8 sm:mb-10">
-              <a
-                href="#services"
-                className="px-6 py-3.5 rounded-xl sm:rounded-2xl bg-primary text-black font-extrabold hover:bg-white hover:scale-105 transition-all duration-300 text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 drop-shadow-[0_0_25px_rgba(0,240,255,0.5)]"
-              >
-                <span>Explore 11 Core Services</span>
-                <ArrowRight size={15} />
-              </a>
-              
-              <button
-                onClick={() => {
-                  const msg = encodeURIComponent("Hello SARDYX AI! I would like to consult on a POS / Website / AI project.");
-                  window.open(`https://wa.me/923499398141?text=${msg}`, "_blank");
-                }}
-                className="px-6 py-3.5 rounded-xl sm:rounded-2xl glass-panel border border-emerald-500/40 text-emerald-400 font-bold hover:bg-emerald-500/10 hover:border-emerald-400 hover:scale-105 transition-all text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(16,185,129,0.2)]"
-              >
-                <MessageCircle size={16} />
-                <span>Instant WhatsApp Desk</span>
-              </button>
-            </div>
-
-            {/* Micro Feature Highlights (2-columns on mobile, 4 on desktop) */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 w-full max-w-2xl pt-4 sm:pt-6 border-t border-white/10">
-              {[
-                { icon: <Code2 size={14} className="text-primary" />, title: "Next.js 16 SSR", sub: "100/100 Speed" },
-                { icon: <Store size={14} className="text-emerald-400" />, title: "Cloud POS Suite", sub: "Multi-Branch Sync" },
-                { icon: <Bot size={14} className="text-cyan-400" />, title: "Sub-800ms AI Bots", sub: "24/7 Autopilot" },
-                { icon: <Zap size={14} className="text-amber-400" />, title: "Organic SEO #1", sub: "Lead Machine" }
-              ].map((item, idx) => (
-                <div 
-                  key={idx} 
-                  className="glass-panel p-2 sm:p-2.5 rounded-xl border border-white/5 bg-black/40 flex items-center gap-2 hover:border-primary/40 transition-colors"
-                >
-                  <div className="w-6 h-6 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
-                    {item.icon}
-                  </div>
-                  <div>
-                    <div className="text-[10px] sm:text-[11px] font-bold text-white leading-tight">{item.title}</div>
-                    <div className="text-[8px] sm:text-[9px] text-gray-400 leading-tight">{item.sub}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span className="text-xs font-semibold tracking-wider uppercase text-gray-200">
+              Top-Tier Software, POS & Autonomous AI Agency
+            </span>
           </motion.div>
 
-          {/* ================= RIGHT COLUMN: Cute Animated AI Robot Mascot ================= */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="lg:col-span-5 relative flex justify-center items-center"
+          {/* Main Title */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[1.08] text-white mb-6"
           >
-            <div className="relative w-full max-w-[320px] sm:max-w-sm lg:max-w-md">
-              
-              {/* Outer Cyan Glow Backlight */}
-              <div className="absolute -inset-2 rounded-[2.5rem] bg-gradient-to-tr from-primary via-cyan-400 to-secondary opacity-30 blur-2xl animate-pulse"></div>
-              
-              {/* Animated Floating Robot Container */}
-              <motion.div
-                animate={{ 
-                  y: [-8, 8, -8],
-                  rotate: [0, 1, -1, 0]
-                }}
-                transition={{ 
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-                className="relative rounded-[2rem] overflow-hidden border border-white/20 glass-panel bg-neutral-950/90 shadow-[0_0_50px_rgba(0,240,255,0.3)] group"
-              >
-                <Image
-                  src="/hero/ai-robot.jpg"
-                  alt="SARDYX AI Autonomous Agent Mascot"
-                  width={500}
-                  height={500}
-                  priority
-                  className="w-full h-auto object-cover object-center transform group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
+            Architecting Modern <br className="hidden sm:inline" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-200 to-violet-400">
+              Websites, POS & AI Systems
+            </span>
+          </motion.h1>
 
-                {/* Subtle Image Gradients for Depth */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/30 pointer-events-none"></div>
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed mb-8"
+          >
+            We engineer high-performance web systems, cloud POS & sales software, mobile apps, sub-second AI voice callbots, and <strong className="text-white">#1 organic SEO ranking engines</strong> built to dominate.
+          </motion.p>
 
-                {/* Floating Top Badge */}
-                <div className="absolute top-3 right-3 glass-panel px-2.5 py-1.5 rounded-lg border border-primary/40 bg-black/75 backdrop-blur-md flex items-center gap-1.5 shadow-[0_0_15px_rgba(0,240,255,0.3)]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-                  <span className="text-[10px] font-mono font-bold text-white flex items-center gap-1">
-                    <Activity size={11} className="text-emerald-400" />
-                    AI Agent Active
-                  </span>
-                </div>
+          {/* Action CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex flex-wrap items-center justify-center gap-3.5"
+          >
+            <a
+              href="#services"
+              className="px-7 py-3.5 rounded-xl bg-primary text-black font-extrabold text-xs sm:text-sm uppercase tracking-wider hover:bg-white hover:scale-105 transition-all duration-300 flex items-center gap-2 shadow-[0_0_25px_rgba(0,240,255,0.4)]"
+            >
+              <span>Explore 12 Services</span>
+              <ArrowRight size={16} />
+            </a>
 
-                {/* Floating Bottom HUD Overlay */}
-                <div className="absolute bottom-3 left-3 right-3 glass-panel p-2.5 rounded-xl border border-white/20 bg-black/80 backdrop-blur-xl shadow-[0_8px_25px_rgba(0,0,0,0.8)]">
-                  <div className="flex items-center justify-between mb-1.5">
-                    <div className="flex items-center gap-1.5">
-                      <div className="w-6 h-6 rounded-md bg-primary/20 border border-primary/30 flex items-center justify-center">
-                        <TrendingUp size={13} className="text-primary" />
-                      </div>
-                      <div>
-                        <div className="text-[8px] font-mono uppercase text-gray-400 leading-tight">Neural Core</div>
-                        <div className="text-[11px] font-black text-white leading-tight">Autonomous Multi-Agent v2.6</div>
-                      </div>
-                    </div>
-                    <span className="text-[9px] font-bold text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded border border-emerald-500/30">
-                      99.9% Sync
-                    </span>
-                  </div>
+            <button
+              onClick={() => {
+                const msg = encodeURIComponent("Hello SARDYX AI! I would like to consult on a POS / Website / AI project.");
+                window.open(`https://wa.me/923499398141?text=${msg}`, "_blank");
+              }}
+              className="px-6 py-3.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 font-bold text-xs sm:text-sm uppercase tracking-wider hover:scale-105 transition-all flex items-center gap-2"
+            >
+              <MessageCircle size={16} />
+              <span>WhatsApp Live Desk</span>
+            </button>
 
-                  <div className="grid grid-cols-3 gap-1 pt-1.5 border-t border-white/10 text-center">
-                    <div>
-                      <span className="text-[8px] text-gray-400 block">Response</span>
-                      <span className="text-[10px] font-black text-primary">&lt; 0.4s</span>
-                    </div>
-                    <div>
-                      <span className="text-[8px] text-gray-400 block">POS Sync</span>
-                      <span className="text-[10px] font-black text-emerald-400">0.02s</span>
-                    </div>
-                    <div>
-                      <span className="text-[8px] text-gray-400 block">Leads Gen</span>
-                      <span className="text-[10px] font-black text-cyan-300">24/7 Auto</span>
-                    </div>
-                  </div>
-                </div>
-
-              </motion.div>
-
-              {/* Floating Side Capsule Badge */}
-              <motion.div
-                animate={{ y: [6, -6, 6] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="hidden sm:flex absolute -left-4 top-1/4 glass-panel px-2.5 py-1.5 rounded-lg border border-secondary/40 bg-black/85 backdrop-blur-md items-center gap-1.5 shadow-[0_0_20px_rgba(168,85,247,0.35)] z-20"
-              >
-                <Cpu size={12} className="text-secondary" />
-                <span className="text-[10px] font-bold text-white">Autonomous Core</span>
-              </motion.div>
-
-            </div>
+            <a
+              href="/contact"
+              className="px-6 py-3.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-white font-semibold text-xs sm:text-sm uppercase tracking-wider transition-all"
+            >
+              Book Strategy Call
+            </a>
           </motion.div>
 
         </div>
+
+        {/* ================= ULTRA-CLEAN LIVE TELEMETRY DASHBOARD PREVIEW ================= */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="max-w-5xl mx-auto rounded-2xl sm:rounded-3xl border border-white/10 bg-[#0B0B18]/90 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.8)] overflow-hidden"
+        >
+          {/* Top Window Navigation Bar */}
+          <div className="px-4 sm:px-6 py-3.5 border-b border-white/10 bg-white/[0.02] flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-rose-500/70"></div>
+              <div className="w-3 h-3 rounded-full bg-amber-500/70"></div>
+              <div className="w-3 h-3 rounded-full bg-emerald-500/70"></div>
+              <span className="ml-3 text-2xs font-mono text-gray-400 hidden sm:inline">
+                sardyx-core.engine // live-telemetry
+              </span>
+            </div>
+
+            {/* Dashboard Tabs */}
+            <div className="flex items-center gap-1.5 p-1 rounded-xl bg-black/50 border border-white/5">
+              {[
+                { id: "pos", label: "Cloud POS & Sales" },
+                { id: "web", label: "Web & SEO #1" },
+                { id: "ai", label: "AI Voice Agents" }
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as any)}
+                  className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                    activeTab === tab.id
+                      ? "bg-primary text-black font-bold shadow-[0_0_10px_rgba(0,240,255,0.3)]"
+                      : "text-gray-400 hover:text-white"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="hidden md:flex items-center gap-2 text-2xs font-mono text-emerald-400">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+              ALL SYSTEMS OPTIMAL
+            </div>
+          </div>
+
+          {/* Dashboard Body */}
+          <div className="p-4 sm:p-8">
+            {activeTab === "pos" && (
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                {/* Metrics */}
+                <div className="md:col-span-4 space-y-3">
+                  <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
+                    <span className="text-2xs font-mono text-gray-400 uppercase block mb-1">Today's Revenue Sync</span>
+                    <div className="text-2xl sm:text-3xl font-black text-white font-mono">$4,850.00</div>
+                    <span className="text-xs text-emerald-400 font-semibold flex items-center gap-1 mt-1">
+                      <TrendingUp size={13} /> +32.4% vs last week
+                    </span>
+                  </div>
+                  
+                  <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
+                    <span className="text-2xs font-mono text-gray-400 uppercase block mb-1">Multi-Branch Status</span>
+                    <div className="text-lg font-bold text-white flex items-center justify-between">
+                      <span>4 Outlets Active</span>
+                      <span className="text-xs font-mono text-cyan-400 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-500/30">0.02s Sync</span>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
+                    <span className="text-2xs font-mono text-gray-400 uppercase block mb-1">Inventory Alert</span>
+                    <div className="text-xs text-gray-300 flex items-center gap-2">
+                      <CheckCircle2 size={14} className="text-emerald-400" />
+                      All stock synchronized with cloud DB
+                    </div>
+                  </div>
+                </div>
+
+                {/* Simulated Chart & Pipeline */}
+                <div className="md:col-span-8 p-5 rounded-2xl bg-black/60 border border-white/5">
+                  <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/5">
+                    <div>
+                      <h4 className="text-sm font-bold text-white">Live Transactions & Sales Pipeline</h4>
+                      <p className="text-xs text-gray-400">NSK Enterprise Multi-Store Production Instance</p>
+                    </div>
+                    <span className="text-xs font-mono text-primary font-bold">Auto-Reconcile ON</span>
+                  </div>
+
+                  {/* Simulated Sparkline / Chart Bars */}
+                  <div className="grid grid-cols-7 gap-2 items-end h-28 pt-4 pb-2">
+                    {[45, 62, 55, 80, 72, 94, 100].map((val, idx) => (
+                      <div key={idx} className="flex flex-col items-center gap-1.5 h-full justify-end">
+                        <div 
+                          className="w-full rounded-t-lg bg-gradient-to-t from-primary/30 to-primary transition-all duration-500 hover:brightness-125"
+                          style={{ height: `${val}%` }}
+                        ></div>
+                        <span className="text-[10px] font-mono text-gray-500">Day {idx + 1}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-2 pt-4 mt-2 border-t border-white/5 text-center">
+                    <div>
+                      <span className="text-[10px] text-gray-400 block">Offline Mode</span>
+                      <span className="text-xs font-bold text-emerald-400">Enabled (Auto-Sync)</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-gray-400 block">Thermal Printing</span>
+                      <span className="text-xs font-bold text-white">ESC/POS & Wi-Fi</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-gray-400 block">Staff Commission</span>
+                      <span className="text-xs font-bold text-cyan-300">Automated Ledger</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === "web" && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/5">
+                  <div className="text-2xs font-mono text-gray-400 uppercase mb-2">Google Lighthouse Score</div>
+                  <div className="text-4xl font-black text-emerald-400 font-mono mb-2">100/100</div>
+                  <p className="text-xs text-gray-300">Core Web Vitals passed with LCP &lt; 0.9s and 0 CLS shift.</p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/5">
+                  <div className="text-2xs font-mono text-gray-400 uppercase mb-2">Organic Search Position</div>
+                  <div className="text-4xl font-black text-primary font-mono mb-2">#1 Rank</div>
+                  <p className="text-xs text-gray-300">Targeted local and commercial search keywords dominating.</p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/5">
+                  <div className="text-2xs font-mono text-gray-400 uppercase mb-2">Next.js 16 SSR Latency</div>
+                  <div className="text-4xl font-black text-cyan-300 font-mono mb-2">&lt; 0.3s</div>
+                  <p className="text-xs text-gray-300">Global edge CDN deployment with sub-second response times.</p>
+                </div>
+              </div>
+            )}
+
+            {activeTab === "ai" && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/5">
+                  <div className="text-2xs font-mono text-gray-400 uppercase mb-2">Voice Callbot Latency</div>
+                  <div className="text-4xl font-black text-emerald-400 font-mono mb-2">&lt; 780ms</div>
+                  <p className="text-xs text-gray-300">Real-time bidirectional natural voice streaming with emotion.</p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/5">
+                  <div className="text-2xs font-mono text-gray-400 uppercase mb-2">24/7 Auto Booking</div>
+                  <div className="text-4xl font-black text-primary font-mono mb-2">84.2%</div>
+                  <p className="text-xs text-gray-300">Calls automatically converted into confirmed calendar bookings.</p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/5">
+                  <div className="text-2xs font-mono text-gray-400 uppercase mb-2">Omnichannel Routing</div>
+                  <div className="text-4xl font-black text-violet-400 font-mono mb-2">Unified</div>
+                  <p className="text-xs text-gray-300">WhatsApp, Web Chat, Phone Callbot & CRM in one pipeline.</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </motion.div>
+
+        {/* Bottom Trust Metrics Strip */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto mt-10 pt-8 border-t border-white/10 text-center">
+          <div>
+            <div className="text-2xl sm:text-3xl font-black text-white font-mono">100+</div>
+            <div className="text-xs text-gray-400 font-medium">Digital Systems Deployed</div>
+          </div>
+          <div>
+            <div className="text-2xl sm:text-3xl font-black text-emerald-400 font-mono">99.99%</div>
+            <div className="text-xs text-gray-400 font-medium">Cloud Infrastructure Uptime</div>
+          </div>
+          <div>
+            <div className="text-2xl sm:text-3xl font-black text-primary font-mono">&lt; 800ms</div>
+            <div className="text-xs text-gray-400 font-medium">AI Voice Callbot Latency</div>
+          </div>
+          <div>
+            <div className="text-2xl sm:text-3xl font-black text-violet-400 font-mono">#1 Rank</div>
+            <div className="text-xs text-gray-400 font-medium">Organic SEO Performance</div>
+          </div>
+        </div>
+
       </div>
     </section>
   );
