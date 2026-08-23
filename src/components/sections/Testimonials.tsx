@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Quote, Sparkles, MessageSquarePlus, X, Star } from "lucide-react";
+import { Quote, Sparkles, MessageSquarePlus, X, Star, ArrowRight } from "lucide-react";
 import { mockTestimonials } from "@/lib/supabase";
 
 export default function Testimonials() {
@@ -55,104 +55,102 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="py-20 sm:py-28 relative bg-[#06060E] overflow-hidden">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+    <section className="py-16 sm:py-24 relative bg-[#06060E] overflow-hidden">
+      <div className="container mx-auto px-5 sm:px-8 lg:px-14 relative z-10">
 
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-14 gap-6">
-          <div className="max-w-2xl">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 sm:mb-14 gap-4">
+          <div>
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 mb-4"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 mb-3"
             >
-              <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <Sparkles size={13} className="text-primary" />
               <span className="text-xs font-semibold tracking-wider uppercase text-gray-300">Client Feedback</span>
             </motion.div>
-            
-            <motion.h2
-              initial={{ opacity: 0, y: 15 }}
+
+            <motion.h2 
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-3xl sm:text-5xl font-black tracking-tight text-white"
+              className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight text-white"
             >
-              Client <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-200 to-violet-400">Validations</span>
+              Verified <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-200 to-violet-400">Client Reviews</span>
             </motion.h2>
-            
-            <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-gray-400 mt-3 text-sm sm:text-base leading-relaxed"
-            >
-              Direct feedback from business owners and enterprise clients who rely on SARDYX AI software and websites.
-            </motion.p>
           </div>
 
-          <button
+          <motion.button
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             onClick={() => setShowFormModal(true)}
-            className="px-5 py-2.5 rounded-xl border border-white/10 bg-white/[0.04] hover:bg-primary hover:text-black hover:border-primary text-gray-200 transition-all font-bold text-xs uppercase tracking-wider flex items-center gap-2 cursor-pointer shrink-0"
+            className="self-start sm:self-auto px-4 py-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-primary/40 text-xs font-bold text-white transition-all flex items-center gap-2 cursor-pointer"
           >
-            <MessageSquarePlus size={15} /> 
-            <span>Submit Review</span>
-          </button>
+            <MessageSquarePlus size={14} className="text-primary" />
+            <span>Leave a Review</span>
+          </motion.button>
         </div>
 
-        {/* Testimonials Grid: Clean, high-contrast cards */}
+        {/* Testimonials: Mobile Horizontal Snap Scroll / Desktop Grid */}
         {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+          <div className="flex md:grid md:grid-cols-3 gap-4 sm:gap-6 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory no-scrollbar pb-3 md:pb-0">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="h-56 rounded-2xl bg-white/[0.02] border border-white/5 animate-pulse" />
+              <div key={i} className="min-w-[280px] md:min-w-0 h-44 rounded-2xl bg-white/[0.02] border border-white/5 animate-pulse" />
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-            <AnimatePresence>
-              {testimonials.map((test, index) => (
-                <motion.div
-                  key={test.id || index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.35, delay: index * 0.04 }}
-                  className="p-6 sm:p-7 rounded-2xl border border-white/10 bg-[#0E0E1C]/80 hover:bg-[#121224] hover:border-primary/40 transition-all flex flex-col justify-between shadow-sm hover:shadow-md group"
-                >
-                  <div>
-                    {/* 5-Star Rating */}
-                    <div className="flex gap-1 mb-4">
-                      {[1, 2, 3, 4, 5].map((s) => (
-                        <Star key={s} size={14} className="text-amber-400 fill-amber-400" />
+          <div className="flex md:grid md:grid-cols-3 gap-4 sm:gap-6 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory no-scrollbar pb-3 md:pb-0 -mx-5 px-5 md:mx-0 md:px-0">
+            {testimonials.map((item, index) => (
+              <motion.div
+                key={item.id || index}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+                className="min-w-[280px] sm:min-w-[320px] md:min-w-0 snap-center p-5 sm:p-6 rounded-2xl border border-white/[0.08] bg-[#0E0E1C] flex flex-col justify-between"
+              >
+                <div>
+                  {/* Rating Stars & Quote Icon */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex gap-1 text-amber-400">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} size={13} className="fill-amber-400" />
                       ))}
                     </div>
-
-                    {/* Quote Text */}
-                    <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-6 italic">
-                      "{test.quote}"
-                    </p>
+                    <Quote size={18} className="text-primary/30" />
                   </div>
 
-                  {/* Author Meta */}
-                  <div className="flex items-center gap-3.5 pt-4 border-t border-white/10 mt-auto">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-primary/20 to-violet-500/20 flex items-center justify-center border border-white/10 text-white font-bold font-mono text-sm shrink-0">
-                      {test.author ? test.author.charAt(0) : "S"}
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-bold text-white group-hover:text-primary transition-colors">
-                        {test.author}
-                      </h4>
-                      <p className="text-xs text-gray-400 font-mono">{test.role}</p>
-                    </div>
+                  <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-5 italic">
+                    "{item.quote}"
+                  </p>
+                </div>
+
+                {/* Author Info */}
+                <div className="pt-3 border-t border-white/[0.06] flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-xs text-primary font-mono shrink-0">
+                    {item.author ? item.author.charAt(0) : "C"}
                   </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
+                  <div className="truncate">
+                    <h4 className="font-bold text-white text-xs sm:text-sm truncate">{item.author}</h4>
+                    <p className="text-[11px] text-gray-500 truncate">{item.role}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         )}
+
+        {/* Mobile Swipe Hint */}
+        <div className="flex md:hidden items-center justify-center gap-1.5 mt-3 text-[10px] text-gray-500 font-medium">
+          <span>Swipe sideways to read reviews</span>
+          <ArrowRight size={11} />
+        </div>
+
       </div>
 
-      {/* Review Submission Modal */}
+      {/* Review Submission Form Modal */}
       <AnimatePresence>
         {showFormModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
@@ -160,79 +158,72 @@ export default function Testimonials() {
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              className="relative w-full max-w-md p-6 sm:p-8 rounded-3xl border border-white/15 bg-[#0B0B18] shadow-2xl text-white overflow-hidden"
+              className="relative w-full max-w-lg rounded-2xl border border-white/15 p-6 sm:p-8 bg-[#0B0B18] shadow-2xl text-white"
             >
               <button
                 onClick={() => setShowFormModal(false)}
-                className="absolute top-5 right-5 text-gray-400 hover:text-white transition-colors"
+                className="absolute top-4 right-4 w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-gray-300 hover:text-white transition-colors cursor-pointer"
               >
-                <X size={18} />
+                <X size={15} />
               </button>
 
-              <h3 className="text-xl font-black text-white mb-1.5 flex items-center gap-2">
-                <Sparkles className="text-primary" size={17} /> Share Your Experience
-              </h3>
-              <p className="text-gray-400 text-xs mb-6">
-                Your feedback will appear on the site once verified by our team.
-              </p>
+              <div className="mb-6">
+                <span className="px-3 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary text-[10px] font-mono font-bold uppercase tracking-wider inline-block mb-2">
+                  Client Verification
+                </span>
+                <h3 className="text-xl font-bold text-white">Share Your Experience</h3>
+                <p className="text-xs text-gray-400 mt-1">Your feedback helps enterprise businesses evaluate our engineering.</p>
+              </div>
 
               {submitStatus === "success" ? (
-                <div className="py-8 text-center flex flex-col items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 text-xl font-bold">
-                    ✓
-                  </div>
-                  <h4 className="text-base font-bold text-white">Review Submitted</h4>
-                  <p className="text-xs text-gray-400">Thank you for validating our work.</p>
+                <div className="p-5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-center text-emerald-400 text-xs font-semibold">
+                  Thank you! Your testimonial has been submitted for review.
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-xs font-mono uppercase text-gray-400 mb-1.5 font-bold">Your Name</label>
+                    <label className="block text-xs font-medium text-gray-400 mb-1">Your Name</label>
                     <input
                       type="text"
                       name="author"
                       value={formData.author}
                       onChange={handleInputChange}
                       required
-                      placeholder="e.g. Ahmed Raza"
-                      className="w-full bg-white/[0.04] border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-primary"
+                      placeholder="e.g. John Doe"
+                      className="w-full bg-[#0A0A18] border border-white/[0.08] rounded-xl px-4 py-2.5 text-white text-xs placeholder-gray-600 focus:outline-none focus:border-primary/60"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-mono uppercase text-gray-400 mb-1.5 font-bold">Role & Company</label>
+                    <label className="block text-xs font-medium text-gray-400 mb-1">Role / Business</label>
                     <input
                       type="text"
                       name="role"
                       value={formData.role}
                       onChange={handleInputChange}
                       required
-                      placeholder="e.g. CEO, NSK Enterprise"
-                      className="w-full bg-white/[0.04] border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-primary"
+                      placeholder="e.g. Founder at TechCorp"
+                      className="w-full bg-[#0A0A18] border border-white/[0.08] rounded-xl px-4 py-2.5 text-white text-xs placeholder-gray-600 focus:outline-none focus:border-primary/60"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-mono uppercase text-gray-400 mb-1.5 font-bold">Review Feedback</label>
+                    <label className="block text-xs font-medium text-gray-400 mb-1">Your Testimonial</label>
                     <textarea
                       name="quote"
                       value={formData.quote}
                       onChange={handleInputChange}
                       required
-                      rows={3}
-                      placeholder="Tell us about the results of your website, POS, or AI system..."
-                      className="w-full bg-white/[0.04] border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-primary resize-none"
+                      rows={4}
+                      placeholder="Describe your project experience and results..."
+                      className="w-full bg-[#0A0A18] border border-white/[0.08] rounded-xl px-4 py-2.5 text-white text-xs placeholder-gray-600 focus:outline-none focus:border-primary/60 resize-none"
                     />
                   </div>
-
-                  {submitStatus === "error" && (
-                    <p className="text-xs text-rose-400">Submission failed. Please try again.</p>
-                  )}
 
                   <button
                     type="submit"
                     disabled={submitStatus === "submitting"}
-                    className="w-full py-3 rounded-xl bg-primary text-black font-extrabold text-xs uppercase tracking-wider hover:bg-white transition-all shadow-[0_0_15px_rgba(0,240,255,0.4)] disabled:opacity-50"
+                    className="w-full py-3 rounded-xl bg-primary text-black font-bold text-xs uppercase tracking-wider hover:bg-cyan-300 transition-all cursor-pointer"
                   >
                     {submitStatus === "submitting" ? "Submitting..." : "Submit Review"}
                   </button>

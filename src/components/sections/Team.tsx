@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import { mockTeam } from "@/lib/supabase";
 
 const Linkedin = (props: any) => (
@@ -32,7 +33,7 @@ export default function Team() {
         const data = await res.json();
         if (data && data.length > 0) setTeamMembers(data);
       } catch {
-        // fallback to mock
+        // fallback
       } finally {
         setLoading(false);
       }
@@ -41,19 +42,19 @@ export default function Team() {
   }, []);
 
   return (
-    <section id="team" className="py-20 sm:py-28 relative overflow-hidden bg-[#06060E]">
+    <section id="team" className="py-16 sm:py-24 relative overflow-hidden bg-[#06060E]">
       {/* Ambient lighting */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/5 blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-5 sm:px-8 lg:px-14 relative z-10">
 
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-14">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 mb-4"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 mb-3"
           >
             <span className="w-2 h-2 rounded-full bg-primary" />
             <span className="text-xs font-semibold tracking-wider uppercase text-gray-300">The People Behind It</span>
@@ -63,7 +64,7 @@ export default function Team() {
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl sm:text-5xl font-black mb-3 tracking-tight text-white"
+            className="text-2xl sm:text-4xl md:text-5xl font-black mb-3 tracking-tight text-white"
           >
             Meet the <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-200 to-violet-400">Team</span>
           </motion.h2>
@@ -72,21 +73,21 @@ export default function Team() {
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-gray-400 text-sm sm:text-base leading-relaxed"
+            className="text-gray-400 text-xs sm:text-base leading-relaxed"
           >
             A specialized team of engineers, strategists, and designers building the future of digital systems.
           </motion.p>
         </div>
 
-        {/* Single unified grid */}
+        {/* Team: Mobile Horizontal Carousel / Desktop 6-Col Grid */}
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5 max-w-6xl mx-auto">
+          <div className="flex lg:grid lg:grid-cols-6 gap-4 overflow-x-auto lg:overflow-x-visible snap-x snap-mandatory no-scrollbar pb-3 lg:pb-0">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="h-56 rounded-2xl bg-white/[0.02] border border-white/5 animate-pulse" />
+              <div key={i} className="min-w-[200px] lg:min-w-0 h-52 rounded-2xl bg-white/[0.02] border border-white/5 animate-pulse" />
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5 max-w-6xl mx-auto">
+          <div className="flex lg:grid lg:grid-cols-6 gap-4 overflow-x-auto lg:overflow-x-visible snap-x snap-mandatory no-scrollbar pb-3 lg:pb-0 -mx-5 px-5 lg:mx-0 lg:px-0">
             {teamMembers.map((member, index) => {
               const roleColor = roleColors[member.role] || "text-gray-400";
               const isFirst = index === 0;
@@ -94,48 +95,49 @@ export default function Team() {
               return (
                 <motion.div
                   key={member.id || member.name}
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.35, delay: index * 0.05 }}
-                  className={`relative flex flex-col items-center text-center p-5 rounded-2xl border transition-all group
+                  transition={{ duration: 0.3, delay: index * 0.04 }}
+                  className={`min-w-[190px] sm:min-w-[220px] lg:min-w-0 snap-center relative flex flex-col items-center text-center p-4 sm:p-5 rounded-2xl border transition-all group
                     ${isFirst
                       ? "border-primary/30 bg-[#0E0E1C] ring-1 ring-primary/20"
                       : "border-white/[0.08] bg-[#0E0E1C] hover:border-white/20"
                     }`}
                 >
-                  {/* CEO badge */}
+                  {/* Founder badge */}
                   {isFirst && (
-                    <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-primary text-black text-[10px] font-black uppercase tracking-wider whitespace-nowrap">
+                    <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-primary text-black text-[9px] font-black uppercase tracking-wider whitespace-nowrap">
                       Founder
                     </span>
                   )}
 
                   {/* Avatar */}
-                  <div className={`w-16 h-16 mb-3 rounded-full overflow-hidden border shrink-0 ${isFirst ? "border-primary/50 w-20 h-20" : "border-white/10"}`}>
+                  <div className={`w-14 h-14 sm:w-16 sm:h-16 mb-3 rounded-full overflow-hidden border shrink-0 ${
+                    isFirst ? "border-primary/50" : "border-white/10"
+                  }`}>
                     {member.image_url ? (
                       <img
                         src={member.image_url}
                         alt={member.name}
-                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-lg font-bold text-primary bg-primary/10">
+                      <div className="w-full h-full flex items-center justify-center text-base font-bold text-primary bg-primary/10">
                         {member.name?.charAt(0)}
                       </div>
                     )}
                   </div>
 
                   {/* Info */}
-                  <h4 className={`font-bold text-white leading-tight mb-0.5 ${isFirst ? "text-base" : "text-sm"}`}>
+                  <h4 className="font-bold text-white text-xs sm:text-sm leading-tight mb-0.5 truncate w-full">
                     {member.name}
                   </h4>
-                  <p className={`text-[11px] font-semibold uppercase tracking-wide mb-3 ${roleColor}`}>
+                  <p className={`text-[10px] sm:text-[11px] font-semibold uppercase tracking-wide mb-2 truncate w-full ${roleColor}`}>
                     {member.role}
                   </p>
 
-                  {/* Bio — show on hover for non-CEO, always for CEO */}
-                  <p className="text-[11px] text-gray-500 leading-relaxed line-clamp-3 mb-3">
+                  <p className="text-[10px] sm:text-[11px] text-gray-500 leading-relaxed line-clamp-2 mb-3">
                     {member.bio}
                   </p>
 
@@ -145,7 +147,8 @@ export default function Team() {
                       href={member.linkedin && member.linkedin !== "#" ? member.linkedin : "https://www.linkedin.com/"}
                       target="_blank"
                       rel="noreferrer"
-                      className="w-6 h-6 rounded-md bg-white/[0.04] flex items-center justify-center text-gray-500 hover:text-primary transition-colors"
+                      aria-label={`${member.name} LinkedIn`}
+                      className="w-6 h-6 rounded-md bg-white/[0.04] hover:bg-primary/20 flex items-center justify-center text-gray-500 hover:text-primary transition-colors"
                     >
                       <Linkedin className="w-3 h-3" />
                     </a>
@@ -156,7 +159,11 @@ export default function Team() {
           </div>
         )}
 
-
+        {/* Mobile Swipe Hint */}
+        <div className="flex lg:hidden items-center justify-center gap-1.5 mt-3 text-[10px] text-gray-500 font-medium">
+          <span>Swipe sideways to view all team members</span>
+          <ArrowRight size={11} />
+        </div>
 
       </div>
     </section>

@@ -16,7 +16,8 @@ import {
   Bot,
   ArrowRight,
   CheckCircle2,
-  Search
+  Search,
+  ChevronRight
 } from "lucide-react";
 import { mockAllServices } from "@/lib/supabase";
 
@@ -31,31 +32,31 @@ export default function Services() {
     "SEO & Marketing"
   ];
 
-  const getIcon = (iconName: string, category: string) => {
-    const iconClass = "w-6 h-6 text-primary group-hover:scale-110 transition-transform duration-300";
+  const getIcon = (iconName: string) => {
+    const iconClass = "w-5 h-5 text-primary group-hover:scale-110 transition-transform duration-300";
     switch (iconName) {
       case "LayoutTemplate":
         return <LayoutTemplate className={iconClass} />;
       case "ReceiptText":
-        return <ReceiptText className="w-6 h-6 text-emerald-400 group-hover:scale-110 transition-transform duration-300" />;
+        return <ReceiptText className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform duration-300" />;
       case "TrendingUp":
-        return <TrendingUp className="w-6 h-6 text-cyan-400 group-hover:scale-110 transition-transform duration-300" />;
+        return <TrendingUp className="w-5 h-5 text-cyan-400 group-hover:scale-110 transition-transform duration-300" />;
       case "Smartphone":
-        return <Smartphone className="w-6 h-6 text-violet-400 group-hover:scale-110 transition-transform duration-300" />;
+        return <Smartphone className="w-5 h-5 text-violet-400 group-hover:scale-110 transition-transform duration-300" />;
       case "Gamepad2":
-        return <Gamepad2 className="w-6 h-6 text-fuchsia-400 group-hover:scale-110 transition-transform duration-300" />;
+        return <Gamepad2 className="w-5 h-5 text-fuchsia-400 group-hover:scale-110 transition-transform duration-300" />;
       case "Share2":
-        return <Share2 className="w-6 h-6 text-pink-400 group-hover:scale-110 transition-transform duration-300" />;
+        return <Share2 className="w-5 h-5 text-pink-400 group-hover:scale-110 transition-transform duration-300" />;
       case "Sparkles":
-        return <Sparkles className="w-6 h-6 text-amber-400 group-hover:scale-110 transition-transform duration-300" />;
+        return <Sparkles className="w-5 h-5 text-amber-400 group-hover:scale-110 transition-transform duration-300" />;
       case "Monitor":
-        return <Monitor className="w-6 h-6 text-blue-400 group-hover:scale-110 transition-transform duration-300" />;
+        return <Monitor className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform duration-300" />;
       case "Video":
-        return <Video className="w-6 h-6 text-rose-400 group-hover:scale-110 transition-transform duration-300" />;
+        return <Video className="w-5 h-5 text-rose-400 group-hover:scale-110 transition-transform duration-300" />;
       case "Cpu":
-        return <Cpu className="w-6 h-6 text-teal-400 group-hover:scale-110 transition-transform duration-300" />;
+        return <Cpu className="w-5 h-5 text-teal-400 group-hover:scale-110 transition-transform duration-300" />;
       case "Bot":
-        return <Bot className="w-6 h-6 text-primary group-hover:scale-110 transition-transform duration-300" />;
+        return <Bot className="w-5 h-5 text-primary group-hover:scale-110 transition-transform duration-300" />;
       default:
         return <Cpu className={iconClass} />;
     }
@@ -71,57 +72,56 @@ export default function Services() {
   });
 
   return (
-    <section id="services" className="py-20 sm:py-28 relative overflow-hidden bg-[#080814]">
+    <section id="services" className="py-16 sm:py-24 relative overflow-hidden bg-[#080814]">
       {/* Background ambient lighting */}
       <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-violet-600/5 rounded-full blur-[140px] pointer-events-none"></div>
       <div className="absolute bottom-10 left-0 w-[450px] h-[450px] bg-primary/5 rounded-full blur-[140px] pointer-events-none"></div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+      <div className="container mx-auto px-5 sm:px-8 lg:px-14 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 mb-4"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 mb-3"
           >
             <span className="w-2 h-2 rounded-full bg-primary"></span>
-            <span className="text-xs font-semibold tracking-wider uppercase text-gray-300">12 Specialized Core Disciplines</span>
+            <span className="text-xs font-semibold tracking-wider uppercase text-gray-300">12 Specialized Core Capabilities</span>
           </motion.div>
 
           <motion.h2 
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl sm:text-5xl font-black mb-4 tracking-tight text-white"
+            className="text-2xl sm:text-4xl md:text-5xl font-black mb-3 tracking-tight text-white"
           >
             Full-Stack <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-200 to-violet-400">Engineering & SEO</span> Services
           </motion.h2>
 
           <motion.p 
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-gray-300 text-sm sm:text-base leading-relaxed"
+            className="text-gray-400 text-xs sm:text-base leading-relaxed"
           >
-            From turnkey Next.js websites and multi-branch POS softwares to sub-second AI voice callbots and #1 Google SEO domination.
+            Next.js web portals, cloud POS softwares, autonomous AI voice bots, and #1 Google SEO dominance.
           </motion.p>
         </div>
 
-        {/* Filter Pills */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
+        {/* Filter Tabs — Horizontal Scrollable on Mobile */}
+        <div className="flex overflow-x-auto snap-x no-scrollbar justify-start sm:justify-center gap-2 mb-8 sm:mb-12 pb-2 -mx-5 px-5 sm:mx-0 sm:px-0">
           {filterTabs.map((tab) => {
             const isActive = selectedFilter === tab;
             return (
               <button
                 key={tab}
                 onClick={() => setSelectedFilter(tab)}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                   isActive 
-                    ? "bg-white text-black font-bold shadow-lg" 
-                    : "bg-white/[0.03] text-gray-400 hover:text-white border border-white/5 hover:border-white/20"
+                    ? "bg-white text-black shadow-sm" 
+                    : "bg-white/[0.04] text-gray-400 hover:text-white border border-white/5 hover:border-white/20"
                 }`}
               >
                 {tab}
@@ -130,97 +130,87 @@ export default function Services() {
           })}
         </div>
 
-        {/* Services Grid: Clean, high-contrast, perfectly spaced */}
+        {/* Responsive Grid: 2-Col on Mobile (compact) / 4-Col on Desktop */}
         <motion.div 
           layout
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5"
         >
           <AnimatePresence>
             {filteredServices.map((service, index) => (
               <motion.div
                 key={service.id}
                 layout
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.3, delay: index * 0.03 }}
-                className="p-6 rounded-2xl border border-white/10 bg-[#0E0E1C]/80 hover:bg-[#121224] hover:border-primary/40 transition-all duration-300 flex flex-col justify-between group shadow-sm hover:shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+                transition={{ duration: 0.25, delay: index * 0.02 }}
+                className="group rounded-2xl p-5 sm:p-6 border border-white/[0.08] hover:border-primary/40 bg-[#0E0E1C] hover:bg-[#121224] transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
-                  {/* Top Icon & Category */}
-                  <div className="flex items-center justify-between mb-5">
-                    <div className="w-12 h-12 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center group-hover:border-primary/40 group-hover:bg-primary/10 transition-colors">
-                      {getIcon(service.icon, service.category)}
+                  {/* Top Bar: Icon + Category Badge */}
+                  <div className="flex items-center justify-between mb-3.5">
+                    <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center">
+                      {getIcon(service.icon)}
                     </div>
-                    <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/5 text-gray-400 uppercase tracking-wider font-semibold">
+                    <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-md bg-white/[0.03] border border-white/5 text-gray-400 uppercase tracking-wider font-bold">
                       {service.category}
                     </span>
                   </div>
 
                   {/* Title & Short Description */}
-                  <h3 className="text-lg font-bold text-white mb-2 group-hover:text-primary transition-colors leading-snug">
+                  <h3 className="text-base sm:text-lg font-bold text-white mb-1.5 group-hover:text-primary transition-colors leading-snug">
                     {service.title}
                   </h3>
-                  <p className="text-gray-400 text-xs sm:text-sm leading-relaxed mb-5 line-clamp-2">
+                  
+                  <p className="text-gray-400 text-xs leading-relaxed mb-4 line-clamp-2">
                     {service.shortDesc}
                   </p>
 
-                  {/* Feature Highlights */}
-                  <ul className="space-y-2 mb-6">
-                    {service.features.slice(0, 3).map((feat, i) => (
-                      <li key={i} className="flex items-start text-xs text-gray-300 gap-2">
+                  {/* Turnkey Starting Price */}
+                  <div className="mb-4 py-2 px-3 rounded-lg bg-white/[0.02] border border-white/5 flex items-center justify-between">
+                    <span className="text-[10px] font-mono uppercase text-gray-400">Starting From</span>
+                    <div className="text-right">
+                      <span className="text-xs font-mono font-bold text-primary">
+                        ${service.priceUsd}
+                      </span>
+                      <span className="text-[10px] text-gray-500 font-mono ml-1.5">
+                        (₨ {(service.pricePkr / 1000).toFixed(0)}k)
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Feature bullet list */}
+                  <ul className="space-y-1.5 mb-5">
+                    {service.features.slice(0, 2).map((feat, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs text-gray-300 leading-snug">
                         <CheckCircle2 size={13} className="text-primary shrink-0 mt-0.5" />
-                        <span className="leading-snug">{feat}</span>
+                        <span className="line-clamp-1">{feat}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                {/* Bottom Action & Starting Price */}
-                <div className="pt-4 border-t border-white/10 flex items-center justify-between mt-auto">
-                  <div>
-                    <span className="text-[10px] font-mono uppercase text-gray-400 block">Starting From</span>
-                    <span className="text-base sm:text-lg font-black text-white font-mono group-hover:text-primary transition-colors">
-                      ${service.priceUsd} <span className="text-xs text-gray-500 font-normal font-sans">/ ₨ {(service.pricePkr / 1000).toFixed(0)}k</span>
-                    </span>
-                  </div>
+                {/* Bottom Action CTAs */}
+                <div className="pt-3 border-t border-white/[0.06] flex items-center gap-2 mt-auto">
+                  <Link
+                    href={`/contact?service=${encodeURIComponent(service.title)}`}
+                    className="flex-1 py-2 rounded-lg bg-primary/10 hover:bg-primary border border-primary/30 hover:border-primary text-primary hover:text-black font-bold text-xs uppercase tracking-wider text-center transition-all"
+                  >
+                    Get Quote
+                  </Link>
 
                   <Link
                     href={`/services/${service.slug}`}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/[0.05] hover:bg-primary hover:text-black text-white text-xs font-bold transition-all duration-200 border border-white/10 hover:border-primary shrink-0"
+                    className="w-8 h-8 rounded-lg bg-white/[0.04] hover:bg-white/10 border border-white/[0.08] flex items-center justify-center text-gray-300 hover:text-white transition-all shrink-0"
+                    aria-label={`View ${service.title} details`}
                   >
-                    <span>Details</span>
-                    <ArrowRight size={13} />
+                    <ChevronRight size={14} />
                   </Link>
                 </div>
               </motion.div>
             ))}
           </AnimatePresence>
         </motion.div>
-
-        {/* Clean Bottom Banner */}
-        <div className="mt-14 rounded-2xl p-6 sm:p-10 border border-white/10 bg-gradient-to-r from-primary/10 via-[#0B0B18] to-violet-600/10 text-center max-w-4xl mx-auto">
-          <h3 className="text-xl sm:text-2xl font-black text-white mb-2">
-            Need a Custom Multi-Service Architecture?
-          </h3>
-          <p className="text-gray-300 text-xs sm:text-sm max-w-xl mx-auto mb-6">
-            Combine Next.js websites, cloud POS systems, and automated voice agents with automated package bundling discounts.
-          </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            <a
-              href="#pricing"
-              className="px-6 py-3 rounded-xl bg-primary text-black font-extrabold text-xs uppercase tracking-wider hover:bg-white transition-all shadow-[0_0_20px_rgba(0,240,255,0.3)]"
-            >
-              Custom Package Builder
-            </a>
-            <a
-              href="#contact"
-              className="px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold text-xs uppercase tracking-wider transition-all"
-            >
-              Request Free Proposal
-            </a>
-          </div>
-        </div>
 
       </div>
     </section>
