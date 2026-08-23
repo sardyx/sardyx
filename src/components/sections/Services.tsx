@@ -14,15 +14,16 @@ import {
   Video,
   Cpu,
   Bot,
-  ArrowRight,
+  ChevronRight,
+  ChevronDown,
   CheckCircle2,
-  Search,
-  ChevronRight
+  Layers
 } from "lucide-react";
 import { mockAllServices } from "@/lib/supabase";
 
 export default function Services() {
   const [selectedFilter, setSelectedFilter] = useState("All Capabilities");
+  const [showAllServices, setShowAllServices] = useState(false);
 
   const filterTabs = [
     "All Capabilities",
@@ -71,6 +72,11 @@ export default function Services() {
     return true;
   });
 
+  // Show 4 flagship services initially unless expanded or filtered
+  const visibleServices = showAllServices || selectedFilter !== "All Capabilities" 
+    ? filteredServices 
+    : filteredServices.slice(0, 4);
+
   return (
     <section id="services" className="py-16 sm:py-24 relative overflow-hidden bg-[#080814]">
       {/* Background ambient lighting */}
@@ -80,7 +86,7 @@ export default function Services() {
       <div className="container mx-auto px-5 sm:px-8 lg:px-14 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -106,18 +112,21 @@ export default function Services() {
             viewport={{ once: true }}
             className="text-gray-400 text-xs sm:text-base leading-relaxed"
           >
-            Next.js web portals, cloud POS softwares, autonomous AI voice bots, and #1 Google SEO dominance.
+            High-converting Next.js websites, cloud POS softwares, autonomous AI voice bots, and #1 Google SEO dominance.
           </motion.p>
         </div>
 
         {/* Filter Tabs — Horizontal Scrollable on Mobile */}
-        <div className="flex overflow-x-auto snap-x no-scrollbar justify-start sm:justify-center gap-2 mb-8 sm:mb-12 pb-2 -mx-5 px-5 sm:mx-0 sm:px-0">
+        <div className="flex overflow-x-auto snap-x no-scrollbar justify-start sm:justify-center gap-2 mb-8 sm:mb-10 pb-2 -mx-5 px-5 sm:mx-0 sm:px-0">
           {filterTabs.map((tab) => {
             const isActive = selectedFilter === tab;
             return (
               <button
                 key={tab}
-                onClick={() => setSelectedFilter(tab)}
+                onClick={() => {
+                  setSelectedFilter(tab);
+                  setShowAllServices(true);
+                }}
                 className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                   isActive 
                     ? "bg-white text-black shadow-sm" 
@@ -130,13 +139,13 @@ export default function Services() {
           })}
         </div>
 
-        {/* Responsive Grid: 2-Col on Mobile (compact) / 4-Col on Desktop */}
+        {/* Services Grid: Shows 4 Flagship by default on desktop & mobile */}
         <motion.div 
           layout
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-8"
         >
           <AnimatePresence>
-            {filteredServices.map((service, index) => (
+            {visibleServices.map((service, index) => (
               <motion.div
                 key={service.id}
                 layout
@@ -148,17 +157,17 @@ export default function Services() {
               >
                 <div>
                   {/* Top Bar: Icon + Category Badge */}
-                  <div className="flex items-center justify-between mb-3.5">
+                  <div className="flex items-center justify-between mb-3">
                     <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center">
                       {getIcon(service.icon)}
                     </div>
-                    <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-md bg-white/[0.03] border border-white/5 text-gray-400 uppercase tracking-wider font-bold">
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/[0.03] border border-white/5 text-gray-400 uppercase tracking-wider font-bold">
                       {service.category}
                     </span>
                   </div>
 
                   {/* Title & Short Description */}
-                  <h3 className="text-base sm:text-lg font-bold text-white mb-1.5 group-hover:text-primary transition-colors leading-snug">
+                  <h3 className="text-base font-bold text-white mb-1.5 group-hover:text-primary transition-colors leading-snug">
                     {service.title}
                   </h3>
                   
@@ -211,6 +220,20 @@ export default function Services() {
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {/* View All Services (12) Toggle Button */}
+        {selectedFilter === "All Capabilities" && (
+          <div className="text-center pt-2">
+            <button
+              onClick={() => setShowAllServices(!showAllServices)}
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#0E0E1C] hover:bg-[#141428] border border-white/10 hover:border-primary/40 text-xs sm:text-sm font-bold text-white transition-all cursor-pointer shadow-sm group"
+            >
+              <Layers size={14} className="text-primary group-hover:scale-110 transition-transform" />
+              <span>{showAllServices ? "Show Flagship Services Only (4)" : "View All 12 Engineering Capabilities"}</span>
+              <ChevronDown size={14} className={`text-gray-400 transition-transform duration-200 ${showAllServices ? "rotate-180 text-primary" : ""}`} />
+            </button>
+          </div>
+        )}
 
       </div>
     </section>
