@@ -80,13 +80,13 @@ export default function Team() {
 
         {/* Single unified grid */}
         {loading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5 max-w-6xl mx-auto">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="h-52 rounded-2xl bg-white/[0.02] border border-white/5 animate-pulse" />
+              <div key={i} className="h-56 rounded-2xl bg-white/[0.02] border border-white/5 animate-pulse" />
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5 max-w-6xl mx-auto">
             {teamMembers.map((member, index) => {
               const roleColor = roleColors[member.role] || "text-gray-400";
               const isFirst = index === 0;
