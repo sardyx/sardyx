@@ -1,85 +1,115 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Eye, Shield, Target } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, Code, ShieldCheck, Zap, Globe2, Sparkles, Building2 } from "lucide-react";
+import FounderAndTeam from "@/components/sections/FounderAndTeam";
 
 export const metadata: Metadata = {
-  title: "About SARDYX AI | Premium Enterprise AI Agency",
-  description: "Learn about the mission, values, and engineering team behind SARDYX AI, builders of enterprise automation and custom intelligence pipelines.",
+  title: "About SARDYX AI — Full-Stack Software & AI Agency",
+  description:
+    "Learn about SARDYX AI, an engineering-first software and AI agency serving ambitious businesses across Pakistan, the US, and the UK. Led by Sardar M. Abdullah.",
   alternates: {
-    canonical: "https://sardyxai.com/about",
+    canonical: "https://www.sardyxai.com/about",
   },
 };
 
+const pillars = [
+  {
+    title: "Engineering-First Delivery",
+    desc: "We write clean, production-grade Next.js, TypeScript, and PostgreSQL. Every system is built to be fast, maintainable, and scalable for years to come.",
+    icon: Code,
+  },
+  {
+    title: "Transparent Fixed Pricing",
+    desc: "We eliminate hidden fees and surprise billing. Every turnkey package and custom engagement is scoped with documented deliverables and milestones.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Long-Term Operational Support",
+    desc: "Deployment is day one. We provide ongoing software maintenance, uptime monitoring, and direct engineering support to keep your operations running.",
+    icon: Zap,
+  },
+];
+
 export default function AboutPage() {
-  const values = [
-    {
-      title: "Data Sovereignty & Security",
-      desc: "Enterprise data is sacred. We build VPC-isolated agentic systems where your data never trains public LLMs.",
-      icon: <Shield className="text-primary" size={24} />,
-    },
-    {
-      title: "Outcome-Driven Automation",
-      desc: "We measure success by hours saved and conversions generated, not API calls or model parameters.",
-      icon: <Target className="text-primary" size={24} />,
-    },
-    {
-      title: "Transparent Intelligence",
-      desc: "No black boxes. We design deterministic fallback layers and clean human-in-the-loop review nodes.",
-      icon: <Eye className="text-primary" size={24} />,
-    },
-  ];
-
   return (
-    <main className="min-h-screen bg-black text-white pt-32 pb-20 relative overflow-hidden">
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-primary/10 blur-[150px] pointer-events-none" />
-
-      <div className="container mx-auto px-6 lg:px-16 relative z-10">
-        {/* Story Section */}
-        <div className="max-w-4xl mb-20">
-          <span className="text-primary text-xs font-mono uppercase tracking-widest mb-4 block">Our Origin</span>
-          <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-            Architecting the Autonomous Enterprise
+    <div className="pt-28 sm:pt-36 pb-24 min-h-screen bg-[#07060D] text-[#B8B3CC]">
+      <div className="container mx-auto px-5 sm:px-8 max-w-[1100px]">
+        {/* Hero Section */}
+        <div className="max-w-3xl mx-auto text-center mb-20">
+          <div className="eyebrow-pill mb-4">
+            <Sparkles size={13} className="text-[#00C0FF]" />
+            <span>ABOUT SARDYX AI</span>
+          </div>
+          <h1 className="font-heading font-extrabold text-3xl sm:text-5xl text-white tracking-tight mb-6">
+            Engineering Systems Built for <span className="gradient-text-highlight">Real Business Growth</span>
           </h1>
-          <p className="text-lg text-gray-300 leading-relaxed mb-6">
-            Founded by a collective of machine learning engineers and enterprise software architects, SARDYX AI was born out of a single realization: <em>generic SaaS integrations are too fragile for enterprise scale.</em>
-          </p>
-          <p className="text-lg text-gray-400 leading-relaxed">
-            We bridge the gap between abstract academic ML breakthroughs and hardened, secure runtime pipelines. Today, we empower companies across North America and Europe to automate back-office workflows, launch hyper-realistic voice agents, and design predictive competitor intelligence systems.
+          <p className="text-base sm:text-lg text-[#B8B3CC] leading-relaxed">
+            SARDYX AI is a full-stack software and AI agency headquartered and led from Khyber Pakhtunkhwa, Pakistan, delivering production-grade web applications, cloud POS systems, mobile apps, and autonomous AI agents for clients across Pakistan, the United States, and the United Kingdom.
           </p>
         </div>
 
-        {/* Core Values */}
-        <div className="mb-20">
-          <h2 className="text-3xl font-black mb-12 text-center text-white">Our Anchoring Values</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {values.map((v, i) => (
-              <div key={i} className="glass-panel p-8 rounded-2xl border border-white/5 bg-white/[0.01]">
-                <div className="mb-6">{v.icon}</div>
-                <h3 className="text-xl font-bold text-white mb-4">{v.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{v.desc}</p>
+        {/* Pillars Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-24">
+          {pillars.map((pillar, idx) => {
+            const Icon = pillar.icon;
+            return (
+              <div key={idx} className="glass-panel p-6 sm:p-8 rounded-2xl border border-white/[0.08]">
+                <div className="w-12 h-12 rounded-xl bg-[#8A2BEF]/15 border border-[#8A2BEF]/30 text-[#C4A0FF] flex items-center justify-center mb-5">
+                  <Icon size={24} />
+                </div>
+                <h3 className="font-heading font-bold text-lg text-white mb-2">{pillar.title}</h3>
+                <p className="text-xs sm:text-sm text-[#B8B3CC] leading-relaxed">{pillar.desc}</p>
               </div>
-            ))}
+            );
+          })}
+        </div>
+
+        {/* Operating Facts & GEO Knowledge Box */}
+        <div className="glass-panel p-8 sm:p-10 rounded-3xl border border-white/[0.08] mb-24">
+          <div className="flex items-center gap-2 mb-4">
+            <Building2 size={18} className="text-[#00C0FF]" />
+            <h2 className="font-heading font-bold text-xl text-white">Agency Fact Sheet</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 pt-4 border-t border-white/[0.06] text-xs font-mono">
+            <div>
+              <span className="text-[#8A849F] block mb-1">Founder & CEO</span>
+              <span className="text-white font-bold">Sardar M. Abdullah (Mr. Abdullah)</span>
+            </div>
+            <div>
+              <span className="text-[#8A849F] block mb-1">Headquarters</span>
+              <span className="text-white font-bold">Khyber Pakhtunkhwa, Pakistan</span>
+            </div>
+            <div>
+              <span className="text-[#8A849F] block mb-1">Operating Regions</span>
+              <span className="text-white font-bold">Pakistan · USA · UK</span>
+            </div>
+            <div>
+              <span className="text-[#8A849F] block mb-1">Core Focus</span>
+              <span className="text-white font-bold">Web, Cloud POS, AI Agents</span>
+            </div>
           </div>
         </div>
 
-        {/* Global Operations */}
-        <div className="glass-panel p-12 rounded-3xl border border-white/5 bg-white/[0.01] text-center mb-20">
-          <h2 className="text-2xl md:text-3xl font-black mb-4">Global Infrastructure, Local Compliance</h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
-            With regional presences spanning the United States, Canada, the United Kingdom, and the European Union, we guarantee strict compliance with HIPAA, GDPR, and localized data sovereignty regulations.
-          </p>
-        </div>
+        {/* Founder Spotlight & Team */}
+        <FounderAndTeam />
 
-        {/* Contact CTA */}
-        <div className="text-center">
-          <h2 className="text-3xl font-black mb-6">Ready to work with us?</h2>
-          <div className="flex justify-center">
-            <Link href="/contact" className="px-8 py-4 rounded-full bg-primary text-black font-semibold hover:bg-white transition-all flex items-center gap-2 group drop-shadow-[0_0_12px_rgba(0,240,255,0.3)]">
-              Schedule a Systems Audit <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+        {/* CTA */}
+        <div className="text-center mt-20 pt-16 border-t border-white/[0.06]">
+          <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-white mb-4">
+            Ready to Discuss Your Project?
+          </h2>
+          <p className="text-xs sm:text-sm text-[#B8B3CC] max-w-md mx-auto mb-6">
+            Get in touch with our engineering team for a free discovery consultation and fixed-scope quotation within 24 hours.
+          </p>
+          <div className="flex justify-center gap-3">
+            <Link href="/contact" className="btn-primary-pill text-xs py-2.5 px-6">
+              <span>Initiate Project Consultation</span>
+              <ArrowRight size={14} />
             </Link>
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

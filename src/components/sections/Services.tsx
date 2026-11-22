@@ -1,240 +1,232 @@
 "use client";
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import {
-  LayoutTemplate,
-  ReceiptText,
+  Layout,
+  Receipt,
   TrendingUp,
   Smartphone,
-  Gamepad2,
-  Share2,
-  Sparkles,
-  Monitor,
-  Video,
   Cpu,
   Bot,
-  ChevronRight,
-  ChevronDown,
-  CheckCircle2,
-  Layers
+  Search,
+  ArrowRight,
+  Sparkles,
+  ChevronRight
 } from "lucide-react";
-import { mockAllServices } from "@/lib/supabase";
+
+interface ServiceItem {
+  id: string;
+  slug: string;
+  title: string;
+  category: "web_apps" | "software_pos" | "ai_automation" | "seo_marketing";
+  categoryLabel: string;
+  shortDesc: string;
+  bullets: [string, string];
+  priceFrom: string;
+  icon: any;
+  featured: boolean;
+}
+
+const servicesData: ServiceItem[] = [
+  {
+    id: "s1",
+    slug: "professional-websites",
+    title: "Professional Websites",
+    category: "web_apps",
+    categoryLabel: "Web & Apps",
+    shortDesc: "High-performance web applications built with Next.js App Router, SSR, and clean glass UI.",
+    bullets: ["Mobile-first responsive architecture", "Core Web Vitals & schema foundation"],
+    priceFrom: "$399 (~₨110k)",
+    icon: Layout,
+    featured: true,
+  },
+  {
+    id: "s2",
+    slug: "pos-softwares",
+    title: "Cloud POS Softwares",
+    category: "software_pos",
+    categoryLabel: "Software & POS",
+    shortDesc: "Point of Sale systems for retail, salons, restaurants, and multi-branch outlets.",
+    bullets: ["Instant thermal receipt & barcode billing", "Real-time multi-register inventory sync"],
+    priceFrom: "$599 (~₨165k)",
+    icon: Receipt,
+    featured: true,
+  },
+  {
+    id: "s3",
+    slug: "sales-management-systems",
+    title: "Sales Management Systems",
+    category: "software_pos",
+    categoryLabel: "Software & POS",
+    shortDesc: "SME revenue pipelines, customer CRM, automated commission ledgers, and executive dashboards.",
+    bullets: ["Automated revenue & expense audits", "Staff commission & customer history tracking"],
+    priceFrom: "$799 (~₨220k)",
+    icon: TrendingUp,
+    featured: true,
+  },
+  {
+    id: "s4",
+    slug: "mobile-apps",
+    title: "Android & iOS Apps",
+    category: "web_apps",
+    categoryLabel: "Web & Apps",
+    shortDesc: "Performant cross-platform mobile apps engineered with Flutter and React Native.",
+    bullets: ["Store publishing on App Store & Google Play", "Smooth 60fps animations & push notifications"],
+    priceFrom: "$1,299 (~₨360k)",
+    icon: Smartphone,
+    featured: true,
+  },
+  {
+    id: "s5",
+    slug: "ai-automations",
+    title: "AI Workflow Automations",
+    category: "ai_automation",
+    categoryLabel: "AI & Automation",
+    shortDesc: "Autonomous operational workflows with n8n and custom APIs eliminating repetitive manual tasks.",
+    bullets: ["Automated email, invoice & CRM triaging", "Zero human error data sync pipelines"],
+    priceFrom: "$499",
+    icon: Cpu,
+    featured: true,
+  },
+  {
+    id: "s6",
+    slug: "ai-chatbot-callbot",
+    title: "AI Chatbots & Voice Callbots",
+    category: "ai_automation",
+    categoryLabel: "AI & Automation",
+    shortDesc: "Omnichannel 24/7 intelligent chatbots and low-latency voice callbots for lead capture.",
+    bullets: ["Sub-second latency (<800ms) voice calls", "WhatsApp & website calendar booking integration"],
+    priceFrom: "$699",
+    icon: Bot,
+    featured: true,
+  },
+];
+
+const categories = [
+  { id: "all", label: "All Featured" },
+  { id: "web_apps", label: "Web & Apps" },
+  { id: "software_pos", label: "Software & POS" },
+  { id: "ai_automation", label: "AI & Automation" },
+];
 
 export default function Services() {
-  const [selectedFilter, setSelectedFilter] = useState("All Capabilities");
-  const [showAllServices, setShowAllServices] = useState(false);
+  const [activeCategory, setActiveCategory] = useState("all");
 
-  const filterTabs = [
-    "All Capabilities",
-    "Web & Apps",
-    "Software & POS",
-    "AI & Automations",
-    "SEO & Marketing"
-  ];
-
-  const getIcon = (iconName: string) => {
-    const iconClass = "w-5 h-5 text-primary group-hover:scale-110 transition-transform duration-300";
-    switch (iconName) {
-      case "LayoutTemplate":
-        return <LayoutTemplate className={iconClass} />;
-      case "ReceiptText":
-        return <ReceiptText className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform duration-300" />;
-      case "TrendingUp":
-        return <TrendingUp className="w-5 h-5 text-cyan-400 group-hover:scale-110 transition-transform duration-300" />;
-      case "Smartphone":
-        return <Smartphone className="w-5 h-5 text-violet-400 group-hover:scale-110 transition-transform duration-300" />;
-      case "Gamepad2":
-        return <Gamepad2 className="w-5 h-5 text-fuchsia-400 group-hover:scale-110 transition-transform duration-300" />;
-      case "Share2":
-        return <Share2 className="w-5 h-5 text-pink-400 group-hover:scale-110 transition-transform duration-300" />;
-      case "Sparkles":
-        return <Sparkles className="w-5 h-5 text-amber-400 group-hover:scale-110 transition-transform duration-300" />;
-      case "Monitor":
-        return <Monitor className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform duration-300" />;
-      case "Video":
-        return <Video className="w-5 h-5 text-rose-400 group-hover:scale-110 transition-transform duration-300" />;
-      case "Cpu":
-        return <Cpu className="w-5 h-5 text-teal-400 group-hover:scale-110 transition-transform duration-300" />;
-      case "Bot":
-        return <Bot className="w-5 h-5 text-primary group-hover:scale-110 transition-transform duration-300" />;
-      default:
-        return <Cpu className={iconClass} />;
-    }
-  };
-
-  const filteredServices = mockAllServices.filter((s) => {
-    if (selectedFilter === "All Capabilities") return true;
-    if (selectedFilter === "Web & Apps") return s.slug === "professional-websites" || s.slug === "mobile-apps" || s.slug === "game-development";
-    if (selectedFilter === "Software & POS") return s.slug === "pos-softwares" || s.slug === "sales-management-systems" || s.slug === "windows-apps";
-    if (selectedFilter === "AI & Automations") return s.slug === "ai-automations" || s.slug === "ai-chatbot-callbot";
-    if (selectedFilter === "SEO & Marketing") return s.slug === "enterprise-seo" || s.slug === "social-media-marketing" || s.slug === "ads-creatives" || s.slug === "graphic-design-video-editing";
-    return true;
-  });
-
-  // Show 4 flagship services initially unless expanded or filtered
-  const visibleServices = showAllServices || selectedFilter !== "All Capabilities" 
-    ? filteredServices 
-    : filteredServices.slice(0, 4);
+  const filteredServices = activeCategory === "all"
+    ? servicesData
+    : servicesData.filter((s) => s.category === activeCategory);
 
   return (
-    <section id="services" className="py-16 sm:py-24 relative overflow-hidden bg-[#080814]">
+    <section id="services" className="py-24 sm:py-32 bg-[#07060D] relative">
       {/* Background ambient lighting */}
-      <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-violet-600/5 rounded-full blur-[140px] pointer-events-none"></div>
-      <div className="absolute bottom-10 left-0 w-[450px] h-[450px] bg-primary/5 rounded-full blur-[140px] pointer-events-none"></div>
+      <div className="absolute top-1/2 left-0 w-[450px] h-[450px] bg-[#8A2BEF]/10 blur-[130px] pointer-events-none" />
 
-      <div className="container mx-auto px-5 sm:px-8 lg:px-14 relative z-10">
-        
+      <div className="container mx-auto px-5 sm:px-8 max-w-[1200px] relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 mb-3"
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
+          <div>
+            <div className="eyebrow-pill mb-4">
+              <Sparkles size={13} className="text-[#00C0FF]" />
+              <span>CORE CAPABILITIES</span>
+            </div>
+            <h2 className="font-heading font-extrabold text-2xl sm:text-4xl text-[#F5F3FF] tracking-tight">
+              Engineered Software & <span className="gradient-text-highlight">AI Solutions</span>
+            </h2>
+          </div>
+          <Link
+            href="/services"
+            className="mt-4 md:mt-0 inline-flex items-center gap-1.5 text-sm font-semibold text-[#C4A0FF] hover:text-white transition-colors"
           >
-            <span className="w-2 h-2 rounded-full bg-primary"></span>
-            <span className="text-xs font-semibold tracking-wider uppercase text-gray-300">12 Specialized Core Capabilities</span>
-          </motion.div>
-
-          <motion.h2 
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-2xl sm:text-4xl md:text-5xl font-black mb-3 tracking-tight text-white"
-          >
-            Full-Stack <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-200 to-violet-400">Engineering & SEO</span> Services
-          </motion.h2>
-
-          <motion.p 
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-gray-400 text-xs sm:text-base leading-relaxed"
-          >
-            High-converting Next.js websites, cloud POS softwares, autonomous AI voice bots, and #1 Google SEO dominance.
-          </motion.p>
+            <span>View all 12 services</span>
+            <ChevronRight size={16} />
+          </Link>
         </div>
 
-        {/* Filter Tabs — Horizontal Scrollable on Mobile */}
-        <div className="flex overflow-x-auto snap-x no-scrollbar justify-start sm:justify-center gap-2 mb-8 sm:mb-10 pb-2 -mx-5 px-5 sm:mx-0 sm:px-0">
-          {filterTabs.map((tab) => {
-            const isActive = selectedFilter === tab;
-            return (
-              <button
-                key={tab}
-                onClick={() => {
-                  setSelectedFilter(tab);
-                  setShowAllServices(true);
-                }}
-                className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
-                  isActive 
-                    ? "bg-white text-black shadow-sm" 
-                    : "bg-white/[0.04] text-gray-400 hover:text-white border border-white/5 hover:border-white/20"
-                }`}
-              >
-                {tab}
-              </button>
-            );
-          })}
+        {/* Category Filter Chips */}
+        <div className="flex flex-wrap gap-2 mb-10">
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setActiveCategory(cat.id)}
+              className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all min-h-[44px] cursor-pointer ${
+                activeCategory === cat.id
+                  ? "bg-[#8A2BEF] text-white shadow-[0_0_15px_rgba(138,43,239,0.5)] border border-[#C4A0FF]/40"
+                  : "bg-white/[0.04] text-[#B8B3CC] hover:text-white hover:bg-white/[0.08] border border-white/[0.08]"
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
         </div>
 
-        {/* Services Grid: Shows 4 Flagship by default on desktop & mobile */}
-        <motion.div 
-          layout
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-8"
-        >
+        {/* Bento Grid */}
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence>
-            {visibleServices.map((service, index) => (
-              <motion.div
-                key={service.id}
-                layout
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.25, delay: index * 0.02 }}
-                className="group rounded-2xl p-5 sm:p-6 border border-white/[0.08] hover:border-primary/40 bg-[#0E0E1C] hover:bg-[#121224] transition-all duration-300 flex flex-col justify-between"
-              >
-                <div>
-                  {/* Top Bar: Icon + Category Badge */}
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center">
-                      {getIcon(service.icon)}
-                    </div>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/[0.03] border border-white/5 text-gray-400 uppercase tracking-wider font-bold">
-                      {service.category}
-                    </span>
-                  </div>
-
-                  {/* Title & Short Description */}
-                  <h3 className="text-base font-bold text-white mb-1.5 group-hover:text-primary transition-colors leading-snug">
-                    {service.title}
-                  </h3>
-                  
-                  <p className="text-gray-400 text-xs leading-relaxed mb-4 line-clamp-2">
-                    {service.shortDesc}
-                  </p>
-
-                  {/* Turnkey Starting Price */}
-                  <div className="mb-4 py-2 px-3 rounded-lg bg-white/[0.02] border border-white/5 flex items-center justify-between">
-                    <span className="text-[10px] font-mono uppercase text-gray-400">Starting From</span>
-                    <div className="text-right">
-                      <span className="text-xs font-mono font-bold text-primary">
-                        ${service.priceUsd}
-                      </span>
-                      <span className="text-[10px] text-gray-500 font-mono ml-1.5">
-                        (₨ {(service.pricePkr / 1000).toFixed(0)}k)
+            {filteredServices.map((service) => {
+              const Icon = service.icon;
+              return (
+                <motion.div
+                  layout
+                  key={service.id}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.25 }}
+                  className="rounded-2xl glass-panel p-6 flex flex-col justify-between glass-panel-hover group border border-white/[0.08]"
+                >
+                  <div>
+                    {/* Top Row: Icon + Category */}
+                    <div className="flex items-center justify-between mb-5">
+                      <div className="p-3 rounded-xl bg-[#8A2BEF]/15 border border-[#8A2BEF]/30 text-[#C4A0FF] group-hover:scale-105 group-hover:bg-[#8A2BEF]/25 transition-all">
+                        <Icon size={22} />
+                      </div>
+                      <span className="text-[11px] font-mono uppercase tracking-wider text-[#00C0FF] bg-[#00C0FF]/10 px-2.5 py-1 rounded-full border border-[#00C0FF]/20">
+                        {service.categoryLabel}
                       </span>
                     </div>
+
+                    {/* Title */}
+                    <h3 className="font-heading font-bold text-lg text-white mb-2 group-hover:text-[#C4A0FF] transition-colors">
+                      {service.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-xs sm:text-sm text-[#B8B3CC] leading-relaxed mb-4">
+                      {service.shortDesc}
+                    </p>
+
+                    {/* Bullet Points */}
+                    <ul className="space-y-2 mb-6">
+                      {service.bullets.map((bullet, i) => (
+                        <li key={i} className="text-xs text-[#8A849F] flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#8A2BEF]" />
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
 
-                  {/* Feature bullet list */}
-                  <ul className="space-y-1.5 mb-5">
-                    {service.features.slice(0, 2).map((feat, i) => (
-                      <li key={i} className="flex items-start gap-2 text-xs text-gray-300 leading-snug">
-                        <CheckCircle2 size={13} className="text-primary shrink-0 mt-0.5" />
-                        <span className="line-clamp-1">{feat}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Bottom Action CTAs */}
-                <div className="pt-3 border-t border-white/[0.06] flex items-center gap-2 mt-auto">
-                  <Link
-                    href={`/contact?service=${encodeURIComponent(service.title)}`}
-                    className="flex-1 py-2 rounded-lg bg-primary/10 hover:bg-primary border border-primary/30 hover:border-primary text-primary hover:text-black font-bold text-xs uppercase tracking-wider text-center transition-all"
-                  >
-                    Get Quote
-                  </Link>
-
-                  <Link
-                    href={`/services/${service.slug}`}
-                    className="w-8 h-8 rounded-lg bg-white/[0.04] hover:bg-white/10 border border-white/[0.08] flex items-center justify-center text-gray-300 hover:text-white transition-all shrink-0"
-                    aria-label={`View ${service.title} details`}
-                  >
-                    <ChevronRight size={14} />
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
+                  {/* Bottom: Price + Action Link */}
+                  <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between">
+                    <div>
+                      <span className="text-[11px] text-[#8A849F] block">Starting from</span>
+                      <span className="font-mono text-sm font-bold text-white">{service.priceFrom}</span>
+                    </div>
+                    <Link
+                      href={`/services/${service.slug}`}
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#00C0FF] group-hover:text-white transition-colors"
+                    >
+                      <span>Explore</span>
+                      <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </div>
+                </motion.div>
+              );
+            })}
           </AnimatePresence>
         </motion.div>
-
-        {/* View All Services (12) Toggle Button */}
-        {selectedFilter === "All Capabilities" && (
-          <div className="text-center pt-2">
-            <button
-              onClick={() => setShowAllServices(!showAllServices)}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#0E0E1C] hover:bg-[#141428] border border-white/10 hover:border-primary/40 text-xs sm:text-sm font-bold text-white transition-all cursor-pointer shadow-sm group"
-            >
-              <Layers size={14} className="text-primary group-hover:scale-110 transition-transform" />
-              <span>{showAllServices ? "Show Flagship Services Only (4)" : "View All 12 Engineering Capabilities"}</span>
-              <ChevronDown size={14} className={`text-gray-400 transition-transform duration-200 ${showAllServices ? "rotate-180 text-primary" : ""}`} />
-            </button>
-          </div>
-        )}
-
       </div>
     </section>
   );

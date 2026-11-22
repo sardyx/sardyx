@@ -1,203 +1,230 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowLeft, ArrowRight, Calendar, Clock, User } from "lucide-react";
+import { ArrowLeft, Calendar, User, Clock, Share2, ArrowRight } from "lucide-react";
 
-interface PostDetail {
+interface BlogPostData {
+  slug: string;
   title: string;
-  excerpt: string;
   date: string;
-  author: string;
-  category: string;
   readTime: string;
-  content: string; // HTML formatted string
-  relatedServiceSlug: string;
-  relatedServiceName: string;
+  category: string;
+  author: string;
+  quickAnswer: string;
+  sections: Array<{ heading: string; body: string }>;
 }
 
-const postData: Record<string, PostDetail> = {
+const postsData: Record<string, BlogPostData> = {
   "why-your-business-needs-ai-agents-in-2026": {
-    title: "Why Autonomous AI Agents are the Ultimate Leverage for Enterprise Growth in 2026",
-    excerpt: "Discover how multi-agent networks are replacing static software platforms and helping businesses eliminate manual workflow bottlenecks.",
+    slug: "why-your-business-needs-ai-agents-in-2026",
+    title: "Why Ambitious Businesses Are Deploying Autonomous AI Agents in 2026",
     date: "July 01, 2026",
-    author: "SARDYX Technical Team",
-    category: "AI Automation",
-    readTime: "7 min read",
-    content: `
-      <p>The traditional enterprise software model is dead. For decades, companies scaled operations by purchasing seats of SaaS platforms and hiring analysts to manually coordinate data between them. This era of manual middleware and human duct-tape is officially over.</p>
-      
-      <h2>The Shift from Static Apps to Autonomous Agents</h2>
-      <p>In 2026, leading organizations are deploying <strong>autonomous AI agents</strong>. Unlike standard chatbots that only respond to static prompts, modern agents possess reasoning capabilities, task planning systems, and execution toolkits. They can autonomously read databases, interact with APIs, make operational decisions, and verify their own results.</p>
-      
-      <blockquote>
-        "An AI agent doesn't just display data for you to action; it completes the action on your behalf and logs the outcome in your system of record."
-      </blockquote>
-
-      <h2>How Multi-Agent Networks Function</h2>
-      <p>Instead of single, massive AI brains, the gold standard is multi-agent systems. You assign specialized agents to specific tasks, such as:</p>
-      <ul>
-        <li><strong>Triage Agents</strong> to read and analyze inbound tickets.</li>
-        <li><strong>Research Agents</strong> to query proprietary databases for context.</li>
-        <li><strong>Billing Agents</strong> to generate Stripe invoices and check ledger status.</li>
-      </ul>
-      <p>These agents coordinate via message buses, prompting and checking each other's outputs before finalizing transactions. This architectural isolation keeps hallucinations to near-zero.</p>
-    `,
-    relatedServiceSlug: "ai-workflow-automation",
-    relatedServiceName: "AI Workflow Automation",
+    readTime: "6 min read",
+    category: "AI & Automation",
+    author: "Sardar M. Abdullah / SARDYX AI Team",
+    quickAnswer:
+      "Autonomous AI agents handle customer inquiries, qualify leads, and schedule appointments 24/7 with sub-second latency. Unlike rigid chatbots of the past, modern agentic systems query your live business knowledge base and sync directly with WhatsApp and CRM pipelines.",
+    sections: [
+      {
+        heading: "The Shift from Static Chatbots to Autonomous Agents",
+        body: "Traditional decision-tree chatbots frustrated customers because any variation outside pre-programmed menus failed. Modern conversational agents use fine-tuned LLMs coupled with Retrieval-Augmented Generation (RAG) to understand conversational context, tone, and intent in real time across web and WhatsApp channels.",
+      },
+      {
+        heading: "Sub-Second Latency Voice Callbots",
+        body: "For service businesses, salons, workshops, and clinics, missed phone calls represent lost revenue. Voice callbots operating at sub-800ms latency can answer inbound callers, check available calendar slots, confirm bookings, and send confirmation receipts via SMS or WhatsApp automatically.",
+      },
+      {
+        heading: "How SARDYX AI Engineers Autonomous Pipelines",
+        body: "We integrate AI agents directly into your operational stack using n8n and PostgreSQL. Whether triaging corporate quotation requests or reconciling daily booking deposits, our pipelines ensure zero human error with deterministic staff fallback options.",
+      },
+    ],
   },
   "guide-to-workflow-automation-and-roi": {
-    title: "The CFO Guide to AI Workflow Automation ROI: Calculations and Metrics",
-    excerpt: "Learn how to quantify the financial returns of agentic automation pipelines before committing to custom development sprints.",
+    slug: "guide-to-workflow-automation-and-roi",
+    title: "The Practical Guide to SME Workflow Automation & Measurable ROI",
     date: "June 24, 2026",
-    author: "Enterprise Strategy Group",
-    category: "Strategy & ROI",
-    readTime: "10 min read",
-    content: `
-      <p>AI adoption cannot just be a vanity metrics project. To secure enterprise budgets, systems architects and COOs must present robust, mathematically sound return-on-investment (ROI) models to their financial boards.</p>
-      
-      <h2>1. The Formula for Human Labor Replacement ROI</h2>
-      <p>The baseline ROI calculation focuses on direct time recaptured. Calculate the cost of manual processing:</p>
-      <pre><code>Current Cost = (Hours Spent per Week) * (Hourly Labor Rate) * 52</code></pre>
-      <p>When automated, the cost structure shifts to model inference costs and maintenance:</p>
-      <pre><code>Automated Cost = (Tokens per Transaction * Cost per Token * Weekly Volume * 52) + Annual Maintenance</code></pre>
-
-      <h2>2. Calculating Opportunity Gains</h2>
-      <p>Time saved is only half the equation. Consider the velocity multiplier. If your sales qualifying voice agent calls leads within 30 seconds of signup instead of 4 hours, your conversion rate rises dramatically. These pipeline velocity gains frequently outweigh direct cost deflection savings by a factor of 10.</p>
-    `,
-    relatedServiceSlug: "ai-consulting",
-    relatedServiceName: "AI Strategy Consulting",
+    readTime: "8 min read",
+    category: "Workflow Automations",
+    author: "Sardar M. Abdullah / SARDYX AI Team",
+    quickAnswer:
+      "Workflow automation connects your disconnected software tools into cohesive background pipelines. By automating repetitive tasks like invoice generation, lead follow-ups, and inventory stock alerts, businesses typically recoup their automation investment within 6 to 10 weeks.",
+    sections: [
+      {
+        heading: "Identifying Manual Overhead Bottlenecks",
+        body: "Every growing business suffers from 'swivel-chair' administration — where employees spend hours manually copying customer data from WhatsApp into spreadsheets, generating thermal bills, or following up on quotation statuses. These repetitive actions create operational drag and data discrepancies.",
+      },
+      {
+        heading: "Top 5 Workflows That Deliver Immediate ROI",
+        body: "1. Instant WhatsApp lead notification and CRM deal logging. 2. Automated thermal billing receipt generation. 3. Low-stock inventory threshold alerts. 4. Pre-appointment SMS/WhatsApp reminders to eliminate no-shows. 5. Automated daily revenue and commission reconciliation.",
+      },
+      {
+        heading: "Choosing n8n Over Proprietary Closed Platforms",
+        body: "We build our clients' automation workflows using open, self-hostable tools like n8n. This avoids per-task cloud pricing lock-in and ensures total data privacy, allowing your automations to scale to tens of thousands of monthly events without ballooning subscription costs.",
+      },
+    ],
   },
   "enterprise-seo-maximizing-organic-traffic": {
-    title: "Maximizing LLM Visibility: Optimizing for ChatGPT, Gemini, and AI Overviews",
-    excerpt: "The ultimate roadmap for semantic optimization. How to format structured data and content entities to guarantee citations in AI search engines.",
+    slug: "enterprise-seo-maximizing-organic-traffic",
+    title: "Technical SEO & Generative Engine Optimization (GEO): The 2026 Playbook",
     date: "June 18, 2026",
-    author: "Semantic SEO Specialists",
-    category: "SEO & Search Engine Optimization",
-    readTime: "8 min read",
-    content: `
-      <p>Organic search has fundamentally shifted. Google's AI Overviews, ChatGPT Search, Gemini, Perplexity, and Claude are now acting as the primary curators of the internet's knowledge. If your website is not structured to be referenced by these LLMs, you do not exist.</p>
-      
-      <h2>The Mechanics of LLM Indexing (Agentic Search)</h2>
-      <p>Traditional SEO focused on keyword density and backlink anchors. Agentic Search looks for semantic entities, explicit logical relations, structured JSON-LD schemas, and comprehensive topical authority silos.</p>
-      
-      <h2>3 Pillars of AI Engine Optimization (AIO)</h2>
-      <ol>
-        <li><strong>Question-Answer Blocks:</strong> Format your headings as direct questions with immediate, highly accurate answers in the subsequent paragraphs.</li>
-        <li><strong>Rich Schema Markup:</strong> Provide JSON-LD schemas identifying your organization, services, and product catalogs to provide machine-readable ground truth.</li>
-        <li><strong>Topical Coverage Depth:</strong> Avoid short, superficial summaries. Write exhaustive guides that cover related long-tail entities thoroughly.</li>
-      </ol>
-    `,
-    relatedServiceSlug: "ai-development",
-    relatedServiceName: "Custom AI Software Development",
+    readTime: "9 min read",
+    category: "SEO & Growth",
+    author: "Sardar M. Abdullah / SARDYX AI Team",
+    quickAnswer:
+      "Generative Engine Optimization (GEO) pairs technical SEO fundamentals with structured entity markup. By structuring clear answers, JSON-LD @graph schemas, and authoritative fact sheets, your brand is cited and recommended by AI engines like ChatGPT, Perplexity, and Gemini as well as traditional search engines.",
+    sections: [
+      {
+        heading: "Why Traditional Keyword Stuffing Fails",
+        body: "Modern search engines and AI assistants evaluate topical authority, Core Web Vitals, and verified entity relationships. High-converting pages open with concise 40-80 word answers to user queries, followed by structured data tables and verifiable proof.",
+      },
+      {
+        heading: "The Power of llms.txt and Semantic Knowledge Graphs",
+        body: "Implementing an /llms.txt file and linked Schema.org Person and Organization definitions provides AI crawlers with unambiguous, single-source-of-truth facts about your company, services, and leadership, preventing AI hallucination and driving qualified commercial citations.",
+      },
+      {
+        heading: "Converting Organic Visitors into Confirmed Leads",
+        body: "Traffic without conversion is vanity. High-performing pages position direct WhatsApp triggers, instant scope estimators, and transparent package pricing above the fold, converting passive readers into scheduled consultation requests.",
+      },
+    ],
   },
 };
 
 export async function generateStaticParams() {
-  return Object.keys(postData).map((slug) => ({
-    slug: slug,
-  }));
+  return Object.keys(postsData).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const resolvedParams = await params;
-  const post = postData[resolvedParams.slug];
-  if (!post) return {};
+  const { slug } = await params;
+  const post = postsData[slug];
+  if (!post) return { title: "Article Not Found — SARDYX AI" };
 
   return {
-    title: `${post.title} | SARDYX AI Blog`,
-    description: post.excerpt,
+    title: `${post.title} — SARDYX AI Journal`,
+    description: post.quickAnswer,
+    authors: [{ name: "Sardar M. Abdullah", url: "https://www.sardyxai.com/founder" }],
     alternates: {
-      canonical: `https://sardyxai.com/blog/${resolvedParams.slug}`,
+      canonical: `https://www.sardyxai.com/blog/${slug}`,
+    },
+    openGraph: {
+      title: post.title,
+      description: post.quickAnswer,
+      type: "article",
+      url: `https://www.sardyxai.com/blog/${slug}`,
+      siteName: "SARDYX AI",
     },
   };
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
-  const resolvedParams = await params;
-  const postKey = resolvedParams.slug;
-  const post = postData[postKey];
+  const { slug } = await params;
+  const post = postsData[slug];
 
-  if (!post) {
-    notFound();
-  }
+  if (!post) notFound();
 
-  // Create JSON-LD schema for this Blog Post
-  const blogSchema = {
+  const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": post.title,
-    "description": post.excerpt,
-    "datePublished": new Date(post.date).toISOString().split('T')[0],
-    "author": {
+    headline: post.title,
+    description: post.quickAnswer,
+    datePublished: "2026-06-18T00:00:00Z",
+    dateModified: "2026-07-01T00:00:00Z",
+    author: {
       "@type": "Person",
-      "name": post.author
+      name: "Sardar M. Abdullah",
+      url: "https://www.sardyxai.com/founder",
     },
-    "publisher": {
+    publisher: {
       "@type": "Organization",
-      "name": "SARDYX AI",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://sardyxai.com/opengraph-image.png"
-      }
+      name: "SARDYX AI",
+      url: "https://www.sardyxai.com",
     },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `https://sardyxai.com/blog/${postKey}`
-    }
   };
 
   return (
-    <main className="min-h-screen bg-black text-white pt-32 pb-20 relative overflow-hidden">
+    <article className="pt-28 sm:pt-36 pb-24 min-h-screen bg-[#07060D] text-[#B8B3CC]">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-primary/10 blur-[150px] pointer-events-none" />
-      
-      <div className="container mx-auto px-6 lg:px-16 max-w-4xl relative z-10">
+
+      <div className="container mx-auto px-5 sm:px-8 max-w-[800px]">
         {/* Back Link */}
-        <Link href="/blog" className="inline-flex items-center gap-2 text-gray-500 hover:text-white transition-colors mb-12 text-sm">
-          <ArrowLeft size={16} /> Back to Blog
+        <Link
+          href="/blog"
+          className="inline-flex items-center gap-2 text-xs font-mono text-[#8A849F] hover:text-white transition-colors mb-8"
+        >
+          <ArrowLeft size={14} />
+          <span>Back to all articles</span>
         </Link>
 
-        {/* Article Header */}
-        <header className="mb-12">
-          <div className="flex items-center gap-4 text-xs font-mono text-primary uppercase tracking-widest mb-6">
-            <span>{post.category}</span>
-            <span>•</span>
-            <span className="flex items-center gap-1"><Clock size={12} /> {post.readTime}</span>
+        {/* Post Header */}
+        <div className="mb-10">
+          <div className="flex items-center gap-3 text-xs font-mono text-[#00C0FF] mb-4">
+            <span className="bg-[#00C0FF]/10 px-2.5 py-1 rounded-full border border-[#00C0FF]/20">
+              {post.category}
+            </span>
+            <span>·</span>
+            <span className="text-[#8A849F]">{post.readTime}</span>
           </div>
-          <h1 className="text-3xl md:text-5xl font-black mb-6 leading-tight text-white">
+
+          <h1 className="font-heading font-extrabold text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight leading-tight mb-6">
             {post.title}
           </h1>
-          <div className="flex items-center gap-6 text-gray-400 text-sm">
-            <span className="flex items-center gap-2"><User size={16} className="text-primary" /> By {post.author}</span>
-            <span className="flex items-center gap-2"><Calendar size={16} className="text-primary" /> {post.date}</span>
-          </div>
-        </header>
 
-        {/* Content Body */}
-        <article 
-          className="prose prose-invert prose-primary max-w-none text-gray-300 leading-relaxed mb-16 space-y-6 [&>h2]:text-2xl [&>h2]:font-bold [&>h2]:text-white [&>h2]:mt-10 [&>h2]:mb-4 [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-2 [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:space-y-2 [&>blockquote]:border-l-4 [&>blockquote]:border-primary [&>blockquote]:pl-4 [&>blockquote]:italic [&>pre]:bg-white/5 [&>pre]:p-4 [&>pre]:rounded-xl [&>pre]:overflow-x-auto [&>pre>code]:font-mono"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
-
-        {/* Contextual CTA */}
-        <div className="glass-panel p-8 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 via-transparent to-transparent flex flex-col md:flex-row justify-between items-center gap-6">
-          <div>
-            <h3 className="text-lg font-bold text-white mb-2">Need professional execution?</h3>
-            <p className="text-gray-400 text-sm max-w-md">
-              Learn how SARDYX AI integrates custom workflows, voice agents, and intelligence layers into enterprise systems.
-            </p>
+          {/* Author Byline (Linked to /founder per E-E-A-T spec) */}
+          <div className="flex items-center gap-3 pt-4 border-t border-white/[0.06] text-xs text-[#8A849F]">
+            <span className="flex items-center gap-1.5">
+              <Calendar size={14} /> {post.date}
+            </span>
+            <span>·</span>
+            <Link
+              href="/founder"
+              className="text-[#F5F3FF] font-semibold hover:text-[#00C0FF] transition-colors flex items-center gap-1"
+            >
+              <User size={14} className="text-[#8A2BEF]" />
+              <span>{post.author}</span>
+            </Link>
           </div>
-          <Link 
-            href={`/services/${post.relatedServiceSlug}`} 
-            className="px-6 py-3 rounded-full bg-primary text-black font-semibold hover:bg-white transition-all text-sm flex items-center gap-2 flex-shrink-0"
-          >
-            Explore {post.relatedServiceName} <ArrowRight size={16} />
-          </Link>
+        </div>
+
+        {/* Quick Answer Callout Block */}
+        <div className="p-6 rounded-2xl glass-panel border border-[#8A2BEF]/30 bg-[#8A2BEF]/5 mb-12">
+          <h2 className="text-xs uppercase font-mono tracking-wider text-[#00C0FF] mb-2 font-bold">
+            Executive Quick Answer
+          </h2>
+          <p className="text-xs sm:text-sm text-white leading-relaxed">
+            {post.quickAnswer}
+          </p>
+        </div>
+
+        {/* Article Body */}
+        <div className="space-y-10 text-sm sm:text-base leading-relaxed text-[#B8B3CC] mb-16">
+          {post.sections.map((section, idx) => (
+            <section key={idx}>
+              <h2 className="font-heading font-bold text-xl sm:text-2xl text-white mb-3">
+                {section.heading}
+              </h2>
+              <p>{section.body}</p>
+            </section>
+          ))}
+        </div>
+
+        {/* CTA Box */}
+        <div className="p-8 rounded-2xl glass-panel border border-white/[0.08] text-center">
+          <h3 className="font-heading font-bold text-xl text-white mb-2">
+            Deploy This Technology in Your Enterprise
+          </h3>
+          <p className="text-xs sm:text-sm text-[#B8B3CC] max-w-md mx-auto mb-6">
+            SARDYX AI architects custom web applications, cloud POS systems, and autonomous AI agents. Get a tailored scope within 24 hours.
+          </p>
+          <div className="flex justify-center gap-3">
+            <Link href="/contact" className="btn-primary-pill text-xs py-2.5 px-6">
+              <span>Request Project Proposal</span>
+              <ArrowRight size={14} />
+            </Link>
+          </div>
         </div>
       </div>
-    </main>
+    </article>
   );
 }

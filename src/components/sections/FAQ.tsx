@@ -1,115 +1,130 @@
 "use client";
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Sparkles } from "lucide-react";
 
-const faqs = [
+interface FAQItem {
+  q: string;
+  a: string;
+}
+
+const faqs: FAQItem[] = [
   {
     q: "What services does SARDYX AI provide?",
-    a: "We are a full-stack software & AI agency with 12 core services: Professional Websites, POS Softwares, Sales Management Systems, Android & iOS Apps, Game Development, Social Media Marketing, Ads Creatives, Windows Apps, Graphic Design & Video Editing, AI Workflow Automations, AI Chatbots & Voice Callbots, and Enterprise SEO."
+    a: "SARDYX AI provides 12 specialized services across four key pillars: Web & Apps (Next.js websites, mobile apps, games), Software & POS (Cloud POS systems, sales management systems, Windows desktop software), AI & Automation (n8n workflows, conversational chatbots, low-latency AI voice callbots), and SEO & Growth (technical SEO, ad creatives, video editing, social media marketing).",
   },
   {
     q: "How fast is project delivery?",
-    a: "Standard websites and AI chatbots are delivered in 5–10 days. Custom POS softwares and enterprise Sales Management Systems take 2–4 weeks. Express fast-track options are available for urgent delivery."
+    a: "Delivery timelines depend on scope. Turnkey websites and AI chatbot integrations typically deploy in 1 to 3 weeks. Comprehensive Cloud POS and Sales Management Systems are usually delivered in 2 to 4 weeks. Multi-platform mobile applications and custom enterprise ERPs take 4 to 8 weeks with phased milestone releases.",
   },
   {
-    q: "Can I build a custom package?",
-    a: "Yes! Use our interactive Custom Package Builder in the Pricing section to select any combination of services and automatically unlock up to 25% bundling discounts."
+    q: "Can I build a custom package for my business?",
+    a: "Yes. While our Turnkey packages (Starter Growth, Enterprise Pro, Scale Suite) bundle our most requested services with integrated savings, you can select specific individual modules or request a tailored scope during our discovery consultation.",
   },
   {
-    q: "Do you offer post-launch support?",
-    a: "All packages include initial deployment maintenance. Ongoing 24/7 server monitoring, security patches, and cloud database updates are available starting at $99/month."
+    q: "Do you offer post-launch support and maintenance?",
+    a: "All of our turnkey packages include dedicated post-launch support ranging from 1 to 12 months. This includes software updates, server uptime monitoring, bug fixes, and operational guidance. Extended maintenance SLAs are also available.",
   },
   {
     q: "How do AI Voice Callbots work?",
-    a: "Our AI Voice Callbots operate with sub-800ms latency and realistic human-sounding voices. They answer calls 24/7, qualify leads, answer FAQs, and book appointments directly on your calendar."
+    a: "Our AI voice callbots use sub-second speech-to-text, LLM conversational intelligence trained on your company knowledge base, and natural text-to-speech synthesis. They can answer inbound customer inquiries, qualify visitor needs, schedule calendar appointments, or route complex questions to your team automatically.",
   },
   {
     q: "How do we get started?",
-    a: "Click 'Get Quote' on any package, submit your inquiry through our Contact Form, or message us on WhatsApp for an immediate consultation with our engineering team."
-  }
+    a: "You can submit a project brief through our contact form or send a message directly to our official WhatsApp (+92 349 9398141). We review requirements within 24 hours, schedule an initial discovery call, and provide a clear, transparent scope proposal.",
+  },
 ];
 
 export default function FAQ() {
-  const [activeIndex, setActiveIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  const toggle = (idx: number) => {
+    setOpenIndex(openIndex === idx ? null : idx);
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.a,
+      },
+    })),
+  };
 
   return (
-    <section id="faq" className="py-20 sm:py-28 relative bg-[#080814]">
-      <div className="container mx-auto px-5 sm:px-8 lg:px-14 max-w-2xl relative z-10">
+    <section className="py-24 sm:py-32 bg-[#0D0B16] relative border-t border-white/[0.06]">
+      {/* FAQ JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
 
-        <div className="text-center mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 mb-4"
-          >
-            <span className="w-2 h-2 rounded-full bg-primary"></span>
-            <span className="text-xs font-semibold tracking-wider uppercase text-gray-300">FAQ</span>
-          </motion.div>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl sm:text-4xl font-black mb-3 tracking-tight text-white"
-          >
-            Common <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-violet-400">Questions</span>
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-gray-400 text-sm leading-relaxed"
-          >
-            Everything you need to know about our process, pricing, and turnaround.
-          </motion.p>
+      <div className="container mx-auto px-5 sm:px-8 max-w-[900px]">
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="eyebrow-pill mb-4">
+            <Sparkles size={13} className="text-[#00C0FF]" />
+            <span>CLARITY & DETAILS</span>
+          </div>
+          <h2 className="font-heading font-extrabold text-2xl sm:text-4xl text-[#F5F3FF] tracking-tight">
+            Frequently Asked <span className="gradient-text-highlight">Questions</span>
+          </h2>
+          <p className="text-sm sm:text-base text-[#B8B3CC] mt-3">
+            Honest, direct answers to common questions about our engineering and AI delivery.
+          </p>
         </div>
 
-        <div className="space-y-2">
-          {faqs.map((faq, index) => {
-            const isOpen = activeIndex === index;
+        {/* Accordion List */}
+        <div className="space-y-4">
+          {faqs.map((faq, idx) => {
+            const isOpen = openIndex === idx;
             return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: index * 0.04 }}
-                className="rounded-xl border border-white/[0.08] bg-[#0E0E1C] overflow-hidden"
+              <div
+                key={idx}
+                className={`rounded-2xl transition-all border ${
+                  isOpen
+                    ? "glass-panel border-[#8A2BEF]/40 shadow-[0_0_25px_rgba(138,43,239,0.15)]"
+                    : "glass-panel border-white/[0.08]"
+                }`}
               >
                 <button
-                  onClick={() => setActiveIndex(isOpen ? null : index)}
-                  className="w-full px-5 py-4 text-left flex items-center justify-between gap-4 hover:bg-white/[0.03] transition-colors cursor-pointer"
+                  onClick={() => toggle(idx)}
+                  className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00C0FF] rounded-2xl min-h-[48px]"
+                  aria-expanded={isOpen}
                 >
-                  <span className="text-sm font-semibold text-white leading-snug">
+                  <span className="font-heading font-bold text-sm sm:text-base text-white">
                     {faq.q}
                   </span>
-                  <div className={`w-6 h-6 rounded-lg border flex items-center justify-center shrink-0 transition-all duration-200 ${
-                    isOpen
-                      ? "bg-primary/15 border-primary/40 text-primary rotate-180"
-                      : "bg-white/[0.04] border-white/[0.08] text-gray-500"
-                  }`}>
-                    <ChevronDown size={13} />
+                  <div
+                    className={`p-1.5 rounded-full bg-white/[0.04] text-[#C4A0FF] transition-transform duration-200 shrink-0 ${
+                      isOpen ? "rotate-180 bg-[#8A2BEF]/20" : ""
+                    }`}
+                  >
+                    <ChevronDown size={18} />
                   </div>
                 </button>
 
                 <AnimatePresence>
                   {isOpen && (
                     <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.22 }}
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="overflow-hidden"
                     >
-                      <div className="px-5 pb-5 pt-0 text-sm text-gray-400 leading-relaxed border-t border-white/[0.06]">
+                      <div className="px-5 sm:px-6 pb-6 pt-1 border-t border-white/[0.04] text-xs sm:text-sm text-[#B8B3CC] leading-relaxed">
                         {faq.a}
                       </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </motion.div>
+              </div>
             );
           })}
         </div>

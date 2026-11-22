@@ -1,5 +1,5 @@
-import AdminDashboard from "../adminpanel/page";
+import { redirect } from "next/navigation";
 
-export default function AdminSecurePage() {
-  return <AdminDashboard />;
+export default function AdminSecureRedirect() {
+  redirect("/admin/login");
 }

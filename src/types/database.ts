@@ -1,0 +1,586 @@
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[];
+
+export type AppRole = 'owner' | 'admin' | 'editor';
+export type PublishStatus = 'draft' | 'published' | 'archived';
+export type ReviewStatus = 'pending' | 'approved' | 'rejected';
+export type LeadStatus = 'new' | 'contacted' | 'qualified' | 'proposal' | 'won' | 'lost' | 'spam';
+export type ServiceCategory = 'web_apps' | 'software_pos' | 'ai_automation' | 'seo_marketing';
+
+export interface Database {
+  public: {
+    Tables: {
+      profiles: {
+        Row: {
+          id: string;
+          full_name: string | null;
+          avatar_url: string | null;
+          role: AppRole;
+          is_active: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id: string;
+          full_name?: string | null;
+          avatar_url?: string | null;
+          role?: AppRole;
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          full_name?: string | null;
+          avatar_url?: string | null;
+          role?: AppRole;
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      site_settings: {
+        Row: {
+          id: boolean;
+          brand_name: string;
+          tagline: string | null;
+          description: string | null;
+          email: string | null;
+          phone: string | null;
+          whatsapp_number: string | null;
+          whatsapp_default_message: string | null;
+          regions: string[];
+          address_text: string | null;
+          socials: Record<string, string>;
+          default_currency: string;
+          usd_to_pkr: number;
+          seo_title: string | null;
+          seo_description: string | null;
+          og_image_url: string | null;
+          logo_url: string | null;
+          favicon_url: string | null;
+          analytics: Record<string, any>;
+          updated_at: string;
+        };
+        Insert: {
+          id?: boolean;
+          brand_name?: string;
+          tagline?: string | null;
+          description?: string | null;
+          email?: string | null;
+          phone?: string | null;
+          whatsapp_number?: string | null;
+          whatsapp_default_message?: string | null;
+          regions?: string[];
+          address_text?: string | null;
+          socials?: Record<string, string>;
+          default_currency?: string;
+          usd_to_pkr?: number;
+          seo_title?: string | null;
+          seo_description?: string | null;
+          og_image_url?: string | null;
+          logo_url?: string | null;
+          favicon_url?: string | null;
+          analytics?: Record<string, any>;
+          updated_at?: string;
+        };
+        Update: {
+          id?: boolean;
+          brand_name?: string;
+          tagline?: string | null;
+          description?: string | null;
+          email?: string | null;
+          phone?: string | null;
+          whatsapp_number?: string | null;
+          whatsapp_default_message?: string | null;
+          regions?: string[];
+          address_text?: string | null;
+          socials?: Record<string, string>;
+          default_currency?: string;
+          usd_to_pkr?: number;
+          seo_title?: string | null;
+          seo_description?: string | null;
+          og_image_url?: string | null;
+          logo_url?: string | null;
+          favicon_url?: string | null;
+          analytics?: Record<string, any>;
+          updated_at?: string;
+        };
+      };
+      services: {
+        Row: {
+          id: string;
+          slug: string;
+          category: ServiceCategory;
+          title: string;
+          short_description: string;
+          long_description: string | null;
+          icon: string | null;
+          starting_price_usd: number | null;
+          price_note: string | null;
+          hero_image_url: string | null;
+          is_featured: boolean;
+          status: PublishStatus;
+          sort_order: number;
+          seo_title: string | null;
+          seo_description: string | null;
+          og_image_url: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          slug: string;
+          category: ServiceCategory;
+          title: string;
+          short_description: string;
+          long_description?: string | null;
+          icon?: string | null;
+          starting_price_usd?: number | null;
+          price_note?: string | null;
+          hero_image_url?: string | null;
+          is_featured?: boolean;
+          status?: PublishStatus;
+          sort_order?: number;
+          seo_title?: string | null;
+          seo_description?: string | null;
+          og_image_url?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          slug?: string;
+          category?: ServiceCategory;
+          title?: string;
+          short_description?: string;
+          long_description?: string | null;
+          icon?: string | null;
+          starting_price_usd?: number | null;
+          price_note?: string | null;
+          hero_image_url?: string | null;
+          is_featured?: boolean;
+          status?: PublishStatus;
+          sort_order?: number;
+          seo_title?: string | null;
+          seo_description?: string | null;
+          og_image_url?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      packages: {
+        Row: {
+          id: string;
+          slug: string;
+          name: string;
+          tagline: string | null;
+          description: string | null;
+          price_usd: number;
+          price_label: string | null;
+          badge: string | null;
+          is_featured: boolean;
+          cta_label: string | null;
+          status: PublishStatus;
+          sort_order: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          slug: string;
+          name: string;
+          tagline?: string | null;
+          description?: string | null;
+          price_usd: number;
+          price_label?: string | null;
+          badge?: string | null;
+          is_featured?: boolean;
+          cta_label?: string | null;
+          status?: PublishStatus;
+          sort_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          slug?: string;
+          name?: string;
+          tagline?: string | null;
+          description?: string | null;
+          price_usd?: number;
+          price_label?: string | null;
+          badge?: string | null;
+          is_featured?: boolean;
+          cta_label?: string | null;
+          status?: PublishStatus;
+          sort_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      projects: {
+        Row: {
+          id: string;
+          slug: string;
+          title: string;
+          client_name: string | null;
+          industry: string | null;
+          category: string | null;
+          summary: string;
+          challenge: string | null;
+          solution: string | null;
+          results: Array<{ label: string; value: string }>;
+          tags: string[];
+          cover_image_url: string | null;
+          gallery: string[];
+          live_url: string | null;
+          is_featured: boolean;
+          status: PublishStatus;
+          sort_order: number;
+          seo_title: string | null;
+          seo_description: string | null;
+          og_image_url: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          slug: string;
+          title: string;
+          client_name?: string | null;
+          industry?: string | null;
+          category?: string | null;
+          summary: string;
+          challenge?: string | null;
+          solution?: string | null;
+          results?: Array<{ label: string; value: string }>;
+          tags?: string[];
+          cover_image_url?: string | null;
+          gallery?: string[];
+          live_url?: string | null;
+          is_featured?: boolean;
+          status?: PublishStatus;
+          sort_order?: number;
+          seo_title?: string | null;
+          seo_description?: string | null;
+          og_image_url?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          slug?: string;
+          title?: string;
+          client_name?: string | null;
+          industry?: string | null;
+          category?: string | null;
+          summary?: string;
+          challenge?: string | null;
+          solution?: string | null;
+          results?: Array<{ label: string; value: string }>;
+          tags?: string[];
+          cover_image_url?: string | null;
+          gallery?: string[];
+          live_url?: string | null;
+          is_featured?: boolean;
+          status?: PublishStatus;
+          sort_order?: number;
+          seo_title?: string | null;
+          seo_description?: string | null;
+          og_image_url?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      team_members: {
+        Row: {
+          id: string;
+          name: string;
+          role: string;
+          bio: string | null;
+          photo_url: string | null;
+          socials: Record<string, string>;
+          sort_order: number;
+          is_active: boolean;
+          slug: string | null;
+          is_founder: boolean;
+          headline: string | null;
+          intro_short: string | null;
+          bio_long: string | null;
+          alternate_names: string[];
+          region_label: string | null;
+          public_age_label: string | null;
+          achievements: Array<{ title: string; description: string }>;
+          same_as: string[];
+          knows_about: string[];
+          seo_title: string | null;
+          seo_description: string | null;
+          og_image_url: string | null;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          role: string;
+          bio?: string | null;
+          photo_url?: string | null;
+          socials?: Record<string, string>;
+          sort_order?: number;
+          is_active?: boolean;
+          slug?: string | null;
+          is_founder?: boolean;
+          headline?: string | null;
+          intro_short?: string | null;
+          bio_long?: string | null;
+          alternate_names?: string[];
+          region_label?: string | null;
+          public_age_label?: string | null;
+          achievements?: Array<{ title: string; description: string }>;
+          same_as?: string[];
+          knows_about?: string[];
+          seo_title?: string | null;
+          seo_description?: string | null;
+          og_image_url?: string | null;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          role?: string;
+          bio?: string | null;
+          photo_url?: string | null;
+          socials?: Record<string, string>;
+          sort_order?: number;
+          is_active?: boolean;
+          slug?: string | null;
+          is_founder?: boolean;
+          headline?: string | null;
+          intro_short?: string | null;
+          bio_long?: string | null;
+          alternate_names?: string[];
+          region_label?: string | null;
+          public_age_label?: string | null;
+          achievements?: Array<{ title: string; description: string }>;
+          same_as?: string[];
+          knows_about?: string[];
+          seo_title?: string | null;
+          seo_description?: string | null;
+          og_image_url?: string | null;
+        };
+      };
+      testimonials: {
+        Row: {
+          id: string;
+          author_name: string;
+          author_role: string | null;
+          company: string | null;
+          avatar_url: string | null;
+          rating: number;
+          body: string;
+          project_id: string | null;
+          status: ReviewStatus;
+          is_featured: boolean;
+          submitted_email: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          author_name: string;
+          author_role?: string | null;
+          company?: string | null;
+          avatar_url?: string | null;
+          rating?: number;
+          body: string;
+          project_id?: string | null;
+          status?: ReviewStatus;
+          is_featured?: boolean;
+          submitted_email?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          author_name?: string;
+          author_role?: string | null;
+          company?: string | null;
+          avatar_url?: string | null;
+          rating?: number;
+          body?: string;
+          project_id?: string | null;
+          status?: ReviewStatus;
+          is_featured?: boolean;
+          submitted_email?: string | null;
+          created_at?: string;
+        };
+      };
+      faqs: {
+        Row: {
+          id: string;
+          question: string;
+          answer: string;
+          service_id: string | null;
+          sort_order: number;
+          is_active: boolean;
+        };
+        Insert: {
+          id?: string;
+          question: string;
+          answer: string;
+          service_id?: string | null;
+          sort_order?: number;
+          is_active?: boolean;
+        };
+        Update: {
+          id?: string;
+          question?: string;
+          answer?: string;
+          service_id?: string | null;
+          sort_order?: number;
+          is_active?: boolean;
+        };
+      };
+      leads: {
+        Row: {
+          id: string;
+          full_name: string;
+          email: string;
+          phone: string | null;
+          company: string | null;
+          service_id: string | null;
+          service_label: string | null;
+          package_id: string | null;
+          package_label: string | null;
+          budget_range: string | null;
+          message: string | null;
+          source: string;
+          status: LeadStatus;
+          assigned_to: string | null;
+          utm: Record<string, any>;
+          ip_hash: string | null;
+          user_agent: string | null;
+          consent: boolean;
+          last_contacted_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          full_name: string;
+          email: string;
+          phone?: string | null;
+          company?: string | null;
+          service_id?: string | null;
+          service_label?: string | null;
+          package_id?: string | null;
+          package_label?: string | null;
+          budget_range?: string | null;
+          message?: string | null;
+          source?: string;
+          status?: LeadStatus;
+          assigned_to?: string | null;
+          utm?: Record<string, any>;
+          ip_hash?: string | null;
+          user_agent?: string | null;
+          consent?: boolean;
+          last_contacted_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          full_name?: string;
+          email?: string;
+          phone?: string | null;
+          company?: string | null;
+          service_id?: string | null;
+          service_label?: string | null;
+          package_id?: string | null;
+          package_label?: string | null;
+          budget_range?: string | null;
+          message?: string | null;
+          source?: string;
+          status?: LeadStatus;
+          assigned_to?: string | null;
+          utm?: Record<string, any>;
+          ip_hash?: string | null;
+          user_agent?: string | null;
+          consent?: boolean;
+          last_contacted_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      geo_facts: {
+        Row: {
+          id: string;
+          entity: string;
+          question: string;
+          answer: string;
+          source_url: string | null;
+          is_active: boolean;
+          sort_order: number;
+        };
+        Insert: {
+          id?: string;
+          entity: string;
+          question: string;
+          answer: string;
+          source_url?: string | null;
+          is_active?: boolean;
+          sort_order?: number;
+        };
+        Update: {
+          id?: string;
+          entity?: string;
+          question?: string;
+          answer?: string;
+          source_url?: string | null;
+          is_active?: boolean;
+          sort_order?: number;
+        };
+      };
+      seo_pages: {
+        Row: {
+          path: string;
+          title: string | null;
+          description: string | null;
+          og_title: string | null;
+          og_description: string | null;
+          og_image_url: string | null;
+          canonical_url: string | null;
+          noindex: boolean;
+          extra_schema: any[];
+          updated_at: string;
+        };
+        Insert: {
+          path: string;
+          title?: string | null;
+          description?: string | null;
+          og_title?: string | null;
+          og_description?: string | null;
+          og_image_url?: string | null;
+          canonical_url?: string | null;
+          noindex?: boolean;
+          extra_schema?: any[];
+          updated_at?: string;
+        };
+        Update: {
+          path?: string;
+          title?: string | null;
+          description?: string | null;
+          og_title?: string | null;
+          og_description?: string | null;
+          og_image_url?: string | null;
+          canonical_url?: string | null;
+          noindex?: boolean;
+          extra_schema?: any[];
+          updated_at?: string;
+        };
+      };
+    };
+  };
+}
+

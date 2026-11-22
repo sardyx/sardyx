@@ -1,21 +1,23 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, MessageCircle, ArrowUpRight } from "lucide-react";
+import { Menu, X, ArrowUpRight, MessageCircle } from "lucide-react";
 
 const navLinks = [
-  { name: "Services", href: "/#services" },
-  { name: "Portfolio", href: "/#portfolio" },
-  { name: "Pricing", href: "/#pricing" },
-  { name: "Team", href: "/#team" },
+  { name: "Services", href: "/services" },
+  { name: "Portfolio", href: "/portfolio" },
+  { name: "Pricing", href: "/pricing" },
+  { name: "About", href: "/about" },
+  { name: "Founder", href: "/founder" },
   { name: "Blog", href: "/blog" },
   { name: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -23,120 +25,156 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Prevent background scroll when mobile drawer is open
+  useEffect(() => {
+    if (mobileDrawerOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [mobileDrawerOpen]);
+
   return (
-    <motion.nav
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.45, ease: "easeOut" }}
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled
-          ? "py-3 border-b border-white/[0.07] bg-[#06060E]/90 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.6)]"
-          : "py-5 bg-transparent"
-      }`}
-    >
-      <div className="container mx-auto px-5 sm:px-8 lg:px-14 flex items-center justify-between">
-
-        {/* Brand */}
-        <Link href="/" className="flex items-center group">
-          <span className="text-xl font-black tracking-[0.16em] text-white group-hover:text-primary transition-colors duration-200">
-            SARDYX<span className="text-primary"> AI</span>
-          </span>
-        </Link>
-
-        {/* Desktop Nav */}
-        <div className="hidden lg:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              className="text-[13px] font-medium text-gray-400 hover:text-white transition-colors relative group py-1"
-            >
-              {link.name}
-              <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-primary/80 transition-all duration-300 group-hover:w-full rounded-full"></span>
-            </Link>
-          ))}
-        </div>
-
-        {/* Right Actions */}
-        <div className="hidden lg:flex items-center gap-2">
-          <button
-            onClick={() => {
-              const msg = encodeURIComponent("Hello SARDYX AI! I would like to inquire about your services.");
-              window.open(`https://wa.me/923499398141?text=${msg}`, "_blank");
-            }}
-            className="px-4 py-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer"
-          >
-            <MessageCircle size={13} />
-            WhatsApp
-          </button>
-
-          <Link
-            href="/contact"
-            className="px-4 py-2 rounded-lg bg-primary text-black hover:bg-cyan-300 transition-all text-xs font-bold flex items-center gap-1 cursor-pointer"
-          >
-            Get a Quote
-            <ArrowUpRight size={13} />
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled
+            ? "py-3 bg-[#07060D]/85 backdrop-blur-xl border-b border-white/[0.08] shadow-[0_4px_30px_rgba(0,0,0,0.6)]"
+            : "py-5 bg-transparent"
+        }`}
+      >
+        <div className="container mx-auto px-5 sm:px-8 max-w-[1200px] flex items-center justify-between">
+          {/* Brand Logo */}
+          <Link href="/" className="flex items-center gap-2 group cursor-pointer focus:outline-none">
+            <span className="font-heading font-extrabold text-xl sm:text-2xl tracking-[0.14em] text-white">
+              SARDYX<span className="text-[#8A2BEF] transition-colors group-hover:text-[#A66BFF]">.AI</span>
+            </span>
           </Link>
-        </div>
 
-        {/* Mobile Toggle */}
-        <button
-          className="lg:hidden text-gray-300 p-2 rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] transition-colors"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
-        </button>
-      </div>
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-7">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className="text-[14px] font-medium text-[#B8B3CC] hover:text-[#F5F3FF] transition-colors relative py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00C0FF] rounded-md px-1"
+              >
+                {link.name}
+              </Link>
+            ))}
+          </nav>
 
-      {/* Mobile Dropdown */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.18 }}
-            className="lg:hidden absolute top-full left-0 w-full border-t border-white/[0.07] bg-[#06060E]/95 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.9)]"
+          {/* Actions */}
+          <div className="hidden lg:flex items-center gap-3">
+            <button
+              onClick={() => {
+                const msg = encodeURIComponent("Hello SARDYX AI, I would like to inquire about your software and AI services.");
+                window.open(`https://wa.me/923499398141?text=${msg}`, "_blank");
+              }}
+              aria-label="Contact via WhatsApp"
+              className="p-2.5 rounded-full bg-white/[0.04] border border-white/[0.12] text-[#32CD32] hover:bg-[#32CD32]/10 hover:border-[#32CD32]/40 transition-all cursor-pointer flex items-center justify-center min-w-[44px] min-h-[44px]"
+            >
+              <MessageCircle size={18} />
+            </button>
+
+            <Link
+              href="/contact"
+              className="btn-primary-pill text-xs sm:text-sm py-2 px-5 cursor-pointer font-semibold inline-flex items-center gap-1.5"
+            >
+              Get a Quote
+              <ArrowUpRight size={15} />
+            </Link>
+          </div>
+
+          {/* Mobile Drawer Trigger */}
+          <button
+            className="lg:hidden text-[#F5F3FF] p-2.5 rounded-xl border border-white/[0.1] bg-white/[0.04] hover:bg-white/[0.08] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer"
+            onClick={() => setMobileDrawerOpen(true)}
+            aria-label="Open navigation menu"
           >
-            <div className="container mx-auto px-5 py-4 space-y-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/[0.05] transition-all"
-                >
-                  {link.name}
-                </Link>
-              ))}
+            <Menu size={22} />
+          </button>
+        </div>
+      </header>
 
-              {/* Mobile Actions */}
-              <div className="grid grid-cols-2 gap-2 pt-3 border-t border-white/[0.07] mt-2">
+      {/* Mobile Drawer (Full Height with Large Touch Targets) */}
+      <AnimatePresence>
+        {mobileDrawerOpen && (
+          <div className="fixed inset-0 z-50 lg:hidden">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileDrawerOpen(false)}
+              className="absolute inset-0 bg-black/80 backdrop-blur-md"
+            />
+
+            {/* Slide-in Drawer */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="absolute top-0 right-0 w-full max-w-[340px] h-full bg-[#0D0B16] border-l border-white/[0.1] p-6 flex flex-col justify-between shadow-2xl"
+            >
+              {/* Header */}
+              <div>
+                <div className="flex items-center justify-between pb-6 border-b border-white/[0.08]">
+                  <span className="font-heading font-black text-xl tracking-[0.14em] text-white">
+                    SARDYX<span className="text-[#8A2BEF]">.AI</span>
+                  </span>
+                  <button
+                    onClick={() => setMobileDrawerOpen(false)}
+                    className="p-2 rounded-xl border border-white/[0.1] bg-white/[0.04] text-white hover:bg-white/[0.08] min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer"
+                    aria-label="Close menu"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+
+                {/* Nav Links */}
+                <nav className="flex flex-col gap-2 mt-6">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      onClick={() => setMobileDrawerOpen(false)}
+                      className="px-4 py-3 rounded-xl text-base font-semibold text-[#B8B3CC] hover:text-white hover:bg-white/[0.05] transition-all min-h-[48px] flex items-center"
+                    >
+                      {link.name}
+                    </Link>
+                  ))}
+                </nav>
+              </div>
+
+              {/* Drawer Bottom Actions */}
+              <div className="space-y-3 pt-6 border-t border-white/[0.08]">
                 <button
                   onClick={() => {
-                    setMobileMenuOpen(false);
-                    const msg = encodeURIComponent("Hello SARDYX AI! I want to discuss a project.");
+                    setMobileDrawerOpen(false);
+                    const msg = encodeURIComponent("Hello SARDYX AI, I would like to inquire about your software and AI services.");
                     window.open(`https://wa.me/923499398141?text=${msg}`, "_blank");
                   }}
-                  className="py-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-xs font-semibold flex items-center justify-center gap-1.5"
+                  className="w-full py-3.5 px-4 rounded-full bg-[#32CD32]/10 border border-[#32CD32]/30 text-[#32CD32] font-semibold text-sm flex items-center justify-center gap-2 min-h-[48px] cursor-pointer"
                 >
-                  <MessageCircle size={13} />
-                  WhatsApp
+                  <MessageCircle size={18} />
+                  Chat on WhatsApp
                 </button>
+
                 <Link
                   href="/contact"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="py-2.5 rounded-lg bg-primary text-black text-xs font-bold flex items-center justify-center gap-1"
+                  onClick={() => setMobileDrawerOpen(false)}
+                  className="btn-primary-pill w-full py-3.5 min-h-[48px] text-sm text-center font-bold"
                 >
-                  Get Quote
-                  <ArrowUpRight size={13} />
+                  Get a Free Quote
+                  <ArrowUpRight size={16} />
                 </Link>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </>
   );
 }

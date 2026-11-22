@@ -1,119 +1,92 @@
 "use client";
+
 import { motion } from "framer-motion";
-import { Search, Cpu, Code2, Rocket, ArrowRight } from "lucide-react";
+import { Compass, Layers, Code, Rocket, Sparkles } from "lucide-react";
 
 const steps = [
-  { 
-    num: "01", 
-    title: "Discovery & Scope", 
-    icon: Search,
-    desc: "Mapping your computational needs, business workflows, and ROI targets." 
+  {
+    no: "01",
+    title: "Discovery & Scope",
+    desc: "Map operational workflows, user pain points, system integration requirements, and measurable ROI targets.",
+    icon: Compass,
   },
-  { 
-    num: "02", 
-    title: "System Architecture", 
-    icon: Cpu,
-    desc: "Engineering high-speed database schemas, cloud infrastructure, and APIs." 
+  {
+    no: "02",
+    title: "System Architecture",
+    desc: "Design scalable relational PostgreSQL schemas, secure cloud API contracts, and high-conversion UX flows.",
+    icon: Layers,
   },
-  { 
-    num: "03", 
-    title: "Agile Development", 
-    icon: Code2,
-    desc: "Next.js frontend, POS modules, AI model tuning, and rigorous unit testing." 
+  {
+    no: "03",
+    title: "Agile Development",
+    desc: "Rapid milestone sprints covering frontend interfaces, cloud POS modules, AI model tuning, and rigorous testing.",
+    icon: Code,
   },
-  { 
-    num: "04", 
-    title: "Deployment & Scale", 
+  {
+    no: "04",
+    title: "Deployment & Scale",
+    desc: "Production CDN launch, technical SEO schema validation, uptime monitoring, and client team handover training.",
     icon: Rocket,
-    desc: "Global CDN launch, Google #1 SEO indexing, and 24/7 server monitoring." 
-  }
+  },
 ];
 
 export default function Process() {
   return (
-    <section className="py-16 sm:py-24 relative overflow-hidden bg-[#06060E]">
-      <div className="container mx-auto px-5 sm:px-8 lg:px-14 relative z-10">
-        
-        {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 mb-3"
-          >
-            <span className="w-2 h-2 rounded-full bg-primary"></span>
-            <span className="text-xs font-semibold tracking-wider uppercase text-gray-300">Engineering Protocol</span>
-          </motion.div>
-
-          <motion.h2 
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-2xl sm:text-4xl font-black mb-3 tracking-tight text-white"
-          >
-            How We <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-200 to-violet-400">Deploy Systems</span>
-          </motion.h2>
-
-          <motion.p 
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-gray-400 text-xs sm:text-sm leading-relaxed"
-          >
-            A streamlined 4-phase agile methodology ensuring zero downtime and sub-second execution.
-          </motion.p>
+    <section className="py-24 sm:py-32 bg-[#07060D] relative">
+      <div className="container mx-auto px-5 sm:px-8 max-w-[1200px]">
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="eyebrow-pill mb-4">
+            <Sparkles size={13} className="text-[#00C0FF]" />
+            <span>DELIVERY METHODOLOGY</span>
+          </div>
+          <h2 className="font-heading font-extrabold text-2xl sm:text-4xl text-[#F5F3FF] tracking-tight">
+            How We Build & <span className="gradient-text-highlight">Deliver</span>
+          </h2>
+          <p className="text-sm sm:text-base text-[#B8B3CC] mt-3">
+            A structured, 4-step engineering protocol designed for speed and quality.
+          </p>
         </div>
 
-        {/* 4-Step Grid: Mobile Horizontal Carousel / Desktop 4-Col Grid */}
-        <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 overflow-x-auto sm:overflow-x-visible snap-x snap-mandatory no-scrollbar pb-3 sm:pb-0 -mx-5 px-5 sm:mx-0 sm:px-0">
-          {steps.map((step, index) => {
+        {/* Desktop Horizontal Timeline / Mobile Vertical Stepper */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+          {/* Connector line on desktop */}
+          <div className="hidden md:block absolute top-1/2 left-0 right-0 h-[2px] bg-gradient-to-r from-[#8A2BEF]/20 via-[#00C0FF]/40 to-[#8A2BEF]/20 -translate-y-8 z-0 pointer-events-none" />
+
+          {steps.map((step, idx) => {
             const Icon = step.icon;
             return (
-              <motion.div 
-                key={index}
-                initial={{ opacity: 0, y: 15 }}
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="min-w-[260px] sm:min-w-0 snap-center p-5 sm:p-6 rounded-2xl border border-white/[0.08] bg-[#0E0E1C] hover:border-primary/40 transition-all flex flex-col justify-between group relative"
+                transition={{ duration: 0.4, delay: idx * 0.1 }}
+                className="relative z-10 glass-panel p-6 rounded-2xl border border-white/[0.08] flex flex-col justify-between"
               >
                 <div>
-                  {/* Top Bar: Number & Icon */}
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-2xl font-black font-mono text-primary/40 group-hover:text-primary transition-colors">
-                      {step.num}
+                  {/* Step Number + Icon */}
+                  <div className="flex items-center justify-between mb-5">
+                    <span className="font-mono text-2xl font-black text-[#8A2BEF]/50">
+                      {step.no}
                     </span>
-                    <div className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-gray-300 group-hover:text-primary transition-colors">
-                      <Icon size={16} />
+                    <div className="p-3 rounded-xl bg-[#8A2BEF]/15 text-[#C4A0FF] border border-[#8A2BEF]/20">
+                      <Icon size={20} />
                     </div>
                   </div>
 
-                  <h3 className="text-base font-bold text-white mb-1.5 group-hover:text-primary transition-colors">
+                  <h3 className="font-heading font-bold text-base text-white mb-2">
                     {step.title}
                   </h3>
-                  
-                  <p className="text-gray-400 text-xs leading-relaxed">
+
+                  <p className="text-xs sm:text-sm text-[#B8B3CC] leading-relaxed">
                     {step.desc}
                   </p>
                 </div>
-
-                {index < 3 && (
-                  <div className="hidden lg:block absolute -right-2.5 top-1/2 -translate-y-1/2 z-20 text-gray-600">
-                    <ArrowRight size={14} />
-                  </div>
-                )}
               </motion.div>
             );
           })}
         </div>
-
-        {/* Mobile Swipe Hint */}
-        <div className="flex sm:hidden items-center justify-center gap-1.5 mt-3 text-[10px] text-gray-500 font-medium">
-          <span>Swipe sideways to explore steps</span>
-          <ArrowRight size={11} />
-        </div>
-
       </div>
     </section>
   );

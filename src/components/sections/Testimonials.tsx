@@ -1,231 +1,244 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Quote, Sparkles, MessageSquarePlus, X, Star, ArrowRight } from "lucide-react";
-import { mockTestimonials } from "@/lib/supabase";
+import { Star, MessageSquarePlus, X, Send, Sparkles } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
-export default function Testimonials() {
-  const [testimonials, setTestimonials] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [showFormModal, setShowFormModal] = useState(false);
-  const [formData, setFormData] = useState({ author: "", role: "", quote: "" });
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+interface Review {
+  id: string;
+  author_name: string;
+  author_role: string | null;
+  company: string | null;
+  rating: number;
+  body: string;
+}
 
-  const fetchTestimonials = async () => {
-    try {
-      const res = await fetch("/api/testimonials");
-      if (!res.ok) throw new Error("Failed to fetch");
-      const data = await res.json();
-      setTestimonials(data && data.length > 0 ? data : mockTestimonials);
-    } catch {
-      setTestimonials(mockTestimonials);
-    } finally {
-      setLoading(false);
-    }
-  };
+interface TestimonialsProps {
+  initialReviews?: Review[];
+}
 
-  useEffect(() => {
-    fetchTestimonials();
-  }, []);
+export default function Testimonials({ initialReviews = [] }: TestimonialsProps) {
+  const [reviews] = useState<Review[]>(initialReviews);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [rating, setRating] = useState(5);
+  const [name, setName] = useState("");
+  const [company, setCompany] = useState("");
+  const [role, setRole] = useState("");
+  const [body, setBody] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  // If zero approved reviews exist, hide the section entirely per §6.1 rule 9
+  if (reviews.length === 0 && !modalOpen) {
+    return null;
+  }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitStatus("submitting");
+    if (!name.trim() || !body.trim()) return;
+
+    setSubmitting(true);
     try {
-      const res = await fetch("/api/testimonials", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+      const { error } = await supabase.from("testimonials").insert({
+        author_name: name,
+        company: company || null,
+        author_role: role || null,
+        rating: rating,
+        body: body,
+        status: "pending",
+        is_featured: false,
       });
-      if (!res.ok) throw new Error("Failed to submit");
-      setSubmitStatus("success");
-      setFormData({ author: "", role: "", quote: "" });
-      setTimeout(() => {
-        setShowFormModal(false);
-        setSubmitStatus("idle");
-      }, 2500);
-    } catch {
-      setSubmitStatus("error");
+
+      if (!error) {
+        setSubmitted(true);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSubmitting(false);
     }
   };
 
   return (
-    <section className="py-16 sm:py-24 relative bg-[#06060E] overflow-hidden">
-      <div className="container mx-auto px-5 sm:px-8 lg:px-14 relative z-10">
-
+    <section className="py-24 sm:py-32 bg-[#0D0B16] relative border-t border-white/[0.06]">
+      <div className="container mx-auto px-5 sm:px-8 max-w-[1200px]">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 sm:mb-14 gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
           <div>
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 mb-3"
-            >
-              <Sparkles size={13} className="text-primary" />
-              <span className="text-xs font-semibold tracking-wider uppercase text-gray-300">Client Feedback</span>
-            </motion.div>
-
-            <motion.h2 
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight text-white"
-            >
-              Verified <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-200 to-violet-400">Client Reviews</span>
-            </motion.h2>
+            <div className="eyebrow-pill mb-4">
+              <Sparkles size={13} className="text-[#00C0FF]" />
+              <span>CLIENT SATISFACTION</span>
+            </div>
+            <h2 className="font-heading font-extrabold text-2xl sm:text-4xl text-[#F5F3FF] tracking-tight">
+              Approved Client <span className="gradient-text-highlight">Feedback</span>
+            </h2>
           </div>
-
-          <motion.button
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            onClick={() => setShowFormModal(true)}
-            className="self-start sm:self-auto px-4 py-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-primary/40 text-xs font-bold text-white transition-all flex items-center gap-2 cursor-pointer"
+          <button
+            onClick={() => setModalOpen(true)}
+            className="mt-4 md:mt-0 inline-flex items-center gap-2 text-xs font-semibold px-4 py-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.1] text-white transition-all cursor-pointer min-h-[44px]"
           >
-            <MessageSquarePlus size={14} className="text-primary" />
+            <MessageSquarePlus size={15} className="text-[#00C0FF]" />
             <span>Leave a Review</span>
-          </motion.button>
+          </button>
         </div>
 
-        {/* Testimonials: Mobile Horizontal Snap Scroll / Desktop Grid */}
-        {loading ? (
-          <div className="flex md:grid md:grid-cols-3 gap-4 sm:gap-6 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory no-scrollbar pb-3 md:pb-0">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="min-w-[280px] md:min-w-0 h-44 rounded-2xl bg-white/[0.02] border border-white/5 animate-pulse" />
-            ))}
-          </div>
-        ) : (
-          <div className="flex md:grid md:grid-cols-3 gap-4 sm:gap-6 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory no-scrollbar pb-3 md:pb-0 -mx-5 px-5 md:mx-0 md:px-0">
-            {testimonials.map((item, index) => (
-              <motion.div
-                key={item.id || index}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="min-w-[280px] sm:min-w-[320px] md:min-w-0 snap-center p-5 sm:p-6 rounded-2xl border border-white/[0.08] bg-[#0E0E1C] flex flex-col justify-between"
-              >
-                <div>
-                  {/* Rating Stars & Quote Icon */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex gap-1 text-amber-400">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} size={13} className="fill-amber-400" />
-                      ))}
-                    </div>
-                    <Quote size={18} className="text-primary/30" />
-                  </div>
-
-                  <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-5 italic">
-                    "{item.quote}"
+        {/* Reviews Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {reviews.map((rev) => (
+            <div
+              key={rev.id}
+              className="glass-panel p-6 rounded-2xl border border-white/[0.08] flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center gap-1 text-[#FFB020] mb-4">
+                  {Array.from({ length: rev.rating }).map((_, i) => (
+                    <Star key={i} size={14} fill="currentColor" />
+                  ))}
+                </div>
+                <p className="text-xs sm:text-sm text-[#B8B3CC] leading-relaxed mb-6 italic">
+                  &ldquo;{rev.body}&rdquo;
+                </p>
+              </div>
+              <div className="pt-4 border-t border-white/[0.06]">
+                <h4 className="font-heading font-bold text-xs sm:text-sm text-white">
+                  {rev.author_name}
+                </h4>
+                {(rev.author_role || rev.company) && (
+                  <p className="text-[11px] text-[#8A849F] font-mono">
+                    {[rev.author_role, rev.company].filter(Boolean).join(" · ")}
                   </p>
-                </div>
-
-                {/* Author Info */}
-                <div className="pt-3 border-t border-white/[0.06] flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-xs text-primary font-mono shrink-0">
-                    {item.author ? item.author.charAt(0) : "C"}
-                  </div>
-                  <div className="truncate">
-                    <h4 className="font-bold text-white text-xs sm:text-sm truncate">{item.author}</h4>
-                    <p className="text-[11px] text-gray-500 truncate">{item.role}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        )}
-
-        {/* Mobile Swipe Hint */}
-        <div className="flex md:hidden items-center justify-center gap-1.5 mt-3 text-[10px] text-gray-500 font-medium">
-          <span>Swipe sideways to read reviews</span>
-          <ArrowRight size={11} />
+                )}
+              </div>
+            </div>
+          ))}
         </div>
-
       </div>
 
-      {/* Review Submission Form Modal */}
+      {/* Review Modal */}
       <AnimatePresence>
-        {showFormModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+        {modalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              className="relative w-full max-w-lg rounded-2xl border border-white/15 p-6 sm:p-8 bg-[#0B0B18] shadow-2xl text-white"
-            >
-              <button
-                onClick={() => setShowFormModal(false)}
-                className="absolute top-4 right-4 w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-gray-300 hover:text-white transition-colors cursor-pointer"
-              >
-                <X size={15} />
-              </button>
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setModalOpen(false)}
+              className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            />
 
-              <div className="mb-6">
-                <span className="px-3 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary text-[10px] font-mono font-bold uppercase tracking-wider inline-block mb-2">
-                  Client Verification
-                </span>
-                <h3 className="text-xl font-bold text-white">Share Your Experience</h3>
-                <p className="text-xs text-gray-400 mt-1">Your feedback helps enterprise businesses evaluate our engineering.</p>
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="relative w-full max-w-md bg-[#0D0B16] border border-white/[0.12] rounded-2xl p-6 shadow-2xl z-10"
+            >
+              <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/[0.08]">
+                <h3 className="font-heading font-bold text-base text-white">Submit a Review</h3>
+                <button
+                  onClick={() => setModalOpen(false)}
+                  className="p-1 rounded-lg hover:bg-white/[0.08] text-gray-400 hover:text-white cursor-pointer"
+                  aria-label="Close modal"
+                >
+                  <X size={18} />
+                </button>
               </div>
 
-              {submitStatus === "success" ? (
-                <div className="p-5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-center text-emerald-400 text-xs font-semibold">
-                  Thank you! Your testimonial has been submitted for review.
+              {submitted ? (
+                <div className="text-center py-6">
+                  <div className="w-12 h-12 rounded-full bg-[#32CD32]/20 border border-[#32CD32]/40 text-[#32CD32] flex items-center justify-center mx-auto mb-3">
+                    <Star size={24} fill="currentColor" />
+                  </div>
+                  <h4 className="font-heading font-bold text-base text-white mb-1">Thank You!</h4>
+                  <p className="text-xs text-[#B8B3CC] mb-4">
+                    Your review has been submitted for moderation and will appear after review.
+                  </p>
+                  <button
+                    onClick={() => {
+                      setSubmitted(false);
+                      setModalOpen(false);
+                    }}
+                    className="btn-primary-pill text-xs py-2 px-5 cursor-pointer"
+                  >
+                    Done
+                  </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmitReview} className="space-y-3">
                   <div>
-                    <label className="block text-xs font-medium text-gray-400 mb-1">Your Name</label>
+                    <label className="block text-xs font-mono text-[#8A849F] mb-1">Your Rating</label>
+                    <div className="flex gap-2">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <button
+                          type="button"
+                          key={star}
+                          onClick={() => setRating(star)}
+                          className={`p-1.5 rounded-lg border cursor-pointer ${
+                            star <= rating
+                              ? "bg-[#FFB020]/20 border-[#FFB020]/40 text-[#FFB020]"
+                              : "bg-white/[0.02] border-white/[0.08] text-gray-500"
+                          }`}
+                        >
+                          <Star size={16} fill={star <= rating ? "currentColor" : "none"} />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-mono text-[#8A849F] mb-1">Full Name *</label>
                     <input
                       type="text"
-                      name="author"
-                      value={formData.author}
-                      onChange={handleInputChange}
                       required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                       placeholder="e.g. John Doe"
-                      className="w-full bg-[#0A0A18] border border-white/[0.08] rounded-xl px-4 py-2.5 text-white text-xs placeholder-gray-600 focus:outline-none focus:border-primary/60"
+                      className="w-full px-3 py-2 rounded-xl bg-black/60 border border-white/[0.1] text-xs text-white placeholder:text-gray-600 focus:outline-none focus:border-[#00C0FF]"
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-medium text-gray-400 mb-1">Role / Business</label>
-                    <input
-                      type="text"
-                      name="role"
-                      value={formData.role}
-                      onChange={handleInputChange}
-                      required
-                      placeholder="e.g. Founder at TechCorp"
-                      className="w-full bg-[#0A0A18] border border-white/[0.08] rounded-xl px-4 py-2.5 text-white text-xs placeholder-gray-600 focus:outline-none focus:border-primary/60"
-                    />
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-xs font-mono text-[#8A849F] mb-1">Company</label>
+                      <input
+                        type="text"
+                        value={company}
+                        onChange={(e) => setCompany(e.target.value)}
+                        placeholder="Company Name"
+                        className="w-full px-3 py-2 rounded-xl bg-black/60 border border-white/[0.1] text-xs text-white placeholder:text-gray-600 focus:outline-none focus:border-[#00C0FF]"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-mono text-[#8A849F] mb-1">Role / Title</label>
+                      <input
+                        type="text"
+                        value={role}
+                        onChange={(e) => setRole(e.target.value)}
+                        placeholder="e.g. Director"
+                        className="w-full px-3 py-2 rounded-xl bg-black/60 border border-white/[0.1] text-xs text-white placeholder:text-gray-600 focus:outline-none focus:border-[#00C0FF]"
+                      />
+                    </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-gray-400 mb-1">Your Testimonial</label>
+                    <label className="block text-xs font-mono text-[#8A849F] mb-1">Feedback *</label>
                     <textarea
-                      name="quote"
-                      value={formData.quote}
-                      onChange={handleInputChange}
                       required
-                      rows={4}
-                      placeholder="Describe your project experience and results..."
-                      className="w-full bg-[#0A0A18] border border-white/[0.08] rounded-xl px-4 py-2.5 text-white text-xs placeholder-gray-600 focus:outline-none focus:border-primary/60 resize-none"
+                      rows={3}
+                      value={body}
+                      onChange={(e) => setBody(e.target.value)}
+                      placeholder="Share your experience working with SARDYX AI..."
+                      className="w-full px-3 py-2 rounded-xl bg-black/60 border border-white/[0.1] text-xs text-white placeholder:text-gray-600 focus:outline-none focus:border-[#00C0FF]"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    disabled={submitStatus === "submitting"}
-                    className="w-full py-3 rounded-xl bg-primary text-black font-bold text-xs uppercase tracking-wider hover:bg-cyan-300 transition-all cursor-pointer"
+                    disabled={submitting}
+                    className="btn-primary-pill w-full mt-2 cursor-pointer flex items-center justify-center gap-2 text-xs"
                   >
-                    {submitStatus === "submitting" ? "Submitting..." : "Submit Review"}
+                    <span>{submitting ? "Submitting..." : "Send Review"}</span>
+                    <Send size={13} />
                   </button>
                 </form>
               )}
