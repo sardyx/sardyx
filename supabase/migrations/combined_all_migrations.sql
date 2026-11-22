@@ -798,25 +798,9 @@ His philosophy is direct: start before you feel ready, be honest with clients, d
    'Sardar M. Abdullah (Mr. Abdullah) — Founder & CEO of SARDYX AI',
    'Learn about Sardar M. Abdullah, founder of SARDYX AI. Building high-performance software, Cloud POS, and autonomous AI systems from Khyber Pakhtunkhwa, Pakistan.'),
 
-  ('Miss Bushra', 'Operations & Project Manager',
-   'Coordinates technical delivery timelines, client requirements, and cross-functional agile development sprints.',
-   '/team/bushra.png', '{}'::jsonb, 2, true, false, 'miss-bushra', null, null, null, '{}', 'Pakistan', null, '[]'::jsonb, '{}', '{}', null, null),
-
-  ('Mr. Hamad', 'Senior AI Engineer',
-   'Specializes in low-latency voice callbots, conversational RAG pipelines, and n8n autonomous workflow automations.',
-   '/team/hamad.jpeg', '{}'::jsonb, 3, true, false, 'mr-hamad', null, null, null, '{}', 'Pakistan', null, '[]'::jsonb, '{}', '{}', null, null),
-
-  ('Mr. Khubaib', 'Backend & Cloud Engineer',
-   'Builds scalable PostgreSQL schemas, RESTful APIs, and secure serverless backend microservices.',
-   '/team/khubaib.png', '{}'::jsonb, 4, true, false, 'mr-khubaib', null, null, null, '{}', 'Pakistan', null, '[]'::jsonb, '{}', '{}', null, null),
-
-  ('Mr. Hussain', 'Growth & Strategy Lead',
-   'Leads digital acquisition funnels, client engagement strategy, and market positioning across PK, USA, and UK.',
-   '/team/hussain.jpeg', '{}'::jsonb, 5, true, false, 'mr-hussain', null, null, null, '{}', 'Pakistan', null, '[]'::jsonb, '{}', '{}', null, null),
-
-  ('Mr. Ahmed', 'Client Solutions Consultant',
-   'Works closely with retail and enterprise clients to define software requirements, POS workflows, and rollout plans.',
-   '/team/ahmed.jpeg', '{}'::jsonb, 6, true, false, 'mr-ahmed', null, null, null, '{}', 'Pakistan', null, '[]'::jsonb, '{}', '{}', null, null)
+  ('SARDAR ZAKA', 'Managing Director',
+   'Directs organizational operations, commercial compliance, and corporate client engagements across Pakistan, the US, and the UK.',
+   '/team/zaka.svg', '{}'::jsonb, 2, true, false, 'sardar-zaka', null, null, null, '{}', 'Pakistan', null, '[]'::jsonb, '{}', '{}', null, null)
 on conflict (name) do nothing;
 
 -- FAQs

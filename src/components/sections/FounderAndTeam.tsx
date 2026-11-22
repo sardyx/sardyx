@@ -7,34 +7,10 @@ import { ArrowRight, Sparkles, ShieldCheck, Code, Globe2 } from "lucide-react";
 
 const teamMembers = [
   {
-    name: "Miss Bushra",
-    role: "Operations & Project Manager",
-    desc: "Coordinates agile development sprints, client communication, and software milestone delivery.",
-    photo: "/team/bushra.png",
-  },
-  {
-    name: "Mr. Hamad",
-    role: "Senior AI Engineer",
-    desc: "Engineers sub-second latency voice callbots, conversational RAG, and n8n workflow automations.",
-    photo: "/team/hamad.jpeg",
-  },
-  {
-    name: "Mr. Khubaib",
-    role: "Backend & Cloud Engineer",
-    desc: "Architects high-availability PostgreSQL databases, serverless APIs, and secure microservices.",
-    photo: "/team/khubaib.png",
-  },
-  {
-    name: "Mr. Hussain",
-    role: "Growth & Strategy Lead",
-    desc: "Drives commercial pipeline acquisition and market positioning across Pakistan, the US, and the UK.",
-    photo: "/team/hussain.jpeg",
-  },
-  {
-    name: "Mr. Ahmed",
-    role: "Client Solutions Consultant",
-    desc: "Translates complex retail and enterprise workflows into scalable software requirements.",
-    photo: "/team/ahmed.jpeg",
+    name: "SARDAR ZAKA",
+    role: "Managing Director",
+    desc: "Directs organizational operations, commercial compliance, and corporate client engagements across Pakistan, the US, and the UK.",
+    photo: "/team/zaka.svg",
   },
 ];
 
@@ -125,43 +101,43 @@ export default function FounderAndTeam() {
         <div className="text-center max-w-2xl mx-auto mb-14">
           <div className="eyebrow-pill mb-3">
             <Sparkles size={13} className="text-[#00C0FF]" />
-            <span>ENGINEERING TALENT</span>
+            <span>EXECUTIVE LEADERSHIP</span>
           </div>
           <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-white tracking-tight">
-            The SARDYX <span className="gradient-text-highlight">Team</span>
+            Agency <span className="gradient-text-highlight">Leadership</span>
           </h2>
           <p className="text-xs sm:text-sm text-[#B8B3CC] mt-2">
-            Engineers, system architects, and operations specialists delivering client milestones.
+            Direct executive governance ensuring engineering excellence and enterprise compliance.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div className="flex justify-center">
           {teamMembers.map((member, idx) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: idx * 0.08 }}
-              className="glass-panel p-5 rounded-2xl border border-white/[0.08] flex flex-col items-center text-center glass-panel-hover"
+              transition={{ duration: 0.4 }}
+              className="glass-panel p-6 sm:p-8 rounded-2xl border border-white/[0.08] flex flex-col items-center text-center glass-panel-hover max-w-md w-full"
             >
-              <div className="relative w-24 h-24 rounded-full overflow-hidden mb-4 border border-[#8A2BEF]/30 bg-black/40">
+              <div className="relative w-28 h-28 rounded-full overflow-hidden mb-4 border-2 border-[#8A2BEF]/40 bg-[#0D0B16] shadow-lg shadow-[#8A2BEF]/10">
                 <Image
                   src={member.photo}
                   alt={member.name}
                   fill
                   className="object-cover"
-                  sizes="96px"
+                  sizes="112px"
                 />
               </div>
 
-              <h4 className="font-heading font-bold text-sm text-white mb-0.5">
+              <h4 className="font-heading font-bold text-base text-white mb-1">
                 {member.name}
               </h4>
-              <p className="text-[11px] font-mono text-[#00C0FF] mb-2">
+              <p className="text-xs font-mono uppercase tracking-wider text-[#00C0FF] mb-3 font-semibold">
                 {member.role}
               </p>
-              <p className="text-xs text-[#8A849F] leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#8A849F] leading-relaxed">
                 {member.desc}
               </p>
             </motion.div>
