@@ -257,7 +257,7 @@ create table public.testimonials (
 
 create table public.team_members (
   id uuid primary key default gen_random_uuid(),
-  name text not null,
+  name text unique not null,
   role text not null,
   bio text,
   photo_url text,
@@ -268,7 +268,7 @@ create table public.team_members (
 
 create table public.faqs (
   id uuid primary key default gen_random_uuid(),
-  question text not null,
+  question text unique not null,
   answer text not null,
   service_id uuid references public.services(id) on delete cascade,
   sort_order int not null default 0,
@@ -844,7 +844,7 @@ insert into public.faqs (question, answer, sort_order, is_active) values
   ('How do we get started?',
    'You can submit a project brief through our contact form or send a message directly to our official WhatsApp (+92 349 9398141). We review requirements within 24 hours, schedule an initial discovery call, and provide a clear, transparent scope proposal.',
    6, true)
-on conflict do nothing;
+on conflict (question) do nothing;
 
 -- ------------------------------------------------------------------------------
 -- BOOTSTRAP OWNER INSTRUCTION:
