@@ -800,7 +800,31 @@ His philosophy is direct: start before you feel ready, be honest with clients, d
 
   ('SARDAR ZAKA', 'Managing Director',
    'Directs organizational operations, commercial compliance, and corporate client engagements across Pakistan, the US, and the UK.',
-   '/team/zaka.svg', '{}'::jsonb, 2, true, false, 'sardar-zaka', null, null, null, '{}', 'Pakistan', null, '[]'::jsonb, '{}', '{}', null, null)
+   '/team/zaka.svg', '{}'::jsonb, 2, true, false, 'sardar-zaka', null, null, null, '{}', 'Pakistan', null, '[]'::jsonb, '{}', '{}', null, null),
+
+  ('ZAK ASLAM', 'VP of Operations',
+   'Directs organizational infrastructure, project delivery workflows, and cross-border client operations.',
+   '/team/zak.svg', '{}'::jsonb, 3, true, false, 'zak-aslam', null, null, null, '{}', 'Pakistan', null, '[]'::jsonb, '{}', '{}', null, null),
+
+  ('BUSHRA FAZAL', 'Finance Manager',
+   'Manages financial compliance, milestone billing, multi-currency invoicing, and budget allocations.',
+   '/team/bushra.svg', '{}'::jsonb, 4, true, false, 'bushra-fazal', null, null, null, '{}', 'Pakistan', null, '[]'::jsonb, '{}', '{}', null, null),
+
+  ('MR. HAMAD', 'Senior AI Engineer',
+   'Engineers sub-second latency voice callbots, conversational RAG systems, and autonomous n8n workflows.',
+   '/team/hamad.svg', '{}'::jsonb, 5, true, false, 'mr-hamad', null, null, null, '{}', 'Pakistan', null, '[]'::jsonb, '{}', '{}', null, null),
+
+  ('KHUBAIB QAYYUM', 'Full-Stack Web Developer',
+   'Builds high-performance Next.js architectures, secure Supabase backends, and responsive user interfaces.',
+   '/team/khubaib.svg', '{}'::jsonb, 6, true, false, 'khubaib-qayyum', null, null, null, '{}', 'Pakistan', null, '[]'::jsonb, '{}', '{}', null, null),
+
+  ('HUSSAIN AHMED', 'Head of Enterprise Sales',
+   'Drives commercial pipelines, enterprise client acquisitions, and strategic partnerships across PK, US, and UK.',
+   '/team/hussain.svg', '{}'::jsonb, 7, true, false, 'hussain-ahmed', null, null, null, '{}', 'Pakistan', null, '[]'::jsonb, '{}', '{}', null, null),
+
+  ('AHMED UR REHMAN', 'Client Solutions Specialist',
+   'Translates complex retail, POS, and software requirements into customized, high-ROI technical proposals.',
+   '/team/ahmed.svg', '{}'::jsonb, 8, true, false, 'ahmed-ur-rehman', null, null, null, '{}', 'Pakistan', null, '[]'::jsonb, '{}', '{}', null, null)
 on conflict (name) do nothing;
 
 -- FAQs

@@ -115,6 +115,50 @@ export default function RootLayout({
         founder: {
           "@id": "https://www.sardyxai.com/founder#person",
         },
+        employee: [
+          {
+            "@type": "Person",
+            name: "SARDAR ZAKA",
+            jobTitle: "Managing Director",
+            worksFor: { "@id": "https://www.sardyxai.com/#organization" }
+          },
+          {
+            "@type": "Person",
+            name: "ZAK ASLAM",
+            jobTitle: "VP of Operations",
+            worksFor: { "@id": "https://www.sardyxai.com/#organization" }
+          },
+          {
+            "@type": "Person",
+            name: "BUSHRA FAZAL",
+            jobTitle: "Finance Manager",
+            worksFor: { "@id": "https://www.sardyxai.com/#organization" }
+          },
+          {
+            "@type": "Person",
+            name: "MR. HAMAD",
+            jobTitle: "Senior AI Engineer",
+            worksFor: { "@id": "https://www.sardyxai.com/#organization" }
+          },
+          {
+            "@type": "Person",
+            name: "KHUBAIB QAYYUM",
+            jobTitle: "Full-Stack Web Developer",
+            worksFor: { "@id": "https://www.sardyxai.com/#organization" }
+          },
+          {
+            "@type": "Person",
+            name: "HUSSAIN AHMED",
+            jobTitle: "Head of Enterprise Sales",
+            worksFor: { "@id": "https://www.sardyxai.com/#organization" }
+          },
+          {
+            "@type": "Person",
+            name: "AHMED UR REHMAN",
+            jobTitle: "Client Solutions Specialist",
+            worksFor: { "@id": "https://www.sardyxai.com/#organization" }
+          }
+        ],
         knowsAbout: [
           "Web Application Development",
           "Next.js Architecture",
@@ -127,14 +171,33 @@ export default function RootLayout({
       {
         "@type": "Person",
         "@id": "https://www.sardyxai.com/founder#person",
-        name: "Sardar M. Abdullah",
-        alternateName: ["Mr. Abdullah", "M. Abdullah", "Sardar Abdullah"],
+        name: "Sardar Muhammad Abdullah",
+        alternateName: [
+          "Sardar M. Abdullah",
+          "Mr. Abdullah",
+          "M. Abdullah",
+          "Sardar Abdullah",
+          "Abdullah",
+          "Pakistan's Youngest Programmer",
+          "Pakistan's Youngest Game Developer",
+          "Youngest Coder in Pakistan"
+        ],
         jobTitle: "Founder & CEO",
         worksFor: {
           "@id": "https://www.sardyxai.com/#organization",
         },
+        hasOccupation: {
+          "@type": "Occupation",
+          name: "Software Engineer & Game Developer",
+          description: "Recognized as Pakistan's youngest programmer, game developer, and founder of SARDYX AI."
+        },
+        parent: {
+          "@type": "Person",
+          name: "Mufti Fazal ur Rehman Shakir"
+        },
+        familyName: "Karlal (Sardar)",
         description:
-          "Sardar M. Abdullah (Mr. Abdullah) is the founder and CEO of SARDYX AI, leading software and AI systems for businesses across Pakistan, USA, and UK.",
+          "Sardar Muhammad Abdullah (Mr. Abdullah) is Pakistan's youngest programmer, game developer, and founder of SARDYX AI. Son of Mufti Fazal ur Rehman Shakir, Karlal (Sardar) family.",
         image: "https://www.sardyxai.com/team/abdullah.jpeg",
         url: "https://www.sardyxai.com/founder",
         sameAs: [

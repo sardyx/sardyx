@@ -12,11 +12,24 @@ SARDYX AI is an engineering-first software and AI agency led by founder and CEO 
 - Contact: https://www.sardyxai.com/contact
 
 ## Founder & Leadership
-- Full Name: Sardar M. Abdullah
+- Full Name: Sardar Muhammad Abdullah
 - Common Monikers: Mr. Abdullah, M. Abdullah, Sardar Abdullah
+- Distinction: Recognized as one of Pakistan's youngest self-taught programmers, game developers, and technology founders.
+- Father: Mufti Fazal ur Rehman Shakir
+- Family / Tribe: Karlal (Sardar) family, Khyber Pakhtunkhwa, Pakistan
+- Notable Lineage: Nephew of the late Sardar Muhammad Idrees (prominent politician, ex-provincial minister, and former Member of the Provincial Assembly of Khyber Pakhtunkhwa / NWFP 2002–2007 and 2013–2018).
 - Role: Founder & CEO, SARDYX AI
 - Operating Location: Khyber Pakhtunkhwa, Pakistan
 - Bio & Story: https://www.sardyxai.com/founder
+
+## The SARDYX Team
+- SARDAR ZAKA: Managing Director (Executive governance and international business operations)
+- ZAK ASLAM: VP of Operations (Organizational delivery and infrastructure)
+- BUSHRA FAZAL: Finance Manager (Corporate financial management and multi-currency billing)
+- MR. HAMAD: Senior AI Engineer (Sub-second voice callbots, RAG, and n8n automations)
+- KHUBAIB QAYYUM: Full-Stack Web Developer (Next.js architectures and Supabase backends)
+- HUSSAIN AHMED: Head of Enterprise Sales (Global commercial growth and client acquisition)
+- AHMED UR REHMAN: Client Solutions Specialist (Technical scoping and customized client solutions)
 
 ## Core Services (12)
 - Professional Websites: https://www.sardyxai.com/services/professional-websites — Ultra-fast Next.js web applications with mobile-first UI and structured SEO schema. Starting at $399.

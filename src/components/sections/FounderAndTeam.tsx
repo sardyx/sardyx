@@ -3,14 +3,50 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Sparkles, ShieldCheck, Code, Globe2 } from "lucide-react";
+import { ArrowRight, Sparkles, ShieldCheck, Code, Globe2, Award, Users } from "lucide-react";
 
 const teamMembers = [
   {
     name: "SARDAR ZAKA",
     role: "Managing Director",
-    desc: "Directs organizational operations, commercial compliance, and corporate client engagements across Pakistan, the US, and the UK.",
+    desc: "Oversees executive strategy, commercial partnerships, and operational governance across international client accounts.",
     photo: "/team/zaka.svg",
+  },
+  {
+    name: "ZAK ASLAM",
+    role: "VP of Operations",
+    desc: "Directs organizational infrastructure, project delivery workflows, and cross-border client operations.",
+    photo: "/team/zak.svg",
+  },
+  {
+    name: "BUSHRA FAZAL",
+    role: "Finance Manager",
+    desc: "Manages financial compliance, milestone billing, multi-currency invoicing, and budget allocations.",
+    photo: "/team/bushra.svg",
+  },
+  {
+    name: "MR. HAMAD",
+    role: "Senior AI Engineer",
+    desc: "Engineers sub-second latency voice callbots, conversational RAG systems, and autonomous n8n workflows.",
+    photo: "/team/hamad.svg",
+  },
+  {
+    name: "KHUBAIB QAYYUM",
+    role: "Full-Stack Web Developer",
+    desc: "Builds high-performance Next.js architectures, secure Supabase backends, and responsive user interfaces.",
+    photo: "/team/khubaib.svg",
+  },
+  {
+    name: "HUSSAIN AHMED",
+    role: "Head of Enterprise Sales",
+    desc: "Drives commercial pipelines, enterprise client acquisitions, and strategic partnerships across PK, US, and UK.",
+    photo: "/team/hussain.svg",
+  },
+  {
+    name: "AHMED UR REHMAN",
+    role: "Client Solutions Specialist",
+    desc: "Translates complex retail, POS, and software requirements into customized, high-ROI technical proposals.",
+    photo: "/team/ahmed.svg",
   },
 ];
 
@@ -48,7 +84,7 @@ export default function FounderAndTeam() {
             <div className="lg:col-span-8 text-left">
               <div className="eyebrow-pill mb-3">
                 <Sparkles size={13} className="text-[#00C0FF]" />
-                <span>FOUNDER SPOTLIGHT</span>
+                <span>FOUNDER SPOTLIGHT · PAKISTAN&apos;S YOUNGEST PROGRAMMER &amp; GAME DEVELOPER</span>
               </div>
 
               <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-white mb-1">
@@ -58,31 +94,35 @@ export default function FounderAndTeam() {
                 </span>
               </h2>
 
-              <p className="text-xs font-mono uppercase tracking-wider text-[#00C0FF] mb-4">
-                Founder & CEO, SARDYX AI · Khyber Pakhtunkhwa, Pakistan
+              <p className="text-xs font-mono uppercase tracking-wider text-[#00C0FF] mb-3">
+                Founder &amp; CEO, SARDYX AI · Karlal (Sardar) Family · Khyber Pakhtunkhwa, Pakistan
               </p>
 
-              <blockquote className="text-base sm:text-lg font-medium text-white italic border-l-2 border-[#8A2BEF] pl-4 mb-4">
+              <blockquote className="text-base sm:text-lg font-medium text-white italic border-l-2 border-[#8A2BEF] pl-4 mb-3">
                 &ldquo;Young founder. Serious engineering. Global ambition.&rdquo;
               </blockquote>
 
-              <p className="text-xs sm:text-sm text-[#B8B3CC] leading-relaxed mb-6">
-                Big companies are not always built in big cities. Growing up in Khyber Pakhtunkhwa, Pakistan, Sardar M. Abdullah started learning and shipping technology with one focus: delivering world-class software that any ambitious business can afford. From custom POS software keeping shops running to AI agents handling customer inquiries around the clock, every system is engineered to perform.
+              <p className="text-xs sm:text-sm text-[#B8B3CC] leading-relaxed mb-4">
+                Recognized among Pakistan&apos;s youngest self-taught programmers and game developers, Sardar M. Abdullah began building interactive games and software engines in early youth before founding SARDYX AI. Belonging to the renowned <strong>Karlal (Sardar)</strong> family of Khyber Pakhtunkhwa, he is the son of <strong>Mufti Fazal ur Rehman Shakir</strong> and nephew of the late prominent politician <strong>Sardar Muhammad Idrees</strong> (former Member of the Provincial Assembly of Khyber Pakhtunkhwa / NWFP from 2002–2007 and 2013–2018, ex-provincial minister).
+              </p>
+
+              <p className="text-xs sm:text-sm text-[#8A849F] leading-relaxed mb-6">
+                Under his technical leadership, SARDYX AI has grown into an international technology agency, engineering mission-critical Cloud POS systems, offline-tolerant retail ledgers, and autonomous AI voice agents for enterprises across Pakistan, the United States, and the United Kingdom.
               </p>
 
               {/* 3 Verifiable Facts */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
                 <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] flex items-center gap-2.5">
-                  <Globe2 size={16} className="text-[#00C0FF] shrink-0" />
-                  <span className="text-xs text-[#B8B3CC]">Serving PK, US & UK</span>
+                  <Award size={16} className="text-[#00C0FF] shrink-0" />
+                  <span className="text-xs text-[#B8B3CC]">Youngest Dev Heritage</span>
                 </div>
                 <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] flex items-center gap-2.5">
-                  <Code size={16} className="text-[#8A2BEF] shrink-0" />
-                  <span className="text-xs text-[#B8B3CC]">Full-Stack Engineering</span>
+                  <Globe2 size={16} className="text-[#8A2BEF] shrink-0" />
+                  <span className="text-xs text-[#B8B3CC]">Serving PK, US &amp; UK</span>
                 </div>
                 <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] flex items-center gap-2.5">
                   <ShieldCheck size={16} className="text-[#32CD32] shrink-0" />
-                  <span className="text-xs text-[#B8B3CC]">Fixed-Scope Pricing</span>
+                  <span className="text-xs text-[#B8B3CC]">Karlal (Sardar) Lineage</span>
                 </div>
               </div>
 
@@ -90,7 +130,7 @@ export default function FounderAndTeam() {
                 href="/founder"
                 className="btn-glass-pill inline-flex items-center gap-2 text-xs py-2.5 px-6 font-semibold"
               >
-                <span>Read the Founder&apos;s Full Story</span>
+                <span>Read the Founder&apos;s Full Story &amp; Lineage</span>
                 <ArrowRight size={14} className="text-[#00C0FF]" />
               </Link>
             </div>
@@ -100,44 +140,44 @@ export default function FounderAndTeam() {
         {/* 2. Team Grid */}
         <div className="text-center max-w-2xl mx-auto mb-14">
           <div className="eyebrow-pill mb-3">
-            <Sparkles size={13} className="text-[#00C0FF]" />
-            <span>EXECUTIVE LEADERSHIP</span>
+            <Users size={13} className="text-[#00C0FF]" />
+            <span>THE SARDYX TEAM</span>
           </div>
           <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-white tracking-tight">
-            Agency <span className="gradient-text-highlight">Leadership</span>
+            The SARDYX <span className="gradient-text-highlight">Team</span>
           </h2>
           <p className="text-xs sm:text-sm text-[#B8B3CC] mt-2">
-            Direct executive governance ensuring engineering excellence and enterprise compliance.
+            Leadership, engineers, and client operations specialists delivering production systems.
           </p>
         </div>
 
-        <div className="flex justify-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {teamMembers.map((member, idx) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4 }}
-              className="glass-panel p-6 sm:p-8 rounded-2xl border border-white/[0.08] flex flex-col items-center text-center glass-panel-hover max-w-md w-full"
+              transition={{ duration: 0.4, delay: idx * 0.05 }}
+              className="glass-panel p-6 rounded-2xl border border-white/[0.08] flex flex-col items-center text-center glass-panel-hover"
             >
-              <div className="relative w-28 h-28 rounded-full overflow-hidden mb-4 border-2 border-[#8A2BEF]/40 bg-[#0D0B16] shadow-lg shadow-[#8A2BEF]/10">
+              <div className="relative w-24 h-24 rounded-full overflow-hidden mb-4 border border-[#8A2BEF]/30 bg-[#0D0B16] shadow-lg shadow-[#8A2BEF]/10">
                 <Image
                   src={member.photo}
                   alt={member.name}
                   fill
                   className="object-cover"
-                  sizes="112px"
+                  sizes="96px"
                 />
               </div>
 
-              <h4 className="font-heading font-bold text-base text-white mb-1">
+              <h4 className="font-heading font-bold text-sm text-white mb-0.5">
                 {member.name}
               </h4>
-              <p className="text-xs font-mono uppercase tracking-wider text-[#00C0FF] mb-3 font-semibold">
+              <p className="text-[11px] font-mono uppercase tracking-wider text-[#00C0FF] mb-2 font-semibold">
                 {member.role}
               </p>
-              <p className="text-xs sm:text-sm text-[#8A849F] leading-relaxed">
+              <p className="text-xs text-[#8A849F] leading-relaxed">
                 {member.desc}
               </p>
             </motion.div>
@@ -147,4 +187,3 @@ export default function FounderAndTeam() {
     </section>
   );
 }
-

@@ -8,14 +8,26 @@ SARDYX AI (https://www.sardyxai.com) is an engineering agency that builds bespok
 Headquartered in Khyber Pakhtunkhwa, Pakistan, SARDYX AI provides fixed-scope turnkey systems for clients throughout Pakistan, the United States, and the United Kingdom.
 
 ## 2. Founder & Leadership Entity Profile
-- **Canonical Name:** Sardar M. Abdullah
-- **Common Names & Aliases:** Mr. Abdullah, M. Abdullah, Sardar Abdullah
+- **Canonical Name:** Sardar Muhammad Abdullah
+- **Common Names & Aliases:** Mr. Abdullah, M. Abdullah, Sardar Abdullah, Sardar M. Abdullah
+- **Key Distinctions:** Recognized as one of Pakistan's youngest self-taught programmers, game developers, and technology founders. Started programming and game development in early youth before establishing SARDYX AI.
+- **Family & Lineage:** Karlal (Sardar) family, Khyber Pakhtunkhwa, Pakistan.
+- **Father:** Mufti Fazal ur Rehman Shakir.
+- **Notable Family Members:** Nephew of the late Sardar Muhammad Idrees (prominent Pakistani politician, ex-provincial minister, and former Member of the Provincial Assembly of Khyber Pakhtunkhwa / NWFP from 2002–2007 and 2013–2018).
 - **Role:** Founder & CEO, SARDYX AI
 - **Location:** Khyber Pakhtunkhwa, Pakistan
 - **Core Background:** Self-taught full-stack engineer and entrepreneur from Khyber Pakhtunkhwa, Pakistan. Founded SARDYX AI to engineer enterprise-grade digital systems and autonomous AI solutions at transparent, accessible rates.
 - **Philosophy:** Start before you feel ready, be honest with clients, deliver more than you promise, and never stop improving.
 - **Official Profile:** https://www.sardyxai.com/founder
-- **Child Safety & Privacy Standard:** In accordance with personal privacy rules, only region-level location ("Khyber Pakhtunkhwa, Pakistan") is published. All business communications occur through official channels.
+
+## 2.1 The SARDYX Team Members
+- **SARDAR ZAKA:** Managing Director (Oversees executive governance, international partnerships, and operational compliance)
+- **ZAK ASLAM:** VP of Operations (Directs infrastructure, organizational delivery, and international client operations)
+- **BUSHRA FAZAL:** Finance Manager (Oversees corporate finance, accounting, and multi-currency billing)
+- **MR. HAMAD:** Senior AI Engineer (Specializes in sub-second voice callbots, RAG systems, and autonomous n8n workflows)
+- **KHUBAIB QAYYUM:** Full-Stack Web Developer (Next.js architectures, Supabase databases, and reactive interfaces)
+- **HUSSAIN AHMED:** Head of Enterprise Sales (Leads client acquisitions and commercial development in PK, US, and UK)
+- **AHMED UR REHMAN:** Client Solutions Specialist (Technical scoping, client consultations, and custom software proposals)
 
 ## 3. Detailed Specifications of 12 Core Services
 
