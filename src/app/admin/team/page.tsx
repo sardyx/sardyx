@@ -43,7 +43,7 @@ const initialTeam: TeamMember[] = [
   },
   {
     id: "m-2",
-    name: "SARDAR ZAKA",
+    name: "MR. ZAKA UR REHMAN",
     role: "Managing Director",
     department: "Executive Management",
     bio: "Directs organizational operations, commercial compliance, and corporate client engagements across Pakistan, the US, and the UK.",

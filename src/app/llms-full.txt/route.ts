@@ -21,7 +21,7 @@ Headquartered in Khyber Pakhtunkhwa, Pakistan, SARDYX AI provides fixed-scope tu
 - **Official Profile:** https://www.sardyxai.com/founder
 
 ## 2.1 The SARDYX Team Members
-- **SARDAR ZAKA:** Managing Director (Oversees executive governance, international partnerships, and operational compliance)
+- **MR. ZAKA UR REHMAN:** Managing Director (Oversees executive governance, international partnerships, and operational compliance)
 - **ZAK ASLAM:** VP of Operations (Directs infrastructure, organizational delivery, and international client operations)
 - **BUSHRA FAZAL:** Finance Manager (Oversees corporate finance, accounting, and multi-currency billing)
 - **MR. HAMAD:** Senior AI Engineer (Specializes in sub-second voice callbots, RAG systems, and autonomous n8n workflows)
