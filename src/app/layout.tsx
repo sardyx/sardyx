@@ -118,7 +118,7 @@ export default function RootLayout({
         employee: [
           {
             "@type": "Person",
-            name: "MR. ZAKA UR REHMAN",
+            name: "SARDAR ZAKA UR REHMAN",
             jobTitle: "Managing Director",
             worksFor: { "@id": "https://www.sardyxai.com/#organization" }
           },

@@ -798,7 +798,7 @@ His philosophy is direct: start before you feel ready, be honest with clients, d
    'Sardar M. Abdullah (Mr. Abdullah) — Founder & CEO of SARDYX AI',
    'Learn about Sardar M. Abdullah, founder of SARDYX AI. Building high-performance software, Cloud POS, and autonomous AI systems from Khyber Pakhtunkhwa, Pakistan.'),
 
-  ('MR. ZAKA UR REHMAN', 'Managing Director',
+  ('SARDAR ZAKA UR REHMAN', 'Managing Director',
    'Directs organizational operations, commercial compliance, and corporate client engagements across Pakistan, the US, and the UK.',
    '/team/zaka.svg', '{}'::jsonb, 2, true, false, 'zaka-ur-rehman', null, null, null, '{}', 'Pakistan', null, '[]'::jsonb, '{}', '{}', null, null),
 

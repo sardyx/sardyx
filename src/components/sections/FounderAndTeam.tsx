@@ -7,7 +7,7 @@ import { ArrowRight, Sparkles, ShieldCheck, Code, Globe2, Award, Users } from "l
 
 const teamMembers = [
   {
-    name: "MR. ZAKA UR REHMAN",
+    name: "SARDAR ZAKA UR REHMAN",
     role: "Managing Director",
     desc: "Oversees executive strategy, commercial partnerships, and operational governance across international client accounts.",
     photo: "/team/zaka.svg",

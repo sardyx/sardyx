@@ -23,7 +23,7 @@ SARDYX AI is an engineering-first software and AI agency led by founder and CEO 
 - Bio & Story: https://www.sardyxai.com/founder
 
 ## The SARDYX Team
-- MR. ZAKA UR REHMAN: Managing Director (Executive governance and international business operations)
+- SARDAR ZAKA UR REHMAN: Managing Director (Executive governance and international business operations)
 - ZAK ASLAM: VP of Operations (Organizational delivery and infrastructure)
 - BUSHRA FAZAL: Finance Manager (Corporate financial management and multi-currency billing)
 - MR. HAMAD: Senior AI Engineer (Sub-second voice callbots, RAG, and n8n automations)
